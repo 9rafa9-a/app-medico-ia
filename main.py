@@ -7,8 +7,14 @@ import flet_audio_recorder
 # --- Lógica de Banco de Dados (Portada) ---
 def load_json_list(filename, key_name=None):
     try:
-        path = os.path.join("data", filename)
-        if not os.path.exists(path): return []
+        # Usa caminho relativo ao arquivo main.py para compatibilidade com Android/EXE
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        path = os.path.join(base_dir, "data", filename)
+        
+        if not os.path.exists(path): 
+            print(f"Arquivo não encontrado: {path}")
+            return []
+            
         with open(path, 'r', encoding='utf-8') as f:
             data = json.load(f)
             names = []
@@ -35,7 +41,8 @@ def load_json_list(filename, key_name=None):
 def load_remume_names():
     # ... Lógica robusta do app.py original ...
     try:
-        path = os.path.join("data", "db_remume.json")
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        path = os.path.join(base_dir, "data", "db_remume.json")
         if not os.path.exists(path): return []
         with open(path, 'r', encoding='utf-8') as f:
             data = json.load(f)
@@ -52,7 +59,8 @@ def load_remume_names():
 
 def load_alto_custo_names():
     try:
-        path = os.path.join("data", "db_alto_custo.json")
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        path = os.path.join(base_dir, "data", "db_alto_custo.json")
         if not os.path.exists(path): return []
         with open(path, 'r', encoding='utf-8') as f:
             data = json.load(f)
@@ -69,7 +77,8 @@ def load_alto_custo_names():
 
 def load_rename_names():
     try:
-        path = os.path.join("data", "db_rename.json")
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        path = os.path.join(base_dir, "data", "db_rename.json")
         if not os.path.exists(path): return []
         with open(path, 'r', encoding='utf-8') as f:
             data = json.load(f)

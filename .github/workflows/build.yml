@@ -30,9 +30,13 @@ jobs:
           channel: 'stable'
           cache: true
 
+      - name: Accept Android Licenses
+        run: |
+          yes | flutter doctor --android-licenses || true
+
       - name: Build APK
         run: |
-          flet build apk --project . --verbose
+          flet build apk --project . --project-name app_medico_ia --product "Assistente Medico" --verbose
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
@@ -66,7 +70,7 @@ jobs:
 
       - name: Build Windows EXE
         run: |
-          flet build windows --project . --verbose
+          flet build windows --project . --project-name app_medico_ia --product "Assistente Medico" --verbose
 
       # Flet/Flutter builds usually output to build/windows/runner/Release/
       # We upload the whole folder or just the exe and necessary DLLs if needed.
