@@ -1,5 +1,4 @@
 import flet as ft
-import flet_audio_recorder # Trigger registration
 import requests
 import json
 import os
