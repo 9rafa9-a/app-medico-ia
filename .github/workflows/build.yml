@@ -46,7 +46,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: android-apk
-          path: build/apk/app-release.apk
+          path: mobile/build/apk/app-release.apk
 
   build-windows:
     name: Build Windows EXE
@@ -87,4 +87,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: windows-exe
-          path: build/windows/runner/Release/
+          path: mobile/build/windows/runner/Release/
