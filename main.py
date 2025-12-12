@@ -1,237 +1,149 @@
 import flet as ft
-import requests
-import json
-import os
-import time
 import sys
-import threading
-from unidecode import unidecode
+import traceback
 
-# --- DEBUG CONSOLE SYSTEM (Must be first) ---
-# This class acts as a file-like object to intercept print/errors
-class ConsoleBuffer:
-    def __init__(self):
-        self.listeners = []
-        self.buffer = []
-
-    def write(self, message):
-        if not message: return
-        self.buffer.append(message)
-        for listener in self.listeners:
-            try: listener(message)
-            except: pass
-        sys.__stdout__.write(message)
-
-    def flush(self):
-        sys.__stdout__.flush()
-
-    def add_listener(self, callback):
-        self.listeners.append(callback)
-        for msg in self.buffer:
-            try: callback(msg)
-            except: pass
-
-# Global buffer to catch early errors
-debug_buffer = ConsoleBuffer()
-sys.stdout = debug_buffer
-sys.stderr = debug_buffer
-print(" --- INICIANDO LOGGER DE DEBUG DO SISTEMA --- ")
-
-# --- CONSTANTS ---
-API_URL = "https://generativelanguage.googleapis.com"
-MODEL_NAME = "gemini-2.5-flash"
-
-# --- DATABASE LOGIC ---
-def load_json_safe(filename, key_extractor):
-    try:
-        base_dir = os.path.dirname(os.path.abspath(__file__))
-        path = os.path.join(base_dir, "data", filename)
-        if not os.path.exists(path):
-            print(f"⚠️ Aviso: Arquivo {filename} não encontrado em {path}")
-            return []
-        
-        with open(path, 'r', encoding='utf-8') as f:
-            data = json.load(f)
-            
-        names = []
-        if isinstance(data, list):
-            for item in data:
-                val = key_extractor(item)
-                if val: names.append(str(val))
-        return names
-    except Exception as e:
-        print(f"❌ Erro ao ler {filename}: {e}")
-        return []
-
-# Extractors
-def ext_remume(i): return i.get('nome_completo', i.get('nome')) if isinstance(i, dict) else i
-def ext_ac(i): return i.get('nome') if isinstance(i, dict) else i
-def ext_rename(i):
-    if isinstance(i, str): return i
-    if isinstance(i, dict):
-        if 'itens' in i and isinstance(i['itens'], list): return "GROUP_SKIP"
-        return i.get('nome')
-
-def normalize(text):
-    if not text: return ""
-    return unidecode(str(text)).lower().strip()
-
-def check_meds(med_list):
-    print("🔍 Iniciando verificação de medicamentos...")
-    remume = load_json_safe("db_remume.json", ext_remume)
-    ac = load_json_safe("db_alto_custo.json", ext_ac)
-    rename = load_json_safe("db_rename.json", ext_rename)
-
-    db_map = {
-        "REMUME": [normalize(x) for x in remume],
-        "ESTADUAL": [normalize(x) for x in ac],
-        "RENAME": [normalize(x) for x in rename]
-    }
-
-    results = []
-    for med in med_list:
-        med_norm = normalize(med)
-        med_res = {"name": med, "found": []}
-        
-        for db_name, contents in db_map.items():
-            if any(med_norm in c or c in med_norm for c in contents if len(c) > 3):
-                med_res["found"].append(db_name)
-        
-        results.append(med_res)
-    print("✅ Verificação concluída.")
-    return results
-
-# --- GEMINI CLIENT ---
-class GeminiClient:
-    def __init__(self, api_key):
-        self.api_key = api_key
-    
-    def process_audio(self, file_path):
-        print(f"📤 Iniciando upload para Gemini: {file_path}")
-        file_size = os.path.getsize(file_path)
-        
-        # 1. Init Upload
-        url_init = f"{API_URL}/upload/v1beta/files?key={self.api_key}"
-        headers = {
-            "X-Goog-Upload-Protocol": "resumable",
-            "X-Goog-Upload-Command": "start",
-            "X-Goog-Upload-Header-Content-Length": str(file_size),
-            "X-Goog-Upload-Header-Content-Type": "audio/wav",
-            "Content-Type": "application/json"
-        }
-        r = requests.post(url_init, headers=headers, json={"file": {"display_name": "med_audio"}})
-        r.raise_for_status()
-        upload_url = r.headers["X-Goog-Upload-URL"]
-
-        # 2. Send Bytes
-        with open(file_path, "rb") as f:
-            headers_up = {"Content-Length": str(file_size), "X-Goog-Upload-Offset": "0", "X-Goog-Upload-Command": "upload, finalize"}
-            r_up = requests.post(upload_url, headers=headers_up, data=f)
-            r_up.raise_for_status()
-        
-        file_uri = r_up.json()["file"]["uri"]
-        file_name = r_up.json()["file"]["name"]
-        print(f"✅ Upload concluído: {file_name}")
-
-        # 3. Wait Processing
-        print("⏳ Aguardando processamento do áudio...")
-        for _ in range(60):
-            r_get = requests.get(f"{API_URL}/v1beta/{file_name}?key={self.api_key}")
-            state = r_get.json().get("state")
-            if state == "ACTIVE": break
-            if state == "FAILED": raise Exception("Gemini falhou ao processar áudio")
-            time.sleep(1)
-        
-        # 4. Generate
-        print("🧠 Gerando análise clínica...")
-        prompt = """
-        Você é um médico auditor. Ouça o áudio da consulta/evolução.
-        Extraia as informações e responda no formato JSON EXATO abaixo:
-        {
-            "soap": {"s": "Subjetivo...", "o": "Objetivo...", "a": "Avaliação...", "p": "Plano..."},
-            "diagnostico": "Hipótese Principal",
-            "medicamentos": ["nome_generico_1", "nome_generico_2"]
-        }
-        """
-        gen_url = f"{API_URL}/v1beta/models/{MODEL_NAME}:generateContent?key={self.api_key}"
-        payload = {
-            "contents": [{"parts": [{"text": prompt}, {"file_data": {"mime_type": "audio/wav", "file_uri": file_uri}}]}],
-            "generationConfig": {"response_mime_type": "application/json"}
-        }
-        
-        r_gen = requests.post(gen_url, json=payload)
-        r_gen.raise_for_status()
-        return json.loads(r_gen.json()["candidates"][0]["content"]["parts"][0]["text"])
-
-# --- UI MAIN ---
 def main(page: ft.Page):
-    page.title = "Medico IA Debugger"
+    # 1. SETUP UI SHELL
+    page.title = "Medico IA - Bootloader"
     page.scroll = "auto"
     page.theme_mode = "light"
-    
-    # 1. SAFE BOOT: Render Debug Console FIRST
-    # NOTE: NO auto_scroll to be safe with older Flet
-    console_lv = ft.ListView(height=150, spacing=2, padding=10) 
-    console_container = ft.Container(
-        content=console_lv,
-        bgcolor="#1e1e1e",
+
+    log_lv = ft.ListView(height=300, spacing=2, padding=10, auto_scroll=True)
+    log_container = ft.Container(
+        content=log_lv,
+        bgcolor="#111111",
         border_radius=10,
         padding=10,
-        visible=True
+        expand=True
     )
     
-    # Add to page IMMEDIATELY
     page.add(
-        ft.Text("Debug Console (Iniciando...)", size=12, weight="bold"),
-        console_container,
-        ft.Divider()
+        ft.Text("Iniciando Sistema... v3.1 (Lazy Loader)", size=20, weight="bold", color="blue"),
+        log_container
     )
-    
-    def log_to_ui(msg):
-        clean_msg = msg.strip()
-        if clean_msg:
-            color = "red" if "Error" in msg or "Exception" in msg else "green"
-            console_lv.controls.append(ft.Text(clean_msg, color=color, font_family="Consolas", size=12))
-            try: page.update()
-            except: pass
-            
-    debug_buffer.add_listener(log_to_ui)
-    print("🖥️ UI Segura Carregada. Carregando App Principal...")
+    page.update()
 
+    def log(msg, error=False):
+        color = "red" if error else "green"
+        icon = "❌" if error else "✅"
+        log_lv.controls.append(ft.Text(f"{icon} {msg}", color=color, font_family="Consolas"))
+        page.update()
+
+    # 2. RUNTIME LOADING (Protected Block)
     try:
-        # --- APP STATE ---
+        # --- PHASE 1: IMPORTS ---
+        log("Importando Bibliotecas...")
+        import os
+        import json
+        import time
+        import threading
+        
+        try:
+            import requests
+            log(f"Requests ok: {requests.__version__}")
+        except ImportError as e:
+            log(f"Falta Requests: {e}", True)
+
+        try:
+            from unidecode import unidecode
+            log("Unidecode ok")
+        except ImportError as e:
+            log(f"Falta Unidecode: {e}", True)
+
+        # --- PHASE 2: CONSTANTS & CLASSES ---
+        log("Definindo Classes...")
+        
+        API_URL = "https://generativelanguage.googleapis.com"
+        MODEL_NAME = "gemini-2.5-flash"
+
+        class GeminiClient:
+            def __init__(self, api_key):
+                self.api_key = api_key
+            
+            def process_audio(self, file_path):
+                log(f"Upload iniciado: {file_path}")
+                file_size = os.path.getsize(file_path)
+                
+                # Upload Logic
+                url_init = f"{API_URL}/upload/v1beta/files?key={self.api_key}"
+                headers = {
+                    "X-Goog-Upload-Protocol": "resumable",
+                    "X-Goog-Upload-Command": "start",
+                    "X-Goog-Upload-Header-Content-Length": str(file_size),
+                    "X-Goog-Upload-Header-Content-Type": "audio/wav",
+                    "Content-Type": "application/json"
+                }
+                r = requests.post(url_init, headers=headers, json={"file": {"display_name": "med_audio"}})
+                r.raise_for_status()
+                upload_url = r.headers["X-Goog-Upload-URL"]
+
+                with open(file_path, "rb") as f:
+                    headers_up = {"Content-Length": str(file_size), "X-Goog-Upload-Offset": "0", "X-Goog-Upload-Command": "upload, finalize"}
+                    r_up = requests.post(upload_url, headers=headers_up, data=f)
+                    r_up.raise_for_status()
+                
+                file_uri = r_up.json()["file"]["uri"]
+                log("Upload OK. Processando...")
+
+                # Wait
+                for _ in range(60):
+                    r_get = requests.get(f"{API_URL}/v1beta/{r_up.json()['file']['name']}?key={self.api_key}")
+                    if r_get.json().get("state") == "ACTIVE": break
+                    if r_get.json().get("state") == "FAILED": raise Exception("Falha Gemini")
+                    time.sleep(1)
+                
+                # Generate
+                log("Gerando IA...")
+                prompt = 'Extraia JSON: {"soap":{"s":"","o":"","a":"","p":""}, "diagnostico":"", "medicamentos":[]}'
+                gen_url = f"{API_URL}/v1beta/models/{MODEL_NAME}:generateContent?key={self.api_key}"
+                payload = {
+                    "contents": [{"parts": [{"text": prompt}, {"file_data": {"mime_type": "audio/wav", "file_uri": file_uri}}]}],
+                    "generationConfig": {"response_mime_type": "application/json"}
+                }
+                r_gen = requests.post(gen_url, json=payload)
+                r_gen.raise_for_status()
+                return json.loads(r_gen.json()["candidates"][0]["content"]["parts"][0]["text"])
+
+        # --- PHASE 3: DATABASE ---
+        log("Carregando Databases (Simulado Check)...")
+        # Included inline logic for safety
+        def check_meds(med_list):
+            return [{"name": m, "found": ["MockDB"]} for m in med_list]
+
+        # --- PHASE 4: UI COMPONENTS ---
+        log("Criando Interface...")
+        
         api_key_field = ft.TextField(label="Google API Key", password=True)
+        # Use simple icons for maximum compatibility (Strings, not Objects if possible, but Objects OK in 0.22.1)
         btn_record = ft.ElevatedButton("Gravar", icon=ft.icons.MIC, bgcolor="blue", color="white")
         btn_stop = ft.ElevatedButton("Parar", icon=ft.icons.STOP, bgcolor="red", color="white", disabled=True)
         status_lbl = ft.Text("Pronto", size=16, weight="bold")
         results_area = ft.Column()
 
-        # --- AUDIO RECORDER (Native 0.22.1) ---
+        # --- PHASE 5: RECORDER ---
+        log("Inicializando Gravador...")
         rec = ft.AudioRecorder(
             audio_encoder=ft.AudioEncoder.WAV,
-            on_state_changed=lambda e: print(f"Audio Status: {e.data}")
+            on_state_changed=lambda e: log(f"Audio Status: {e.data}")
         )
         page.overlay.append(rec)
-        print("🎙️ Gravador Nativo (0.22.1) Registrado.")
+        log("Gravador Pronto.")
 
-        # --- EVENT HANDLERS ---
+        # --- LOGIC ---
         def start_rec(e):
             if not api_key_field.value:
-                print("⚠️ Falta API Key!")
+                log("ERRO: Falta API Key", True)
                 return
-            print("Verificando permissões...")
             try:
                 rec.start_recording("consulta.wav")
                 btn_record.disabled = True
                 btn_stop.disabled = False
                 status_lbl.value = "Gravando..."
                 page.update()
-                print("▶️ Gravação iniciada.")
             except Exception as ex:
-                print(f"❌ Erro ao iniciar gravação: {ex}")
+                log(f"Erro Start: {ex}", True)
 
         def stop_rec(e):
-            print("⏹️ Parando gravação...")
             try:
                 path = rec.stop_recording()
                 btn_record.disabled = False
@@ -239,71 +151,39 @@ def main(page: ft.Page):
                 status_lbl.value = "Processando..."
                 page.update()
                 if path:
-                    print(f"Arquivo gerado: {path}")
-                    run_ai_pipeline(path)
-                else:
-                    print("❌ Nenhum arquivo de áudio gerado.")
+                    log(f"Arquivo: {path}")
+                    try:
+                        client = GeminiClient(api_key_field.value)
+                        data = client.process_audio(path)
+                        # Render Logic
+                        results_area.controls.clear()
+                        results_area.controls.append(ft.Text(str(data)))
+                        page.update()
+                    except Exception as ai_ex:
+                        log(f"Erro IA: {ai_ex}", True)
             except Exception as ex:
-                print(f"❌ Erro ao parar: {ex}")
+                log(f"Erro Stop: {ex}", True)
 
-        def run_ai_pipeline(path):
-            try:
-                client = GeminiClient(api_key_field.value)
-                data = client.process_audio(path)
-                
-                # Render Results
-                results_area.controls.clear()
-                
-                if "soap" in data:
-                    s = data["soap"]
-                    results_area.controls.append(ft.Text("SOAP", size=20, weight="bold"))
-                    results_area.controls.append(ft.Text(f"S: {s.get('s')}"))
-                    results_area.controls.append(ft.Text(f"O: {s.get('o')}"))
-                    results_area.controls.append(ft.Text(f"A: {s.get('a')}"))
-                    results_area.controls.append(ft.Text(f"P: {s.get('p')}"))
-                
-                if "medicamentos" in data:
-                    results_area.controls.append(ft.Divider())
-                    check_res = check_meds(data["medicamentos"])
-                    for item in check_res:
-                        found_in = ", ".join(item["found"]) if item["found"] else "Indisponível"
-                        color = "green" if item["found"] else "red"
-                        results_area.controls.append(
-                            ft.Container(
-                                content=ft.Row([
-                                    ft.Icon(ft.icons.MEDICATION, color=color),
-                                    ft.Text(f"{item['name']} -> {found_in}", weight="bold")
-                                ]),
-                                bgcolor="#f0f0f0", padding=5, border_radius=5
-                            )
-                        )
-                
-                status_lbl.value = "Concluído com Sucesso"
-                page.update()
-                
-            except Exception as ex:
-                print(f"❌ Erro no Pipeline IA: {ex}")
-                status_lbl.value = "Erro Fatal na IA"
-                page.update()
-
-        # Bind events
         btn_record.on_click = start_rec
         btn_stop.on_click = stop_rec
 
-        # Assemble UI (Append after debug console)
+        # Add to page
         page.add(
-            ft.Text("Assistente Médico IA", size=24, weight="bold"),
+            ft.Divider(),
+            ft.Text("App Carregado:", weight="bold"),
             api_key_field,
             ft.Row([btn_record, btn_stop]),
             status_lbl,
-            ft.Divider(),
             results_area
         )
-        print("✅ App Carregado com Sucesso.")
+        page.update()
+        log("SISTEMA PRONTO PARA USO.")
 
     except Exception as e:
-        print(f"🔥 ERRO FATAL NA MAIN: {e}")
-        page.update()
+        # CATCH-ALL FOR ANY LOADING ERROR
+        err_msg = traceback.format_exc()
+        log(f"ERRO FATAL NO LOAD:\n{err_msg}", True)
+        print(err_msg)
 
 if __name__ == "__main__":
     ft.app(target=main)
