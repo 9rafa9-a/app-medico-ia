@@ -313,8 +313,9 @@ def main(page: ft.Page):
             # Result cards will be appended here
         ]
         
-        # Check updates on start
-        check_for_updates()
+        # Check updates on start (Background Thread to avoid Black Screen)
+        import threading
+        threading.Thread(target=check_for_updates, daemon=True).start()
         page.update()
 
     except Exception as e:
