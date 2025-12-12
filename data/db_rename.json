@@ -115,13 +115,6 @@
                 ]
             },
             {
-                "nome": "81 mg -",
-                "detalhes": "92 mg supositório retal Básico A06AG04",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
                 "nome": "hidróxido de alumínio",
                 "detalhes": "300 mg comprimido Básico A02AB01",
                 "tags": [
@@ -227,43 +220,15 @@
                 ]
             },
             {
-                "nome": "alfaepoetina",
+                "nome": "alfaepoetina a",
                 "detalhes": "10.000 UI solução injetável Especializado B03XA01",
                 "tags": [
                     "Rename 2024"
                 ]
             },
             {
-                "nome": "a",
-                "detalhes": "1 mEq/mL",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "cianocobalamina",
+                "nome": "cianocobalamina a",
                 "detalhes": "500 mcg/mL solução injetável Básico B03BA01",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "equivalente a",
-                "detalhes": "2,56 mEq/mL",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "equivalente a",
-                "detalhes": "3,4 mEq/mL",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "a",
-                "detalhes": "0,154 mEq/mL",
                 "tags": [
                     "Rename 2024"
                 ]
@@ -271,13 +236,6 @@
             {
                 "nome": "protrombínico",
                 "detalhes": "1.000UI pó para solução injetável Estratégico B02BD03",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "105 mg/",
-                "detalhes": "0,7 mL solução injetável Estratégico B02BX06",
                 "tags": [
                     "Rename 2024"
                 ]
@@ -297,15 +255,8 @@
                 ]
             },
             {
-                "nome": "fator VIII de coagulação",
+                "nome": "fator VIII de coagulação contendo fator de von",
                 "detalhes": "500 UI pó para solução injetável Estratégico B02BD02",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "contendo fator de von",
-                "detalhes": "500 UI pó para solução injetável Estratégico B02BD06",
                 "tags": [
                     "Rename 2024"
                 ]
@@ -348,27 +299,6 @@
             {
                 "nome": "lactato de sódio",
                 "detalhes": "3 mg/mL",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "Equivalente a",
-                "detalhes": "5 mg/mL de",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "Equivalente a",
-                "detalhes": "25 mg/mL de",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "Equivalente a",
-                "detalhes": "40 mg de ferro",
                 "tags": [
                     "Rename 2024"
                 ]
@@ -584,13 +514,6 @@
                 ]
             },
             {
-                "nome": "5 mg/",
-                "detalhes": "0,5 mL",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
                 "nome": "acetato de ciproterona",
                 "detalhes": "50 mg comprimido Especializado G03HA01",
                 "tags": [
@@ -703,15 +626,8 @@
                 ]
             },
             {
-                "nome": "amoxicilina",
+                "nome": "amoxicilina potássio",
                 "detalhes": "500 mg cápsula Básico J01CA04 Acesso",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "potássio",
-                "detalhes": "500 mg + 125 mg comprimido Básico J01CR02 Acesso",
                 "tags": [
                     "Rename 2024"
                 ]
@@ -836,29 +752,8 @@
                 ]
             },
             {
-                "nome": "fosamprenavir",
+                "nome": "fosamprenavir de tenofovir de tenofovir",
                 "detalhes": "50 mg/mL suspensão oral Estratégico J05AE07 -",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "de tenofovir",
-                "detalhes": "300 mg comprimido Estratégico J05AF07 -",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "de tenofovir",
-                "detalhes": "25 mg comprimido Estratégico J05AF13 -",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "180 -",
-                "detalhes": "200 UI/mL solução injetável Estratégico J06BB04 -",
                 "tags": [
                     "Rename 2024"
                 ]
@@ -1237,13 +1132,6 @@
             {
                 "nome": "nusinersena",
                 "detalhes": "2,4 mg/mL solução injetável Especializado M09AX07",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "2,0 x",
-                "detalhes": "1013 gv/mL suspensão injetável Especializado M09AX09",
                 "tags": [
                     "Rename 2024"
                 ]
@@ -1781,169 +1669,8 @@
                 ]
             },
             {
-                "nome": "5 mcg, vitamina E",
-                "detalhes": "5 mg, vitamina",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "C",
-                "detalhes": "30 mg, vitamina B1 0,5 mg,",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
                 "nome": "vitamina B2",
                 "detalhes": "0,5 mg, vitamina B6",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "0,5 g, vitamina PP",
-                "detalhes": "6 mg, vitamina",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "B9",
-                "detalhes": "150 mcg, vitamina B12",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "0,9 mcg, ferro",
-                "detalhes": "10 mg, zinco",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "4,1 mg, cobre",
-                "detalhes": "560 mcg, selênio",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "17 mcg, iodo",
-                "detalhes": "90 mcg",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "24 a",
-                "detalhes": "48 mg de derivados de ácido",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "24 a",
-                "detalhes": "48 mg de derivados de ácido",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "24 a",
-                "detalhes": "48 mg de derivados de ácido",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "24 a",
-                "detalhes": "48 mg de derivados de ácido",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "20 a",
-                "detalhes": "30 mg de derivados",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "20 a",
-                "detalhes": "30 mg de derivados",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "60 a",
-                "detalhes": "90 mg taninos totais expressos em",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "60 a",
-                "detalhes": "90 mg taninos totais expressos em",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "60 a",
-                "detalhes": "90 mg taninos totais expressos em",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "60 a",
-                "detalhes": "90 mg taninos totais expressos em",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "30 a",
-                "detalhes": "100 mg de harpagosídeo ou 45 a",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "30 a",
-                "detalhes": "100 mg de harpagosídeo ou 45 a",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "30 a",
-                "detalhes": "100 mg de harpagosídeo ou 45 a comprimido",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "0,5 a",
-                "detalhes": "5 mg de cumarina (dose diária) tintura Básico NC",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "0,5 a",
-                "detalhes": "5 mg de cumarina (dose diária) xarope Básico NC",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "0,5 a",
-                "detalhes": "5 mg de cumarina (dose diária) solução oral Básico NC",
                 "tags": [
                     "Rename 2024"
                 ]
@@ -1956,57 +1683,8 @@
                 ]
             },
             {
-                "nome": "50 a",
-                "detalhes": "120 mg de isoflavonas (dose diária) cápsula Básico NC",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "50 a",
-                "detalhes": "120 mg de isoflavonas (dose diária) comprimido Básico NC",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "3 a",
-                "detalhes": "30 g (dose diária) Básico HA06AC 9001*",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "3 a",
-                "detalhes": "30 g (dose diária) Básico HA06AC 9001*",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "3 a",
-                "detalhes": "30 g (dose diária) pó efervescente Básico HA06AC 9001*",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "60 a",
-                "detalhes": "240 mg de salicina (dose diária) comprimido Básico HN02BA 5008*",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
                 "nome": "salgueiro (Salix alba L.)",
                 "detalhes": "60 a 240 mg de salicina (dose diária) elixir Básico HN02BA 5008*",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "60 a",
-                "detalhes": "240 mg de salicina (dose diária) solução oral Básico HN02BA 5008*",
                 "tags": [
                     "Rename 2024"
                 ]
@@ -2201,13 +1879,6 @@
                 ]
             },
             {
-                "nome": "75 mg + Ivacaftor",
-                "detalhes": "150 mg de 5/9/2023",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
                 "nome": "elexacaftor",
                 "detalhes": "50 mg/",
                 "tags": [
@@ -2217,13 +1888,6 @@
             {
                 "nome": "Tezacaftor",
                 "detalhes": "25 mg/Ivacaftor Sectics/MS n.º 47,",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "37,5 mg + Ivacaftor",
-                "detalhes": "75 mg de 5/9/2023",
                 "tags": [
                     "Rename 2024"
                 ]
@@ -2411,15 +2075,8 @@
                 ]
             },
             {
-                "nome": "estradiol",
+                "nome": "estradiol de estradiol",
                 "detalhes": "5 mg",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "de estradiol",
-                "detalhes": "10 mg/mL acetofenida + enantato de estradiol (150",
                 "tags": [
                     "Rename 2024"
                 ]
@@ -2642,13 +2299,6 @@
                 ]
             },
             {
-                "nome": "300 mg/mL solução mL, sulfato de quinina comprimido",
-                "detalhes": "500 mg e dicloridrato Estratégico",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
                 "nome": "injetável de quinina solução injetável",
                 "detalhes": "300 mg/ mL para tratamento",
                 "tags": [
@@ -2665,13 +2315,6 @@
             {
                 "nome": "fosfato de clindamicina",
                 "detalhes": "300 mg, fosfato de clindamicina solução injetável 150 mg/",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "150 mg/mL solução mL, sulfato de quinina comprimido",
-                "detalhes": "500 mg e dicloridrato Estratégico",
                 "tags": [
                     "Rename 2024"
                 ]
@@ -2698,22 +2341,8 @@
                 ]
             },
             {
-                "nome": "300 mg, fosfato de clindamicina solução injetável",
-                "detalhes": "150 mg/",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "mL, sulfato de quinina comprimido",
+                "nome": "mL, sulfato de quinina comprimido de quinina solução injetável",
                 "detalhes": "500 mg e dicloridrato Estratégico",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "de quinina solução injetável",
-                "detalhes": "300 mg/ mL para tratamento",
                 "tags": [
                     "Rename 2024"
                 ]
@@ -2780,34 +2409,6 @@
                 ]
             },
             {
-                "nome": "24 a",
-                "detalhes": "48 mg de derivados",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "24 a",
-                "detalhes": "48 mg de derivados",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "24 a",
-                "detalhes": "48 mg de derivados",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "24 a",
-                "detalhes": "48 mg de derivados",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
                 "nome": "alcatrão mineral (FN)",
                 "detalhes": "10 mg/g (1%) pomada",
                 "tags": [
@@ -2829,15 +2430,8 @@
                 ]
             },
             {
-                "nome": "benzoilmetronidazol",
+                "nome": "benzoilmetronidazol a",
                 "detalhes": "40 mg/mL suspensão oral",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "a",
-                "detalhes": "1 mEq/mL",
                 "tags": [
                     "Rename 2024"
                 ]
@@ -2866,20 +2460,6 @@
             {
                 "nome": "carbonato de lítio",
                 "detalhes": "300 mg comprimido",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "20 a",
-                "detalhes": "30 mg de derivados",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "20 a",
-                "detalhes": "30 mg de derivados",
                 "tags": [
                     "Rename 2024"
                 ]
@@ -2927,29 +2507,8 @@
                 ]
             },
             {
-                "nome": "equivalente a",
-                "detalhes": "2,56 mEq/mL",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "equivalente a",
-                "detalhes": "3,4 mEq/mL",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "cloreto de sódio",
+                "nome": "cloreto de sódio a",
                 "detalhes": "9 mg/mL (0,9%) solução nasal",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "a",
-                "detalhes": "0,154 mEq/mL",
                 "tags": [
                     "Rename 2024"
                 ]
@@ -3025,13 +2584,6 @@
                 ]
             },
             {
-                "nome": "2% a",
-                "detalhes": "4% solução para uso tópico",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
                 "nome": "dinitrato de isossorbida",
                 "detalhes": "5 mg comprimido sublingual",
                 "tags": [
@@ -3048,34 +2600,6 @@
             {
                 "nome": "epinefrina",
                 "detalhes": "1 mg/mL solução injetável",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "60 a",
-                "detalhes": "90 mg taninos totais",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "60 a",
-                "detalhes": "90 mg taninos totais",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "60 a",
-                "detalhes": "90 mg taninos totais",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "60 a",
-                "detalhes": "90 mg taninos totais",
                 "tags": [
                     "Rename 2024"
                 ]
@@ -3158,36 +2682,8 @@
                 ]
             },
             {
-                "nome": "30 a",
-                "detalhes": "100 mg de",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "30 a",
-                "detalhes": "100 mg de",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "30 a",
-                "detalhes": "100 mg de",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
                 "nome": "glibenclamida",
                 "detalhes": "5 mg comprimido",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "81 mg -",
-                "detalhes": "92 mg supositório retal",
                 "tags": [
                     "Rename 2024"
                 ]
@@ -3200,22 +2696,8 @@
                 ]
             },
             {
-                "nome": "0,5 a",
-                "detalhes": "5 mg de cumarina",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
                 "nome": "guaco (Mikania glomerata",
                 "detalhes": "0,5 a 5 mg de cumarina",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "0,5 a",
-                "detalhes": "5 mg de cumarina",
                 "tags": [
                     "Rename 2024"
                 ]
@@ -3244,13 +2726,6 @@
             {
                 "nome": "hidróxido de alumínio",
                 "detalhes": "300 mg comprimido",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "60 a",
-                "detalhes": "440 mg de mentol e 28",
                 "tags": [
                     "Rename 2024"
                 ]
@@ -3286,20 +2761,6 @@
             {
                 "nome": "insulina humana regular",
                 "detalhes": "100 UI/mL solução injetável",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "50 a",
-                "detalhes": "120 mg de isoflavonas",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "50 a",
-                "detalhes": "120 mg de isoflavonas",
                 "tags": [
                     "Rename 2024"
                 ]
@@ -3424,34 +2885,6 @@
                 ]
             },
             {
-                "nome": "3 a",
-                "detalhes": "30 g (dose diária) pó para dispersão oral",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "3 a",
-                "detalhes": "30 g (dose diária) granulado simples",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "3 a",
-                "detalhes": "30 g (dose diária) pó efervescente",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "100 mg/mL (10%) a",
-                "detalhes": "250 mg/",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
                 "nome": "podofilotoxina",
                 "detalhes": "1,5 mg/g creme",
                 "tags": [
@@ -3468,27 +2901,6 @@
             {
                 "nome": "rifampicina",
                 "detalhes": "300 mg cápsula",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "60 a",
-                "detalhes": "240 mg de salicina (dose",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "60 a",
-                "detalhes": "240 mg de salicina (dose",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "60 a",
-                "detalhes": "240 mg de salicina (dose",
                 "tags": [
                     "Rename 2024"
                 ]
@@ -3566,27 +2978,6 @@
             {
                 "nome": "sulfato de zinco",
                 "detalhes": "10 mg comprimido mastigável",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "Equivalente a",
-                "detalhes": "5 mg/mL de",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "Equivalente a",
-                "detalhes": "25 mg/mL de",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "Equivalente a",
-                "detalhes": "40 mg de ferro",
                 "tags": [
                     "Rename 2024"
                 ]
@@ -3828,14 +3219,7 @@
                 ]
             },
             {
-                "nome": "fator VIII de coagulação",
-                "detalhes": "500 UI pó para solução injetável",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "contendo fator de von",
+                "nome": "fator VIII de coagulação contendo fator de von",
                 "detalhes": "500 UI pó para solução injetável",
                 "tags": [
                     "Rename 2024"
@@ -3912,20 +3296,6 @@
                 ]
             },
             {
-                "nome": "180 -",
-                "detalhes": "200 UI/mL solução injetável",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "125 UI/",
-                "detalhes": "2,5 mL solução injetável",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
                 "nome": "isetionato de pentamidina",
                 "detalhes": "300 mg pó para solução injetável",
                 "tags": [
@@ -3975,13 +3345,6 @@
                 ]
             },
             {
-                "nome": "D",
-                "detalhes": "5 mcg, vitamina E 5 mg,",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
                 "nome": "vitamina C",
                 "detalhes": "30 mg, vitamina B1",
                 "tags": [
@@ -3989,22 +3352,8 @@
                 ]
             },
             {
-                "nome": "0,5 mg, vitamina B2",
-                "detalhes": "0,5 mg,",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
                 "nome": "micronutrientes vitamina B6",
                 "detalhes": "0,5 mg, vitamina pó",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "PP",
-                "detalhes": "6 mg, vitamina B9 150 mcg,",
                 "tags": [
                     "Rename 2024"
                 ]
@@ -4054,13 +3403,6 @@
             {
                 "nome": "oxamniquina",
                 "detalhes": "50 mg/mL suspensão oral",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "100 mg/mL (frasco de",
-                "detalhes": "0,5 mL e",
                 "tags": [
                     "Rename 2024"
                 ]
@@ -4164,13 +3506,6 @@
                 ]
             },
             {
-                "nome": "e",
-                "detalhes": "15 DMN (Dose Mínima",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
                 "nome": "neutralizam, no mínimo,",
                 "detalhes": "5 mg solução injetável",
                 "tags": [
@@ -4187,13 +3522,6 @@
             {
                 "nome": "soro antibotrópico neutralizam, no mínimo,",
                 "detalhes": "5 mg",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "e",
-                "detalhes": "3 mg de veneno de Lachesis",
                 "tags": [
                     "Rename 2024"
                 ]
@@ -4386,13 +3714,6 @@
                 ]
             },
             {
-                "nome": "75 mg comprimido",
-                "detalhes": "2 Protocolo de Síndromes Coronarianas Agudas",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
                 "nome": "cabergolina",
                 "detalhes": "0,5 mg comprimido 1A",
                 "tags": [
@@ -4507,13 +3828,6 @@
             {
                 "nome": "metotrexato",
                 "detalhes": "2,5 mg comprimido 1A",
-                "tags": [
-                    "Rename 2024"
-                ]
-            },
-            {
-                "nome": "2,0 x",
-                "detalhes": "1013 gv/mL 1A",
                 "tags": [
                     "Rename 2024"
                 ]
