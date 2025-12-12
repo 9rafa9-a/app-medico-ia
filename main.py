@@ -121,7 +121,7 @@ def main(page: ft.Page):
         
         btn_pick = ft.ElevatedButton(
             "Selecionar Áudio (WAV/MP3)", 
-            icon=ft.icons.UPLOAD_FILE, 
+            icon=ft.Icons.UPLOAD_FILE, 
             bgcolor="blue", 
             color="white",
             on_click=lambda _: file_picker.pick_files(allow_multiple=False)
