@@ -18,7 +18,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.12'
 
       - name: Install Python Dependencies
         working-directory: mobile
@@ -42,7 +42,7 @@ jobs:
 
       - name: Install Android NDK
         run: |
-          # echo "y" | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "ndk;23.1.7779620"
+          echo "y" | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "ndk;23.1.7779620"
 
       - name: Build APK (Custom Android Entry Point)
         working-directory: mobile
