@@ -40,6 +40,10 @@ jobs:
         run: |
           yes | flutter doctor --android-licenses || true
 
+      - name: Install Android NDK
+        run: |
+          echo "y" | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "ndk;23.1.7779620"
+
       - name: Build APK
         working-directory: mobile
         run: |
