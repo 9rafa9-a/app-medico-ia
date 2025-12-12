@@ -1,0 +1,4 @@
+flet
+google-generativeai
+unidecode
+flet-audio-recorder

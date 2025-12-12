@@ -1,0 +1,1412 @@
+[
+    {
+        "nome": "Abatacepte",
+        "dose": "125 mg",
+        "cids_autorizados": "M050 - Síndrome de Felty M053 - Artrite reumatóide com comprometimento de outros órgãos e sistemas M058 - Outras artrites reumatóides soro-positivas M060 - Artrite reumatóide soro-negativa M068 - Outras artrites reumatóides especificadas",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Abatacepte",
+        "dose": "250 mg",
+        "cids_autorizados": "M050 - Síndrome de Felty M053 - Artrite reumatóide com comprometimento de outros órgãos e sistemas M058 - Outras artrites reumatóides soro-positivas M060 - Artrite reumatóide soro-negativa M068 - Outras artrites reumatóides especificadas M080 - Artrite reumatóide juvenil",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Acitretina",
+        "dose": "10 mg",
+        "cids_autorizados": "L400 - Psoríase vulgar L401 - Psoríase pustulosa generalizada L404 - Psoríase gutata L408 - Outras formas de psoríase L440 - Pitiríase rubra pilar Q800 - Ictiose vulgar Q801 - Ictiose ligada ao cromossomo x Q802 - Ictiose lamelar Q803 - Eritrodermia ictiosiforme bulhosa congênita Q808 - Outras ictioses congênitas Q828 - Outras malformações congênitas especificadas da pele",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Acitretina",
+        "dose": "25 mg",
+        "cids_autorizados": "L400 - Psoríase vulgar L401 - Psoríase pustulosa generalizada L404 - Psoríase gutata L408 - Outras formas de psoríase L440 - Pitiríase rubra pilar Q800 - Ictiose vulgar Q801 - Ictiose ligada ao cromossomo x Q802 - Ictiose lamelar Q803 - Eritrodermia ictiosiforme bulhosa congênita Q808 - Outras ictioses congênitas Q828 - Outras malformações congênitas especificadas da pele",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Adalimumabe",
+        "dose": "40 mg",
+        "cids_autorizados": "M050 - Síndrome de Felty M053 - Artrite reumatóide com comprometimento de outros órgãos e sistemas M058 - Outras artrites reumatóides soro-positivas M060 - Artrite reumatóide soro-negativa M068 - Outras artrites reumatóides especificadas M070 - Artropatia psoriásica interfalangiana distal M073 - Outras artropatias psoriásicas M080 - Artrite reumatóide juvenil M45 - Espondilite ancilosante M468 - Outras espondilopatias inflamatórias especificadas K500 - Doença de crohn do intestino delgado K501 - Doença de crohn do intestino grosso K508 - Outra forma de doença de crohn",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Alfadornase",
+        "dose": "2,5 mg",
+        "cids_autorizados": "E840 - Fibrose cística com manifestações pulmonares E848 - Fibrose cística com outras manifestações",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Alfaepoetina",
+        "dose": "2.000 UI",
+        "cids_autorizados": "N180 - Doença renal em estádio final N188 - Outra insuficiência renal crônica Z948 - Outros órgãos e tecidos transplantados",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Alfaepoetina",
+        "dose": "4.000 UI",
+        "cids_autorizados": "N180 - Doença renal em estádio final N188 - Outra insuficiência renal crônica Z948 - Outros órgãos e tecidos transplantados",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Alfaepoetina",
+        "dose": "1.000 UI",
+        "cids_autorizados": "N180 - Doença renal em estádio final N188 - Outra insuficiência renal crônica Z948 - Outros órgãos e tecidos transplantados",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Alfaepoetina",
+        "dose": "3.000 UI",
+        "cids_autorizados": "N180 - Doença renal em estádio final N188 - Outra insuficiência renal crônica Z948 - Outros órgãos e tecidos transplantados",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Alfaepoetina",
+        "dose": "10.000 UI",
+        "cids_autorizados": "N180 - Doença renal em estádio final N188 - Outra insuficiência renal crônica Z948 - Outros órgãos e tecidos transplantados",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Alfainterferona 2b",
+        "dose": "",
+        "cids_autorizados": "B171 - Hepatite aguda C B180 - Hepatite viral crônica B com agente delta",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Alfainterferona 2b",
+        "dose": "",
+        "cids_autorizados": "B171 - Hepatite aguda C D180 - Hemangioma de qualquer localização",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Alfainterferona 2b",
+        "dose": "",
+        "cids_autorizados": "D180 - Hemangioma de qualquer localização",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Alfapeginterferona 2a",
+        "dose": "180 mcg",
+        "cids_autorizados": "B180 - Hepatite viral crônica B com agente delta B181 - Hepatite crônica viral B sem agente delta B182 - Hepatite viral crônica C",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Alfapeginterferona 2b",
+        "dose": "80 mcg",
+        "cids_autorizados": "B180 - Hepatite viral crônica B com agente delta B181 - Hepatite crônica viral B sem agente delta B182 - Hepatite viral crônica C",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Alfapeginterferona 2b",
+        "dose": "100 mcg",
+        "cids_autorizados": "B180 - Hepatite viral crônica B com agente delta B181 - Hepatite crônica viral B sem agente delta B182 - Hepatite viral crônica C",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Alfapeginterferona 2b",
+        "dose": "120 mcg",
+        "cids_autorizados": "B180 - Hepatite viral crônica B com agente delta B181 - Hepatite crônica viral B sem agente delta B182 - Hepatite viral crônica C",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Alfataliglicerase",
+        "dose": "",
+        "cids_autorizados": "E752 - Outras esfingolipidoses",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Amantadina",
+        "dose": "100 mg",
+        "cids_autorizados": "G20 - Doença de Parkinson",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Ambrisentana",
+        "dose": "5 mg",
+        "cids_autorizados": "I270 - Hipertensão pulmonar primária I272 - Outra hipertensão pulmonar secundária I278 - Outras doenças pulmonares do coração especificadas",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Atorvastatina",
+        "dose": "20 mg",
+        "cids_autorizados": "E780 - Hipercolesterolemia pura E781 - Hipergliceridemia pura E782 - Hiperlipidemia mista E783 - Hiperquilomicronemia E784 - Outras hiperlipidemias",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Atorvastatina",
+        "dose": "",
+        "cids_autorizados": "E785 - Hiperlipidemia não especificada E786 - Deficiências de lipoproteínas E788 - Outros distúrbios do metabolismo de lipoproteínas",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Atorvastatina",
+        "dose": "40 mg",
+        "cids_autorizados": "E780 - Hipercolesterolemia pura E781 - Hipergliceridemia pura E782 - Hiperlipidemia mista E783 - Hiperquilomicronemia E784 - Outras hiperlipidemias E785 - Hiperlipidemia não especificada E786 - Deficiências de lipoproteínas E788 - Outros distúrbios do metabolismo de lipoproteínas",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Azatioprina",
+        "dose": "50 mg",
+        "cids_autorizados": "D610 - Anemia aplástica constitucional D693 - Púrpura trombocitopênica idiopática G35 - Esclerose múltipla G700 - Miastenia gravis H300 - Inflamação coriorretiniana focal H301 - Inflamação corrorretiniana disseminada H302 - Ciclite posterior H308 - Outras inflamações coriorretinianas K500 - Doença de crohn do intestino delgado K501 - Doença de crohn do intestino grosso K508 - Outra forma de doença de crohn K510 - Enterocolite ulcerativa (crônica) K511 - Ileocolite ulcerativa (crônica) K512 - Proctite ulcerativa (crônica) K513 - Retossigmoidite ulcerativa (crônica) K514 - Pseudopolipose do cólon K515 - Proctocolite mucosa K518 - Outras colites ulcerativas K754 - Hepatite autoimune L930 - Lúpus eritematoso discóide L931 - Lúpus eritematoso cutâneo subagudo M051 - Doença reumatóide do pulmão M052 - Vasculite reumatóide M080 - Artrite reumatóide juvenil M321 - Lúpus eritematoso disseminado [sistêmico] com comprometimento de outros órgãos e sistemas M328 - Outras formas de lúpus eritematoso disseminado [sistêmico] M330 - Dermatomiosite juvenil M331 - Outras dermatomiosites M332 - Polimiosite M340 - Esclerose sistêmica progressiva M341 - Síndrome cr(e)st M348 - Outras formas de esclerose sistêmica T861 - Falência ou rejeição de transplante de rim T864 - Falência ou rejeição de transplante de fígado Z940 - Rim transplantado Z941 - Coração transplantado",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Azatioprina",
+        "dose": "",
+        "cids_autorizados": "Z942 - Pulmão transplantado Z943 - Coração e pulmões transplantados Z944 - Fígado transplantado Z948 - Outros órgãos e tecidos transplantados",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Azatioprina",
+        "dose": "22 mcg",
+        "cids_autorizados": "G35 - Esclerose múltipla",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Azatioprina",
+        "dose": "44 mcg",
+        "cids_autorizados": "G35 - Esclerose múltipla",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Azatioprina",
+        "dose": "30 mcg",
+        "cids_autorizados": "G35 - Esclerose múltipla",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Azatioprina",
+        "dose": "300 mcg",
+        "cids_autorizados": "G35 - Esclerose múltipla",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Bezafibrato",
+        "dose": "200 mg",
+        "cids_autorizados": "E780 - Hipercolesterolemia pura E781 - Hipergliceridemia pura E782 - Hiperlipidemia mista E783 - Hiperquilomicronemia E784 - Outras hiperlipidemias E785 - Hiperlipidemia não especificada E786 - Deficiências de lipoproteínas E788 - Outros distúrbios do metabolismo de lipoproteínas",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Bosentana",
+        "dose": "62,5 mg",
+        "cids_autorizados": "I270 - Hipertensão pulmonar primária I272 - Outra hipertensão pulmonar secundária I278 - Outras doenças pulmonares do coração especificadas",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Bosentana",
+        "dose": "125 mg",
+        "cids_autorizados": "I270 - Hipertensão pulmonar primária I272 - Outra hipertensão pulmonar secundária I278 - Outras doenças pulmonares do coração especificadas",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Bromocriptina",
+        "dose": "2,5 mg",
+        "cids_autorizados": "E221 - Hiperprolactinemia G20 - Doença de Parkinson",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Budesonida",
+        "dose": "200 mcg",
+        "cids_autorizados": "J440 - Doença pulmonar obstrutiva crônica com infecção respiratória aguda do trato respiratório inferior J441 - Doença pulmonar obstrutiva crônica com exacerbação aguda não especificada J448 - Outras formas especificadas de doença pulmonar obstrutiva crônica J450 - Asma predominantemente alérgica J451 - Asma não-alérgica J458 - Asma mista",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Cabergolina",
+        "dose": "0,5 mg",
+        "cids_autorizados": "E220 - Acromegalia e gigantismo hipofisário E221 - Hiperprolactinemia",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Calcipotriol",
+        "dose": "50 mcg/g",
+        "cids_autorizados": "L400 - Psoríase vulgar L401 - Psoríase pustulosa generalizada L404 - Psoríase gutata L408 - Outras formas de psoríase",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Calcitonina",
+        "dose": "200 UI/dose",
+        "cids_autorizados": "M800 - Osteoporose pós-menopáusica com fratura patológica M801 - Osteoporose pós-ooforectomia com fratura patológica M802 - Osteoporose de desuso com fratura patológica M803 - Osteoporose por má-absorção pós-cirúrgica com fratura patológica M804 - Osteoporose induzida por drogas com fratura patológica M805 - Osteoporose idiopática com fratura patológica",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Calcitonina",
+        "dose": "",
+        "cids_autorizados": "M808 - Outras osteoporoses com fratura patológica M810 - Osteoporose pós-menopáusica M811 - Osteoporose pós-ooforectomia M812 - Osteoporose de desuso M813 - Osteoporose devida à má-absorção pós-cirúrgica M814 - Osteoporose induzida por drogas M815 - Osteoporose idiopática M816 - Osteoporose localizada [Lequesne] M818 - Outras osteoporoses M820 - Osteoporose na mielomatose múltipla M821 - Osteoporose em distúrbios endócrinos M828 - Osteoporose em outras doenças classificadas em outra parte M880 - Doença de paget do crânio M888 - Doença de paget de outros ossos",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Calcitriol",
+        "dose": "0,25 mcg",
+        "cids_autorizados": "E200 - Hipoparatireoidismo idiopático E201 - Pseudohipoparatireoidismo E208 - Outro hipoparatireoidismo E550 - Raquitismo ativo E559 - Deficiência não especificada de vitamina D E643 - Seqüelas do raquitismo E833 - Distúrbios do metabolismo do fósforo E892 - Hipoparatireoidismo pós-procedimento M800 - Osteoporose pós-menopáusica com fratura patológica M801 - Osteoporose pós-ooforectomia com fratura patológica M802 - Osteoporose de desuso com fratura patológica M803 - Osteoporose por má-absorção pós-cirúrgica com fratura patológica M804 - Osteoporose induzida por drogas com fratura patológica M805 - Osteoporose idiopática com fratura patológica M808 - Outras osteoporoses com fratura patológica M810 - Osteoporose pós-menopáusica M811 - Osteoporose pós-ooforectomia M812 - Osteoporose de desuso M813 - Osteoporose devida à má-absorção pós-cirúrgica M814 - Osteoporose induzida por drogas M815 - Osteoporose idiopática M816 - Osteoporose localizada [Lequesne] M818 - Outras osteoporoses M820 - Osteoporose na mielomatose múltipla M821 - Osteoporose em distúrbios endócrinos M828 - Osteoporose em outras doenças classificadas em outra parte M830 - Osteomalácia puerperal M831 - Osteomalácia senil M832 - Osteomalácia do adulto devida a má-absorção M833 - Osteomalácia do adulto devido à desnutrição M838 - Outra osteomalácia do adulto N180 - Doença renal em estádio final N188 - Outra insuficiência renal crônica",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Calcitriol",
+        "dose": "",
+        "cids_autorizados": "N250 - Osteodistrofia renal N258 - Outros transtornos resultantes de função renal tubular alterada",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Calcitriol",
+        "dose": "1 mcg",
+        "cids_autorizados": "N180 - Doença renal em estádio final N188 - Outra insuficiência renal crônica N250 - Osteodistrofia renal N258 - Outros transtornos resultantes de função renal tubular alterada",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Certolizumabe Pegol",
+        "dose": "200 mg/mL",
+        "cids_autorizados": "M050 - Síndrome de Felty M053 - Artrite reumatóide com comprometimento de outros órgãos e sistemas M058 - Outras artrites reumatóides soro-positivas M060 - Artrite reumatóide soro-negativa M068 - Outras artrites reumatóides especificadas",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Ciclofosfamida",
+        "dose": "50 mg",
+        "cids_autorizados": "D590 - Anemia hemolítica auto-imune induzida por droga D591 - Outras anemias hemolíticas auto-imunes D600 - Aplasia pura adquirida crônica da série vermelha D693 - Púrpura trombocitopênica idiopática J991 - Transtornos respiratórios em outras doenças sistêmicas do tecido conjuntivo classificadas em outra parte L100 - Pênfigo vulgar L102 - Pênfigo foliáceo L103 - Pênfigo brasileiro [fogo selvagem] L108 - Outras formas de pênfigo L109 - Pênfigo, não especificado L930 - Lúpus eritematoso discóide L931 - Lúpus eritematoso cutâneo subagudo L932 – Outras formas de lúpus eritematoso localizado M320 - Lúpus eritematoso disseminado [sistêmico] induzido por drogas M321 - Lúpus eritematoso disseminado [sistêmico] com comprometimento de outros órgãos e sistemas M328 - Outras formas de lúpus eritematoso disseminado [sistêmico] M340 - Esclerose sistêmica progressiva M341 - Síndrome cr(e)st M348 - Outras formas de esclerose sistêmica N040 - Síndrome nefrótica - anormalidade glomerular minor N041 - Síndrome nefrótica - lesões glomerulares focais e segmentares N042 - Síndrome nefrótica - glomerulonefrite membranosa difusa N043 - Síndrome nefrótica - glomerulonefrite proliferativa mesangial difusa N044 - Síndrome nefrótica - glomerulonefrite proliferativa endocapilar difusa N045 - Síndrome nefrótica - glomerulonefrite mesangiocapilar difusa N046 - Síndrome nefrótica - doença de depósito denso N047 - Síndrome nefrótica - glomerulonefrite difusa em crescente N048 - Síndrome nefrótica – outras N085 - Transtornos glomerulares em doenças sistêmicas do tecido conjuntivo N164 - Transtornos renais túbulo-intersticiais em doenças do tecido conjuntivo",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Ciclosporina",
+        "dose": "25 mg",
+        "cids_autorizados": "D590 - Anemia hemolítica auto-imune induzida por droga D591 - Outras anemias hemolíticas auto-imunes D600 - Aplasia pura adquirida crônica da série vermelha D610 - Anemia aplástica constitucional D611 - Anemia aplástica induzida por drogas D612 - Anemia aplástica devida a outros agentes externos",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Ciclosporina",
+        "dose": "",
+        "cids_autorizados": "D613 - Anemia aplástica idiopática D618 - Outras anemias aplásticas especificadas G700 - Miastenia gravis H300 - Inflamação coriorretiniana focal H301 - Inflamação corrorretiniana disseminada H302 - Ciclite posterior H308 - Outras inflamações coriorretinianas K510 - Enterocolite ulcerativa (crônica) K511 - Ileocolite ulcerativa (crônica) K512 - Proctite ulcerativa (crônica) K513 - Retossigmoidite ulcerativa (crônica) K514 - Pseudopolipose do cólon K515 - Proctocolite mucosa K518 - Outras colites ulcerativas L100 - Pênfigo vulgar L102 - Pênfigo foliáceo L103 - Pênfigo brasileiro [fogo selvagem L108 - Outras formas de pênfigo L109 - Pênfigo, não especificado L208 - Outras dermatites atópicas L400 - Psoríase vulgar L401 - Psoríase pustulosa generalizada L404 - Psoríase gutata L408 - Outras formas de psoríase L930 - Lúpus eritematoso discóide L931 - Lúpus eritematoso cutâneo subagudo M051 - Doença reumatóide do pulmão M052 - Vasculite reumatóide M070 - Artropatia psoriásica interfalangiana distal M073 - Outras artropatias psoriásicas M080 - Artrite reumatóide juvenil M321 - Lúpus eritematoso disseminado [sistêmico] com comprometimento de outros órgãos e sistemas M328 - Outras formas de lúpus eritematoso disseminado [sistêmico] M330 - Dermatomiosite juvenil M331 - Outras dermatomiosites M332 - Polimiosite N040 - Síndrome nefrótica - anormalidade glomerular minor N041 - Síndrome nefrótica - lesões glomerulares focais e segmentares N042 - Síndrome nefrótica - glomerulonefrite membranosa difusa N043 - Síndrome nefrótica - glomerulonefrite proliferativa mesangial difusa N044 - Síndrome nefrótica - glomerulonefrite proliferativa endocapilar difusa N045 - Síndrome nefrótica - glomerulonefrite mesangiocapilar difusa N046 - Síndrome nefrótica - doença de depósito denso N047 - Síndrome nefrótica - glomerulonefrite difusa em crescente N048 - Síndrome nefrótica - outras T861 - Falência ou rejeição de transplante de rim T864 - Falência ou rejeição de transplante de fígado",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Ciclosporina",
+        "dose": "",
+        "cids_autorizados": "Z940 - Rim transplantado Z941 - Coração transplantado Z942 - Pulmão transplantado Z943 - Coração e pulmões transplantados Z944 - Fígado transplantado Z948 - Outros órgãos e tecidos transplantados",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Ciclosporina",
+        "dose": "50 mg",
+        "cids_autorizados": "D590 - Anemia hemolítica auto-imune induzida por droga D591 - Outras anemias hemolíticas auto-imunes D600 - Aplasia pura adquirida crônica da série vermelha D610 - Anemia aplástica constitucional D611 - Anemia aplástica induzida por drogas D612 - Anemia aplástica devida a outros agentes externos D613 - Anemia aplástica idiopática D618 - Outras anemias aplásticas especificadas G700 - Miastenia gravis H300 - Inflamação coriorretiniana focal H301 - Inflamação corrorretiniana disseminada H302 - Ciclite posterior H308 - Outras inflamações coriorretinianas K510 - Enterocolite ulcerativa (crônica) K511 - Ileocolite ulcerativa (crônica) K512 - Proctite ulcerativa (crônica) K513 - Retossigmoidite ulcerativa (crônica) K514 - Pseudopolipose do cólon K515 - Proctocolite mucosa K518 - Outras colites ulcerativas L100 - Pênfigo vulgar L102 - Pênfigo foliáceo L103 - Pênfigo brasileiro [fogo selvagem L108 - Outras formas de pênfigo L109 - Pênfigo, não especificado L208 - Outras dermatites atópicas L400 - Psoríase vulgar L401 - Psoríase pustulosa generalizada L404 - Psoríase gutata L408 - Outras formas de psoríase L930 - Lúpus eritematoso discóide L931 - Lúpus eritematoso cutâneo subagudo M051 - Doença reumatóide do pulmão M052 - Vasculite reumatóide M070 - Artropatia psoriásica interfalangiana distal M073 - Outras artropatias psoriásicas M080 - Artrite reumatóide juvenil M321 - Lúpus eritematoso disseminado [sistêmico] com comprometimento de outros órgãos e sistemas M328 - Outras formas de lúpus eritematoso disseminado [sistêmico] M330 - Dermatomiosite juvenil M331 - Outras dermatomiosites",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Ciclosporina",
+        "dose": "",
+        "cids_autorizados": "M332 - Polimiosite N040 - Síndrome nefrótica - anormalidade glomerular minor N041 - Síndrome nefrótica - lesões glomerulares focais e segmentares N042 - Síndrome nefrótica - glomerulonefrite membranosa difusa N043 - Síndrome nefrótica - glomerulonefrite proliferativa mesangial difusa N044 - Síndrome nefrótica - glomerulonefrite proliferativa endocapilar difusa N045 - Síndrome nefrótica - glomerulonefrite mesangiocapilar difusa N046 - Síndrome nefrótica - doença de depósito denso N047 - Síndrome nefrótica - glomerulonefrite difusa em crescente N048 - Síndrome nefrótica - outras T861 - Falência ou rejeição de transplante de rim T864 - Falência ou rejeição de transplante de fígado Z940 - Rim transplantado Z941 - Coração transplantado Z942 - Pulmão transplantado Z943 - Coração e pulmões transplantados Z944 - Fígado transplantado Z948 - Outros órgãos e tecidos transplantados",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Ciclosporina",
+        "dose": "100mg",
+        "cids_autorizados": "D590 - Anemia hemolítica auto-imune induzida por droga D591 - Outras anemias hemolíticas auto-imunes D600 - Aplasia pura adquirida crônica da série vermelha D610 - Anemia aplástica constitucional D611 - Anemia aplástica induzida por drogas D612 - Anemia aplástica devida a outros agentes externos D613 - Anemia aplástica idiopática D618 - Outras anemias aplásticas especificadas G700 - Miastenia gravis H300 - Inflamação coriorretiniana focal H301 - Inflamação corrorretiniana disseminada H302 - Ciclite posterior H308 - Outras inflamações coriorretinianas K510 - Enterocolite ulcerativa (crônica) K511 - Ileocolite ulcerativa (crônica) K512 - Proctite ulcerativa (crônica) K513 - Retossigmoidite ulcerativa (crônica) K514 - Pseudopolipose do cólon K515 - Proctocolite mucosa K518 - Outras colites ulcerativas L100 - Pênfigo vulgar L102 - Pênfigo foliáceo L103 – Pênfigo brasileiro [fogo selvagem] L108 - Outras formas de pênfigo L109 - Pênfigo, não especificado L208 - Outras dermatites atópicas L400 - Psoríase vulgar L401 - Psoríase pustulosa generalizada L404 - Psoríase gutata",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Ciclosporina",
+        "dose": "",
+        "cids_autorizados": "L408 - Outras formas de psoríase L930 - Lúpus eritematoso discóide L931 - Lúpus eritematoso cutâneo subagudo M051 - Doença reumatóide do pulmão M052 - Vasculite reumatóide M070 - Artropatia psoriásica interfalangiana distal M073 - Outras artropatias psoriásicas M080 - Artrite reumatóide juvenil M321 - Lúpus eritematoso disseminado [sistêmico] com comprometimento de outros órgãos e sistemas M328 - Outras formas de lúpus eritematoso disseminado [sistêmico] M330 - Dermatomiosite juvenil M331 - Outras dermatomiosites M332 - Polimiosite N040 - Síndrome nefrótica - anormalidade glomerular minor N041 - Síndrome nefrótica - lesões glomerulares focais e segmentares N042 - Síndrome nefrótica - glomerulonefrite membranosa difusa N043 - Síndrome nefrótica - glomerulonefrite proliferativa mesangial difusa N044 - Síndrome nefrótica - glomerulonefrite proliferativa endocapilar difusa N045 - Síndrome nefrótica - glomerulonefrite mesangiocapilar difusa N046 - Síndrome nefrótica - doença de depósito denso N047 - Síndrome nefrótica - glomerulonefrite difusa em crescente N048 - Síndrome nefrótica - outras T861 - Falência ou rejeição de transplante de rim T864 - Falência ou rejeição de transplante de fígado Z940 - Rim transplantado Z941 - Coração transplantado Z942 - Pulmão transplantado Z943 - Coração e pulmões transplantados Z944 - Fígado transplantado Z948 - Outros órgãos e tecidos transplantados L100 - Pênfigo vulgar L108 - Outras formas de pênfigo L109 - Pênfigo, não especificado L208 - Outras dermatites atópicas L102 - Pênfigo foliáceo L103 - Pênfigo brasileiro [fogo selvagem]",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Ciclosporina",
+        "dose": "100mg/mL",
+        "cids_autorizados": "D590 - Anemia hemolítica auto-imune induzida por droga D591 - Outras anemias hemolíticas auto-imunes D600 - Aplasia pura adquirida crônica da série vermelha D610 - Anemia aplástica constitucional D611 - Anemia aplástica induzida por drogas D612 - Anemia aplástica devida a outros agentes externos D613 - Anemia aplástica idiopática D618 - Outras anemias aplásticas especificadas G700 - Miastenia gravis H300 - Inflamação coriorretiniana focal H301 - Inflamação corrorretiniana disseminada",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Ciclosporina",
+        "dose": "",
+        "cids_autorizados": "H302 - Ciclite posterior H308 - Outras inflamações coriorretinianas K510 - Enterocolite ulcerativa (crônica) K511 - Ileocolite ulcerativa (crônica) K512 - Proctite ulcerativa (crônica) K513 - Retossigmoidite ulcerativa (crônica) K514 - Pseudopolipose do cólon K515 - Proctocolite mucosa K518 - Outras colites ulcerativas L100 - Pênfigo vulgar L102 - Pênfigo foliáceo L103 – Pênfigo brasileiro [fogo selvagem] L108 - Outras formas de pênfigo L109 - Pênfigo, não especificado L208 - Outras dermatites atópicas L400 - Psoríase vulgar L401 - Psoríase pustulosa generalizada L404 - Psoríase gutata L408 - Outras formas de psoríase L930 - Lúpus eritematoso discóide L931 - Lúpus eritematoso cutâneo subagudo M051 - Doença reumatóide do pulmão M052 - Vasculite reumatóide M070 - Artropatia psoriásica interfalangiana distal M073 - Outras artropatias psoriásicas M080 - Artrite reumatóide juvenil M321 - Lúpus eritematoso disseminado [sistêmico] com comprometimento de outros órgãos e sistemas M328 - Outras formas de lúpus eritematoso disseminado [sistêmico] M330 - Dermatomiosite juvenil M331 - Outras dermatomiosites M332 - Polimiosite N040 - Síndrome nefrótica - anormalidade glomerular minor N041 - Síndrome nefrótica - lesões glomerulares focais e segmentares N042 - Síndrome nefrótica - glomerulonefrite membranosa difusa N043 - Síndrome nefrótica - glomerulonefrite proliferativa mesangial difusa N044 - Síndrome nefrótica - glomerulonefrite proliferativa endocapilar difusa N045 - Síndrome nefrótica - glomerulonefrite mesangiocapilar difusa N046 - Síndrome nefrótica - doença de depósito denso N047 - Síndrome nefrótica - glomerulonefrite difusa em crescente N048 - Síndrome nefrótica - outras T861 - Falência ou rejeição de transplante de rim T864 - Falência ou rejeição de transplante de fígado Z940 - Rim transplantado Z941 - Coração transplantado Z942 - Pulmão transplantado Z943 - Coração e pulmões transplantados Z944 - Fígado transplantado",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Ciclosporina",
+        "dose": "",
+        "cids_autorizados": "Z948 - Outros órgãos e tecidos transplantados L100 - Pênfigo vulgar L108 - Outras formas de pênfigo L109 - Pênfigo, não especificado L208 - Outras dermatites atópicas L102 - Pênfigo foliáceo L103 - Pênfigo brasileiro [fogo selvagem]",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Ciprofibrato",
+        "dose": "100 mg",
+        "cids_autorizados": "E780 - Hipercolesterolemia pura E781 - Hipergliceridemia pura E782 - Hiperlipidemia mista E783 - Hiperquilomicronemia E784 - Outras hiperlipidemias E785 - Hiperlipidemia não especificada E786 - Deficiências de lipoproteínas E788 - Outros distúrbios do metabolismo de lipoproteínas",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Ciproterona",
+        "dose": "50 mg",
+        "cids_autorizados": "E228 - Outras hiperfunções da hipófise E250 - Transtornos adrenogenitais congênitos associados à deficiência enzimática E280 - Excesso de estrógeno E282 - Síndrome do ovário policístico L680 - Hirsutismo",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Clobazam",
+        "dose": "10 mg",
+        "cids_autorizados": "G400 - Epilepsia e síndr. epilépt. idiop. def. por sua local. (focal - parcial)c/ crises de iníc. focal G401 - Epilepsia e síndr. epilépt. sintom. def. por sua local. (focal - parcial) c/ crises parciais simples G402 - Epilepsia e síndr. epilépt. sintom. def. por sua local. (focal - parcial) c/ crises parc. complexas G403 - Epilepsia e síndrome epiléptica generalizadas idiopáticas G404 - Outras epilepsias e síndromes epilépticas generalizadas G405 - Síndromes epilépticas especiais G406 - Crise de grande mal, não especificada (com ou sem pequeno mal) G407 - Pequeno mal não especificado, sem crises de grande mal G408 - Outras epilepsias",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Clobetasol",
+        "dose": "0,5 mg/g",
+        "cids_autorizados": "L400 - Psoríase vulgar L401 - Psoríase pustulosa generalizada L404 - Psoríase gutata L408 - Outras formas de psoríase",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Clobetasol",
+        "dose": "0,5 mg/g",
+        "cids_autorizados": "L400 - Psoríase vulgar L401 - Psoríase pustulosa generalizada L404 - Psoríase gutata L408 - Outras formas de psoríase",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Clopidogrel",
+        "dose": "75 mg",
+        "cids_autorizados": "I200 - Angina instável I201 - Angina pectoris com espasmo documentado I210 - Infarto agudo transmural da parede anterior do miocárdio I211 - Infarto agudo transmural da parede inferior do miocárdio I212 - Infarto agudo transmural do miocárdio de outras localizações I213 - Infarto agudo transmural do miocárdio, de localização não especificada I214 - Infarto agudo subendocárdico do miocárdio I219 - Infarto agudo do miocárdio não especificado I220 - Infarto do miocárdio recorrente da parede anterior I221 - Infarto do miocárdio recorrente da parede inferior",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Clopidogrel",
+        "dose": "",
+        "cids_autorizados": "I228 - Infarto do miocárdio recorrente de outras localizações I229 - Infarto do miocárdio recorrente de localização não especificada I230 - Hemopericárdio como complicação atual subseqüente ao infarto agudo do miocárdio I231 - Comunicação interatrial como complicação atual subseqüente ao infarto agudo do miocárdio I232 - Comunicação interventricular como complicação atual subseqüente ao infarto agudo do miocárdio I233 - Ruptura parede coração sem ocorr. hemopericárdio como complic. atual subseq. infarto agudo miocárdio I234 - Ruptura de cordoalhas tendíneas como complicação atual subseqüente ao infarto agudo do miocárdio I235 - Ruptura de músculos papilares como complicação atual subseqüente ao infarto agudo do miocárdio I236 - Trombose de átrio, aurícula e ventrículo como complicação atual subseq. infarto agudo do miocárdio I238 - Outras complicações atuais subseqüentes ao infarto agudo do miocárdio I240 - Trombose coronária que não resulta em infarto do miocárdio I241 - Síndrome de Dressler I248 - Outras formas de doença isquêmica aguda do coração I249 - Doença isquêmica aguda do coração não especificada I260 - Embolia pulmonar com menção de cor pulmonale agudo I269 - Embolia pulmonar sem menção de cor pulmonale agudo I630 - Infarto cerebral devido a trombose de artérias pré-cerebrais I631 - Infarto cerebral devido a embolia de artérias pré-cerebrais I632- Infarto cerebral devido a oclusão ou estenose não especificadas de artérias pré-cerebrais I633 - Infarto cerebral devido a trombose de artérias cerebrais I634 - Infarto cerebral devido a embolia de artérias cerebrais I635 - Infarto cerebral devido a oclusão ou estenose não especificadas de artérias cerebrais I636 – Infarto cerebral devido a trombose venosa cerebral não-piogênica I638 – Outros infartos cerebrais I639 - Infarto cerebral não especificado I693 – Seqüelas de infarto cerebral I694 - Seqüelas de acidente vascular cerebral não especificado como hemorrágico ou isquêmico I740 - Embolia e trombose da aorta abdominal I742 - Embolia e trombose de artérias dos membros superiores I743 - Embolia e trombose de artérias dos membros inferiores I744 - Embolia e trombose de artérias dos membros não especificadas I745 - Embolia e trombose da artéria ilíaca I741 - Embolia e trombose de outras porções da aorta e das não especificadas I748 - Embolia e trombose de outras artérias I749 - Embolia e trombose de artéria não especificada I828 - E Tromboflebite migratória mbolia e trombose de outras veias especificadas I820 - Síndrome de Budd-Chiari I822 - Embolia e trombose de veia cava I821 - Tromboflebite migratória I823 - Embolia e trombose de veia renal",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Cloroquina",
+        "dose": "150 mg",
+        "cids_autorizados": "J991 - Transtornos respiratórios em outras doenças sistêmicas do tecido conjuntivo classificadas em outra parte L930 - Lúpus eritematoso discóide L931 - Lúpus eritematoso cutâneo subagudo L932 - Outras formas de lúpus eritematoso localizado M050 - Síndrome de Felty M053 - Artrite reumatóide com comprometimento de outros órgãos e sistemas M058 - Outras artrites reumatóides soro-positivas M060 - Artrite reumatóide soro-negativa M068 - Outras artrites reumatóides especificadas M080 - Artrite reumatóide juvenil M320 - Lúpus eritematoso disseminado [sistêmico] induzido por drogas M321 - Lúpus eritematoso disseminado [sistêmico] com comprometimento de outros órgãos e sistemas M328 - Outras formas de lúpus eritematoso disseminado [sistêmico] N085 - Transtornos glomerulares em doenças sistêmicas do tecido conjuntivo N164 – Transtornos renais túbulo-intersticiais em doenças do tecido conjuntivo",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Clozapina",
+        "dose": "25 mg",
+        "cids_autorizados": "F200 - Esquizofrenia paranóide F201 - Esquizofrenia hebefrênica F202 - Esquizofrenia catatônica F203 - Esquizofrenia indiferenciada F204 - Depressão pós-esquizofrênica F205 - Esquizofrenia residual F206 - Esquizofrenia simples F208 - Outras esquizofrenias F250 - Transtorno esquizoafetivo do tipo maníaco F251 - Transtorno esquizoafetivo do tipo depressivo F252 - Transtorno esquizoafetivo do tipo misto F311 - Transtorno afetivo bipolar, episódio atual maníaco sem sintomas psicóticos F312 - Transtorno afetivo bipolar, episódio atual maníaco com sintomas psicóticos F313 - Transtorno afetivo bipolar, episódio atual depressivo leve ou moderado F314 - Transtorno afetivo bipolar, episódio atual depressivo grave sem sintomas psicóticos F315 - Transtorno afetivo bipolar, episódio atual depressivo grave com sintomas psicóticos F316 - Transtorno afetivo bipolar, episódio atual misto F317 - Transtorno afetivo bipolar, atualmente em remissão",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Clozapina",
+        "dose": "100 mg",
+        "cids_autorizados": "F200 - Esquizofrenia paranóide F201 - Esquizofrenia hebefrênica F202 - Esquizofrenia catatônica F203 - Esquizofrenia indiferenciada F204 - Depressão pós-esquizofrênica F205 - Esquizofrenia residual F206 - Esquizofrenia simples F208 - Outras esquizofrenias F250 - Transtorno esquizoafetivo do tipo maníaco F251 - Transtorno esquizoafetivo do tipo depressivo F252 - Transtorno esquizoafetivo do tipo misto F311 - Transtorno afetivo bipolar, episódio atual maníaco sem sintomas psicóticos F312 - Transtorno afetivo bipolar, episódio atual maníaco com sintomas psicóticos F313 - Transtorno afetivo bipolar, episódio atual depressivo leve ou moderado",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Clozapina",
+        "dose": "",
+        "cids_autorizados": "F314 - Transtorno afetivo bipolar, episódio atual depressivo grave sem sintomas psicóticos F315 - Transtorno afetivo bipolar, episódio atual depressivo grave com sintomas psicóticos F316 - Transtorno afetivo bipolar, episódio atual misto F317 - Transtorno afetivo bipolar, atualmente em remissão",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Cinacalcete",
+        "dose": "30 mg",
+        "cids_autorizados": "E833 – Distúrbios do metabolismo do fósforo N180 – Doença renal em estádio final N250 - Osteodistrofia renal",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Cinacalcete",
+        "dose": "60 mg",
+        "cids_autorizados": "E833 – Distúrbios do metabolismo do fósforo N180 – Doença renal em estádio final N250 - Osteodistrofia renal",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Codeína",
+        "dose": "30 mg",
+        "cids_autorizados": "R521 - Dor crônica intratável R522 - Outra dor crônica",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Daclatasvir",
+        "dose": "30 mg",
+        "cids_autorizados": "B182 - Hepatite viral crônica C",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Daclatasvir",
+        "dose": "60 mg",
+        "cids_autorizados": "B182 - Hepatite viral crônica C",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Danazol",
+        "dose": "100 mg",
+        "cids_autorizados": "D693 - Púrpura trombocitopênica idiopática D841 - Defeitos no sistema complemento L930 - Lúpus eritematoso discóide L931 - Lúpus eritematoso cutâneo subagudo M321 - Lúpus eritematoso disseminado [sistêmico] com comprometimento de outros órgãos e sistemas M328 - Outras formas de lúpus eritematoso disseminado [sistêmico] N800 - Endometriose do útero N801 - Endometriose do ovário N802 - Endometriose da trompa de falópio N803 - Endometriose do peritônio pélvico N804 - Endometriose do septo retovaginal e da vagina N805 - Endometriose do intestino N808 - Outra endometriose",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Deferasirox",
+        "dose": "250 mg",
+        "cids_autorizados": "E831 - Doença do metabolismo do ferro T454 - Intoxicação por ferro e seus compostos",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Deferasirox",
+        "dose": "500 mg",
+        "cids_autorizados": "E831 - Doença do metabolismo do ferro T454 - Intoxicação por ferro e seus compostos",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Deferiprona",
+        "dose": "500 mg",
+        "cids_autorizados": "E831 - Doença do metabolismo do ferro T454 - Intoxicação por ferro e seus compostos",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Desferroxamina",
+        "dose": "500 mg",
+        "cids_autorizados": "E831 - Doença do metabolismo do ferro N250 - Osteodistrofia renal T454 - Intoxicação por ferro e seus compostos",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Desmopressina",
+        "dose": "0,1 mg/mL",
+        "cids_autorizados": "E232 - Diabetes insípido",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Donepezila",
+        "dose": "5 mg",
+        "cids_autorizados": "G300 - Doença de alzheimer de início precoce",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Donepezila",
+        "dose": "",
+        "cids_autorizados": "G301 - Doença de alzheimer de início tardio G308 - Outras formas de doença de Alzheimer",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Donepezila",
+        "dose": "10 mg",
+        "cids_autorizados": "G300 - Doença de alzheimer de início precoce G301 - Doença de alzheimer de início tardio G308 - Outras formas de doença de Alzheimer",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Entacapona",
+        "dose": "200 mg",
+        "cids_autorizados": "G20 - Doença de Parkinson",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Entecavir",
+        "dose": "0,5 mg",
+        "cids_autorizados": "B180 - Hepatite crônica viral B com agente delta B181 - Hepatite crônica viral B sem agente delta",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Etanercepte",
+        "dose": "25 mg",
+        "cids_autorizados": "M050 - Síndrome de Felty M053 - Artrite reumatóide com comprometimento de outros órgãos e sistemas M058 - Outras artrites reumatóides soro-positivas M060 - Artrite reumatóide soro-negativa M068 - Outras artrites reumatóides especificadas M070 - Artropatia psoriásica interfalangiana distal M073 - Outras artropatias psoriásicas M080 - Artrite reumatóide juvenil M45 - Espondilite ancilosante M468 - Outras espondilopatias inflamatórias especificadas",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Etanercepte",
+        "dose": "50 mg",
+        "cids_autorizados": "M050 - Síndrome de Felty M053 - Artrite reumatóide com comprometimento de outros órgãos e sistemas M058 - Outras artrites reumatóides soro-positivas M060 - Artrite reumatóide soro-negativa M068 - Outras artrites reumatóides especificadas M070 - Artropatia psoriásica interfalangiana distal M073 - Outras artropatias psoriásicas M080 - Artrite reumatóide juvenil M45 - Espondilite ancilosante M468 - Outras espondilopatias inflamatórias especificadas",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Etossuximida",
+        "dose": "50mg/mL",
+        "cids_autorizados": "G400 - Epilepsia e síndr. epilépt. idiop. def. por sua local. (focal - parcial)c/ crises de iníc. focal G401 - Epilepsia e síndr. epilépt. sintom. def. por sua local. (focal - parcial) c/ crises parciais simples G402 - Epilepsia e síndr. epilépt. sintom. def. por sua local. (focal - parcial) c/ crises parc. complexas G403 - Epilepsia e síndrome epiléptica generalizadas idiopáticas G404 - Outras epilepsias e síndromes epilépticas generalizadas G405 - Síndromes epilépticas especiais G406 - Crise de grande mal, não especificada (com ou sem pequeno mal) G407 - Pequeno mal não especificado, sem crises de grande mal G408 - Outras epilepsias",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Everolimo",
+        "dose": "0,5 mg",
+        "cids_autorizados": "T861 - Falência ou rejeição de transplante de rim T864 - Falência ou rejeição de transplante de fígado Z940 - Rim transplantado Z944 – Fígado transplantado",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Everolimo",
+        "dose": "0,75 mg",
+        "cids_autorizados": "T861 - Falência ou rejeição de transplante de rim T864 - Falência ou rejeição de transplante de fígado Z940 - Rim transplantado Z944 – Fígado transplantado",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Everolimo",
+        "dose": "1 mg",
+        "cids_autorizados": "T861 - Falência ou rejeição de transplante de rim T864 - Falência ou rejeição de transplante de fígado Z940 - Rim transplantado Z944 – Fígado transplantado",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Fenofibrato",
+        "dose": "200 mg",
+        "cids_autorizados": "E780 - Hipercolesterolemia pura E781 - Hipergliceridemia pura E782 - Hiperlipidemia mista E783 - Hiperquilomicronemia E784 - Outras hiperlipidemias E785 - Hiperlipidemia não especificada E786 - Deficiências de lipoproteínas E788 - Outros distúrbios do metabolismo de lipoproteínas",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Fenoterol",
+        "dose": "100 mcg",
+        "cids_autorizados": "J440 - Doença pulmonar obstrutiva crônica com infecção respiratória aguda do trato respiratório inferior J441 - Doença pulmonar obstrutiva crônica com exacerbação aguda não especificada J448 - Outras formas especificadas de doença pulmonar obstrutiva crônica J450 - Asma predominantemente alérgica J451 - Asma não-alérgica J458 - Asma mista",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Filgrastim",
+        "dose": "300 mcg",
+        "cids_autorizados": "B200 - Doença pelo HIV resultando em infecções micobacterianas B201 - Doença pelo HIV resultando em outras infecções bacterianas B202 - Doença pelo HIV resultando em doença citomegálica B203 - Doença pelo HIV resultando em outras infecções virais B204 - Doença pelo HIV resultando em candidíase B205 - Doença pelo HIV resultando em outras micoses B206 - Doença pelo HIV resultando em pneumonia por Pneumocystis jirovecii B207 - Doença pelo HIV resultando em infecções múltiplas B208 - Doença pelo HIV resultando em outras doenças infecciosas e parasitárias B209 - Doença pelo HIV resultando em doença infecciosa ou parasitária não especificada B220 - Doença pelo HIV resultando em encefalopatia B221 - Doença pelo HIV resultando em pneumonite intersticial linfática B222 - Doença pelo HIV resultando em síndrome de emaciação B227 - Doença pelo HIV resultando em doenças múltiplas classificadas em outra parte B230 - Síndrome de infecção aguda pelo hiv B231 - Doença pelo HIV resultando em linfadenopatias generalizadas (persistentes) B232 - Doença pelo HIV resultando em anomalias hematológicas e imunológicas não classificada em out. parte B238 - Doença pelo HIV resultando em outra afecções especificadas B24 - Doença pelo vírus da imunodeficiência humana [HIV] não especificada D460 - Anemia refratária sem sideroblastos D461 - Anemia refratária com sideroblastos D467 - Outras síndromes mielodisplásicas D610 - Anemia aplástica constitucional D611 - Anemia aplástica induzida por drogas D612 - Anemia aplástica devida a outros agentes externos D613 - Anemia aplástica idiopática D618 - Outras anemias aplásticas especificadas D70 - Agranulocitose Z948 - Outros órgãos e tecidos transplantados",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Fingolimode",
+        "dose": "0,5 mg",
+        "cids_autorizados": "G35 – Esclerose Múltipla",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Fludrocortisona",
+        "dose": "0,1 mg",
+        "cids_autorizados": "E250 - Transtornos adrenogenitais congênitos associados à deficiência enzimática E271 - Insuficiência adrenocortical primária E274 - Outras insuficiências adrenocorticais e as não especificadas",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Formoterol",
+        "dose": "12 mcg",
+        "cids_autorizados": "J440 - Doença pulmonar obstrutiva crônica com infecção respiratória aguda do trato respiratório inferior J441 - Doença pulmonar obstrutiva crônica com exacerbação aguda não especificada J448 - Outras formas especificadas de doença pulmonar obstrutiva crônica J450 - Asma predominantemente alérgica J451 - Asma não-alérgica J458 - Asma mista",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Formoterol + Budesonida",
+        "dose": "6 mcg + 200 mcg",
+        "cids_autorizados": "J440 - Doença pulmonar obstrutiva crônica com infecção respiratória aguda do trato respiratório inferior J441 - Doença pulmonar obstrutiva crônica com exacerbação aguda não especificada J448 - Outras formas especificadas de doença pulmonar obstrutiva crônica J450 - Asma predominantemente alérgica J451 - Asma não-alérgica J458 - Asma mista",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Formoterol + Budesonida",
+        "dose": "12 mcg + 400 mcg",
+        "cids_autorizados": "J440 - Doença pulmonar obstrutiva crônica com infecção respiratória aguda do trato respiratório inferior J441 - Doença pulmonar obstrutiva crônica com exacerbação aguda não especificada J448 - Outras formas especificadas de doença pulmonar obstrutiva crônica J450 - Asma predominantemente alérgica J451 - Asma não-alérgica J458 - Asma mista",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Gabapentina",
+        "dose": "300 mg",
+        "cids_autorizados": "G400 - Epilepsia e síndr. epilépt. idiop. def. por sua local. (focal - parcial)c/ crises de iníc. focal G401 - Epilepsia e síndr. epilépt. sintom. def. por sua local. (focal - parcial) c/ crises parciais simples G402 - Epilepsia e síndr. epilépt. sintom. def. por sua local. (focal - parcial) c/ crises parc. complexas G403 - Epilepsia e síndrome epiléptica generalizadas idiopáticas G404 - Outras epilepsias e síndromes epilépticas generalizadas G405 - Síndromes epilépticas especiais G406 - Crise de grande mal, não especificada (com ou sem pequeno mal) G407 - Pequeno mal não especificado, sem crises de grande mal G408 - Outras epilepsias R521 - Dor crônica intratável R522 - Outra dor crônica",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Gabapentina",
+        "dose": "400 mg",
+        "cids_autorizados": "G400 - Epilepsia e síndr. epilépt. idiop. def. por sua local. (focal - parcial)c/ crises de iníc. focal G401 - Epilepsia e síndr. epilépt. sintom. def. por sua local. (focal - parcial) c/ crises parciais simples G402 - Epilepsia e síndr. epilépt. sintom. def. por sua local. (focal - parcial) c/ crises parc. complexas G403 - Epilepsia e síndrome epiléptica generalizadas idiopáticas G404 - Outras epilepsias e síndromes epilépticas generalizadas G405 - Síndromes epilépticas especiais G406 - Crise de grande mal, não especificada (com ou sem pequeno mal) G407 - Pequeno mal não especificado, sem crises de grande mal G408 - Outras epilepsias",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Galantamina",
+        "dose": "8 mg",
+        "cids_autorizados": "G300 - Doença de alzheimer de início precoce G301 - Doença de alzheimer de início tardio G308 - Outras formas de doença de Alzheimer",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Galantamina",
+        "dose": "16 mg",
+        "cids_autorizados": "G300 - Doença de alzheimer de início precoce G301 - Doença de alzheimer de início tardio G308 - Outras formas de doença de Alzheimer",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Galantamina",
+        "dose": "24 mg",
+        "cids_autorizados": "G300 - Doença de alzheimer de início precoce G301 - Doença de alzheimer de início tardio G308 - Outras formas de doença de Alzheimer",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Glatiramer",
+        "dose": "20 mg",
+        "cids_autorizados": "G35 - Esclerose múltipla",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Golimumabe",
+        "dose": "50 mg",
+        "cids_autorizados": "M050 - Síndrome de Felty M053 - Artrite reumatóide com comprometimento de outros órgãos e sistemas M058 - Outras artrites reumatóides soro-positivas M060 - Artrite reumatóide soro-negativa M068 - Outras artrites reumatóides especificadas",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Gosserrelina",
+        "dose": "3,6 mg",
+        "cids_autorizados": "D250 - Leiomioma submucoso do útero D251 - Leiomioma intramural do útero D252 - Leiomioma subseroso do útero E228 - Outras hiperfunções da hipófise E230 - Hipopituitarismo E343 - Nanismo, não classificado em outra parte N800 - Endometriose do útero N801 - Endometriose do ovário N802 - Endometriose da trompa de falópio N803 - Endometriose do peritônio pélvico N804 - Endometriose do septo retovaginal e da vagina N805 - Endometriose do intestino N808 - Outra endometriose P051 - Pequeno para a idade gestacional Q960 - Cariótipo 45, X Q961 - Cariótipo 46, X iso (Xq) Q963 - Mosaicismo cromossômico, 45, X/46, XX ou XY Q962 - Cariótipo 46, X com cromossomo sexual anormal, salvo iso (Xq) Q964 - Mosaicismo cromossômico, 45, X/outra(s) linhagens celular(es) com cromossomo sexual anormal Q968 - Outras variantes da síndrome de Turner",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Gosserrelina",
+        "dose": "10,8 mg",
+        "cids_autorizados": "D250 - Leiomioma submucoso do útero D251 - Leiomioma intramural do útero D252 - Leiomioma subseroso do útero E228 - Outras hiperfunções da hipófise E230 - Hipopituitarismo E343 - Nanismo, não classificado em outra parte N800 - Endometriose do útero N801 - Endometriose do ovário N802 - Endometriose da trompa de falópio N803 - Endometriose do peritônio pélvico N804 - Endometriose do septo retovaginal e da vagina N805 - Endometriose do intestino N808 - Outra endometriose P051 - Pequeno para a idade gestacional",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Gosserrelina",
+        "dose": "",
+        "cids_autorizados": "Q960 - Cariótipo 45, X Q961 - Cariótipo 46, X iso (Xq) Q963 - Mosaicismo cromossômico, 45, X/46, XX ou XY Q962 - Cariótipo 46, X com cromossomo sexual anormal, salvo iso (Xq) Q964 - Mosaicismo cromossômico, 45, X/outra(s) linhagens celular(es) com cromossomo sexual anormal Q968 – Outras variantes da síndrome de Turner",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Hidroxicloroquina",
+        "dose": "400 mg",
+        "cids_autorizados": "L930 - Lúpus eritematoso discóide L931 - Lúpus eritematoso cutâneo subagudo M050 - Síndrome de Felty M053 - Artrite reumatóide com comprometimento de outros órgãos e sistemas M058 - Outras artrites reumatóides soro-positivas M060 - Artrite reumatóide soro-negativa M068 - Outras artrites reumatóides especificadas M080 - Artrite reumatóide juvenil M321 - Lúpus eritematoso disseminado [sistêmico] com comprometimento de outros órgãos e sistemas M328 - Outras formas de lúpus eritematoso disseminado [sistêmico] M330 - Dermatomiosite juvenil M331 - Outras dermatomiosites N164 - Transtornos renais túbulo-intersticiais em doenças do tecido conjuntivo L932 - Outras formas de lúpus eritematoso localizado J991 - Transtornos respiratórios em outras doenças sistêmicas do tecido conjuntivo classificadas em outra parte N085 - Transtornos glomerulares em doenças sistêmicas do tecido conjuntivo M320 - Lúpus eritematoso disseminado [sistêmico] induzido por drogas",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Hidroxiuréia",
+        "dose": "500 mg",
+        "cids_autorizados": "D561 - Talassemia Beta D568 - Outras talassemias D570 - Anemia falciforme com crise D571 - Anemia falciforme sem crise D572 - Transtornos falciformes heterozigóticos duplos",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Imiglucerase",
+        "dose": "",
+        "cids_autorizados": "E752 - Outras esfingolipidoses",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Imunoglobulina Anti- Hepatite B",
+        "dose": "100 UI",
+        "cids_autorizados": "B160 - Hepatite aguda B com agente delta (co-infecção), com coma hepático B162 - Hepatite aguda B sem agente delta, com coma hepático B180 - Hepatite viral crônica B com agente delta B181 - Hepatite crônica viral B sem agente delta",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Imunoglobulina Anti- Hepatite B",
+        "dose": "600 UI",
+        "cids_autorizados": "B160 - Hepatite aguda B com agente delta (co-infecção), com coma hepático B162 - Hepatite aguda B sem agente delta, com coma hepático B180 - Hepatite viral crônica B com agente delta B181 - Hepatite crônica viral B sem agente delta",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Imunoglobulina Humana",
+        "dose": "0,5 g",
+        "cids_autorizados": "B200 - Doença pelo HIV resultando em infecções micobacterianas B201 - Doença pelo HIV resultando em outras infecções bacterianas B202 - Doença pelo HIV resultando em doença citomegálica B203 - Doença pelo HIV resultando em outras infecções virais B204 - Doença pelo HIV resultando em candidíase B205 - Doença pelo HIV resultando em outras micoses B206 - Doença pelo HIV resultando em pneumonia por Pneumocystis jirovecii B207 - Doença pelo HIV resultando em infecções múltiplas B208 - Doença pelo HIV resultando em outras doenças infecciosas e parasitárias",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Imunoglobulina Humana",
+        "dose": "",
+        "cids_autorizados": "B209 - Doença pelo HIV resultando em doença infecciosa ou parasitária não especificada B220 - Doença pelo HIV resultando em encefalopatia B221 - Doença pelo HIV resultando em pneumonite intersticial linfática B222 - Doença pelo HIV resultando em síndrome de emaciação B227 - Doença pelo HIV resultando em doenças múltiplas classificadas em outra parte B230 - Síndrome de infecção aguda pelo hiv B231 - Doença pelo HIV resultando em linfadenopatias generalizadas (persistentes) B232 - Doença pelo HIV resultando em anomalias hematológicas e imunológicas não classificada em out. parte B238 - Doença pelo HIV resultando em outra afecções especificadas B24 - Doença pelo vírus da imunodeficiência humana [HIV] não especificada D590 - Anemia hemolítica auto-imune induzida por droga D591 - Outras anemias hemolíticas auto-imunes D600 - Aplasia pura adquirida crônica da série vermelha D693 - Púrpura trombocitopênica idiopática D800 - Hipogamaglobulinemia hereditária D801 - Hipogamaglobulinemia não familiar D803 - Deficiência seletiva de subclasses de imunoglobulina G [IGG] D805 - Imunodeficiência com aumento de imunoglobulina M [IGM] D806 - Deficiência de anticorpos com imunoglobulinas próximas do normal ou com hiperimunoglobulinemia D807 - Hipogamaglobulinemia transitória da infância D808 - Outras imunodeficiências com predominância de defeitos de anticorpos D810 - Imunodeficiência combinada grave [SCID] com disgenesia reticular D811 - Imunodeficiência combinada grave [SCID] com números baixos de células T e B D812 - Imunodeficiência combinada grave [SCID] com números baixos ou normais de células B D813 - Deficiência de adenosina-deaminase [ADA] D814 - Síndrome de nezelof D815 - Deficiência de purina-nucleosídeo fosforilase [pnp] D816 - Deficiência major classe I do complexo de histocompatibilidade D817 - Deficiência major classe II do complexo de histocompatibilidade D818 - Outras deficiências imunitárias combinadas D820 - Síndrome de Wiskott-Aldrich D821 - Síndrome de di George D830 - Imunodeficiência comum variável com predominância de anormal. do número e da função das células B D832 - Imunodeficiência comum variável com auto-anticorpos às células B ou T D838 - Outras imunodeficiências comuns variáveis G610 - Síndrome de guillain-barré G700 - Miastenia gravis M330 - Dermatomiosite juvenil M331 - Outras dermatomiosites M332 - Polimiosite T861 - Falência ou rejeição de transplante de rim Z940 - Rim transplantado",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Imunoglobulina Humana",
+        "dose": "2,5 g",
+        "cids_autorizados": "B200 - Doença pelo HIV resultando em infecções micobacterianas B201 - Doença pelo HIV resultando em outras infecções bacterianas B202 - Doença pelo HIV resultando em doença citomegálica B203 - Doença pelo HIV resultando em outras infecções virais B204 - Doença pelo HIV resultando em candidíase",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Imunoglobulina Humana",
+        "dose": "",
+        "cids_autorizados": "B205 - Doença pelo HIV resultando em outras micoses B206 - Doença pelo HIV resultando em pneumonia por Pneumocystis jirovecii B207 - Doença pelo HIV resultando em infecções múltiplas B208 - Doença pelo HIV resultando em outras doenças infecciosas e parasitárias B209 - Doença pelo HIV resultando em doença infecciosa ou parasitária não especificada B220 - Doença pelo HIV resultando em encefalopatia B221 - Doença pelo HIV resultando em pneumonite intersticial linfática B222 - Doença pelo HIV resultando em síndrome de emaciação B227 - Doença pelo HIV resultando em doenças múltiplas classificadas em outra parte B230 - Síndrome de infecção aguda pelo hiv B231 - Doença pelo HIV resultando em linfadenopatias generalizadas (persistentes) B232 - Doença pelo HIV resultando em anomalias hematológicas e imunológicas não classificada em out. parte B238 - Doença pelo HIV resultando em outra afecções especificadas B24 - Doença pelo vírus da imunodeficiência humana [HIV] não especificada D590 - Anemia hemolítica auto-imune induzida por droga D591 - Outras anemias hemolíticas auto-imunes D600 - Aplasia pura adquirida crônica da série vermelha D693 - Púrpura trombocitopênica idiopática D800 - Hipogamaglobulinemia hereditária D801 - Hipogamaglobulinemia não familiar D803 - Deficiência seletiva de subclasses de imunoglobulina G [IGG] D805 - Imunodeficiência com aumento de imunoglobulina M [IGM] D806 - Deficiência de anticorpos com imunoglobulinas próximas do normal ou com hiperimunoglobulinemia D807 - Hipogamaglobulinemia transitória da infância D808 - Outras imunodeficiências com predominância de defeitos de anticorpos D810 - Imunodeficiência combinada grave [SCID] com disgenesia reticular D811 - Imunodeficiência combinada grave [SCID] com números baixos de células T e B D812 - Imunodeficiência combinada grave [SCID] com números baixos ou normais de células B D813 - Deficiência de adenosina-deaminase [ADA] D814 - Síndrome de nezelof D815 - Deficiência de purina-nucleosídeo fosforilase [pnp] D816 - Deficiência major classe I do complexo de histocompatibilidade D817 - Deficiência major classe II do complexo de histocompatibilidade D818 - Outras deficiências imunitárias combinadas D820 - Síndrome de Wiskott-Aldrich D821 - Síndrome de di George D830 - Imunodeficiência comum variável com predominância de anormal. do número e da função das células B D832 - Imunodeficiência comum variável com auto-anticorpos às células B ou T D838 - Outras imunodeficiências comuns variáveis G610 - Síndrome de guillain-barré G700 - Miastenia gravis M330 - Dermatomiosite juvenil M331 - Outras dermatomiosites M332 - Polimiosite T861 - Falência ou rejeição de transplante de rim Z940 - Rim transplantado",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Imunoglobulina Humana",
+        "dose": "5 g",
+        "cids_autorizados": "B200 - Doença pelo HIV resultando em infecções micobacterianas B201 - Doença pelo HIV resultando em outras infecções bacterianas B202 - Doença pelo HIV resultando em doença citomegálica B203 - Doença pelo HIV resultando em outras infecções virais B204 - Doença pelo HIV resultando em candidíase B205 - Doença pelo HIV resultando em outras micoses B206 - Doença pelo HIV resultando em pneumonia por Pneumocystis jirovecii B207 - Doença pelo HIV resultando em infecções múltiplas B208 - Doença pelo HIV resultando em outras doenças infecciosas e parasitárias B209 - Doença pelo HIV resultando em doença infecciosa ou parasitária não especificada B220 - Doença pelo HIV resultando em encefalopatia B221 - Doença pelo HIV resultando em pneumonite intersticial linfática B222 - Doença pelo HIV resultando em síndrome de emaciação B227 - Doença pelo HIV resultando em doenças múltiplas classificadas em outra parte B230 - Síndrome de infecção aguda pelo hiv B231 - Doença pelo HIV resultando em linfadenopatias generalizadas (persistentes) B232 - Doença pelo HIV resultando em anomalias hematológicas e imunológicas não classificada em out. parte B238 - Doença pelo HIV resultando em outra afecções especificadas B24 - Doença pelo vírus da imunodeficiência humana [HIV] não especificada D590 - Anemia hemolítica auto-imune induzida por droga D591 - Outras anemias hemolíticas auto-imunes D600 - Aplasia pura adquirida crônica da série vermelha D693 - Púrpura trombocitopênica idiopática D800 - Hipogamaglobulinemia hereditária D801 - Hipogamaglobulinemia não familiar D803 - Deficiência seletiva de subclasses de imunoglobulina G [IGG] D805 - Imunodeficiência com aumento de imunoglobulina M [IGM] D806 - Deficiência de anticorpos com imunoglobulinas próximas do normal ou com hiperimunoglobulinemia D807 - Hipogamaglobulinemia transitória da infância D808 - Outras imunodeficiências com predominância de defeitos de anticorpos D810 - Imunodeficiência combinada grave [SCID] com disgenesia reticular D811 - Imunodeficiência combinada grave [SCID] com números baixos de células T e B D812 - Imunodeficiência combinada grave [SCID] com números baixos ou normais de células B D813 - Deficiência de adenosina-deaminase [ADA] D814 - Síndrome de nezelof D815 - Deficiência de purina-nucleosídeo fosforilase [pnp] D816 - Deficiência major classe I do complexo de histocompatibilidade D817 - Deficiência major classe II do complexo de histocompatibilidade D818 - Outras deficiências imunitárias combinadas D820 - Síndrome de Wiskott-Aldrich D821 - Síndrome de di George D830 - Imunodeficiência comum variável com predominância de anormal. do número e da função das células B D832 - Imunodeficiência comum variável com auto-anticorpos às células B ou T D838 - Outras imunodeficiências comuns variáveis G610 - Síndrome de guillain-barré G700 - Miastenia gravis M330 - Dermatomiosite juvenil",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Imunoglobulina Humana",
+        "dose": "",
+        "cids_autorizados": "M331 - Outras dermatomiosites M332 - Polimiosite T861 - Falência ou rejeição de transplante de rim Z940 - Rim transplantado",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Infliximabe",
+        "dose": "10 mg/mL",
+        "cids_autorizados": "M050 - Síndrome de Felty M053 - Artrite reumatóide com comprometimento de outros órgãos e sistemas M058 - Outras artrites reumatóides soro-positivas M060 - Artrite reumatóide soro-negativa M068 - Outras artrites reumatóides especificadas M080 - Artrite reumatóide juvenil K500 - Doença de crohn do intestino delgado K501 - Doença de crohn do intestino grosso K508 - Outra forma de doença de crohn M070 - Artropatia psoriásica interfalangiana distal M073 - Outras artropatias psoriásicas M45 - Espondilite ancilosante M468 - Outras espondilopatias inflamatórias especificadas",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Insulina Asparte",
+        "dose": "100 UI/ml",
+        "cids_autorizados": "E100 - Diabetes mellitus insulino-dependente - com coma E101 - Diabetes mellitus insulino-dependente - com cetoacidose E102 - Diabetes mellitus insulino-dependente - com complicações renais E107 - Diabetes mellitus insulino-dependente - com complicações múltiplas E108 - Diabetes mellitus insulino-dependente - com complicações não especificadas E109 - Diabetes mellitus insulino-dependente - sem complicações E103 - Diabetes mellitus insulino-dependente - com complicações oftálmicas E104 - Diabetes mellitus insulino-dependente - com complicações neurológicas E105 - Diabetes mellitus insulino-dependente - com complicações circulatórias periféricas E106 - Diabetes mellitus insulino-dependente - com outras complicações especificadas",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Insulina Detemir",
+        "dose": "100 UI/ml",
+        "cids_autorizados": "E100 - Diabetes mellitus insulino-dependente - com coma E101 - Diabetes mellitus insulino-dependente - com cetoacidose E102 - Diabetes mellitus insulino-dependente - com complicações renais E104 - Diabetes mellitus insulino-dependente - com complicações neurológicas E103 - Diabetes mellitus insulino-dependente - com complicações oftálmicas E106 - Diabetes mellitus insulino-dependente - com outras complicações especificadas E105 - Diabetes mellitus insulino-dependente - com complicações circulatórias periféricas E108 - Diabetes mellitus insulino-dependente - com complicações não especificadas E107 - Diabetes mellitus insulino-dependente - com complicações múltiplas E109 - Diabetes mellitus insulino-dependente - sem complicações",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Insulina Glargina",
+        "dose": "100 UI/ml",
+        "cids_autorizados": "E100 - Diabetes mellitus insulino-dependente - com coma E101 - Diabetes mellitus insulino-dependente - com cetoacidose E102 - Diabetes mellitus insulino-dependente - com complicações renais E104 - Diabetes mellitus insulino-dependente - com complicações neurológicas E103 - Diabetes mellitus insulino-dependente - com complicações oftálmicas E106 - Diabetes mellitus insulino-dependente - com outras complicações especificadas E105 - Diabetes mellitus insulino-dependente - com complicações circulatórias periféricas E108 - Diabetes mellitus insulino-dependente - com complicações não especificadas E107 - Diabetes mellitus insulino-dependente - com complicações múltiplas E109 - Diabetes mellitus insulino-dependente - sem complicações",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Insulina Lispro",
+        "dose": "100 UI/ml",
+        "cids_autorizados": "E10 Diabetes mellitus tipo 1 E100 - Diabetes mellitus insulino-dependente - com coma E109 - Diabetes mellitus insulino-dependente - sem complicações E108 - Diabetes mellitus insulino-dependente - com complicações não especificadas E107 - Diabetes mellitus insulino-dependente - com complicações múltiplas E106 - Diabetes mellitus insulino-dependente - com outras complicações especificadas E105 - Diabetes mellitus insulino-dependente - com complicações circulatórias periféricas E104 - Diabetes mellitus insulino-dependente - com complicações neurológicas E103 - Diabetes mellitus insulino-dependente - com complicações oftálmicas E102 - Diabetes mellitus insulino-dependente - sem complicações E101 - Diabetes mellitus insulino-dependente - com cetoacidose",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Isotretinoína",
+        "dose": "10 mg",
+        "cids_autorizados": "L700 - Acne vulgar L701 - Acne conglobata L708 - Outras formas de acne",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Isotretinoína",
+        "dose": "20 mg",
+        "cids_autorizados": "L700 - Acne vulgar L701 - Acne conglobata L708 - Outras formas de acne",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Lamivudina",
+        "dose": "10 mg/mL",
+        "cids_autorizados": "B160 - Hepatite aguda B com agente delta (co-infecção), com coma hepático B162 - Hepatite aguda B sem agente delta, com coma hepático B180 - Hepatite viral crônica B com agente delta B181 - Hepatite crônica viral B sem agente delta",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Lamivudina",
+        "dose": "150 mg",
+        "cids_autorizados": "B160 - Hepatite aguda B com agente delta (co-infecção), com coma hepático B162 - Hepatite aguda B sem agente delta, com coma hepático B180 - Hepatite viral crônica B com agente delta B181 - Hepatite crônica viral B sem agente delta",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Lamotrigina",
+        "dose": "25 mg",
+        "cids_autorizados": "F311 - Transtorno afetivo bipolar, episódio atual maníaco sem sintomas psicóticos F312 - Transtorno afetivo bipolar, episódio atual maníaco com sintomas psicóticos F313 - Transtorno afetivo bipolar, episódio atual depressivo leve ou moderado F314 - Transtorno afetivo bipolar, episódio atual depressivo grave sem sintomas psicóticos F315 - Transtorno afetivo bipolar, episódio atual depressivo grave com sintomas psicóticos F316 - Transtorno afetivo bipolar, episódio atual misto F317 - Transtorno afetivo bipolar, atualmente em remissão G400 - Epilepsia e síndr. epilépt. idiop. def. por sua local. (focal - parcial)c/ crises de iníc. focal G401 - Epilepsia e síndr. epilépt. sintom. def. por sua local. (focal - parcial) c/ crises parciais simples G402 - Epilepsia e síndr. epilépt. sintom. def. por sua local. (focal - parcial) c/ crises parc. complexas G403 - Epilepsia e síndrome epiléptica generalizadas idiopáticas G404 - Outras epilepsias e síndromes epilépticas generalizadas G405 - Síndromes epilépticas especiais G406 - Crise de grande mal, não especificada (com ou sem pequeno mal) G407 - Pequeno mal não especificado, sem crises de grande mal G408 - Outras epilepsias",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Lamotrigina",
+        "dose": "100 mg",
+        "cids_autorizados": "F311 - Transtorno afetivo bipolar, episódio atual maníaco sem sintomas psicóticos F312 - Transtorno afetivo bipolar, episódio atual maníaco com sintomas psicóticos F313 - Transtorno afetivo bipolar, episódio atual depressivo leve ou moderado F314 - Transtorno afetivo bipolar, episódio atual depressivo grave sem sintomas psicóticos F315 - Transtorno afetivo bipolar, episódio atual depressivo grave com sintomas psicóticos F316 - Transtorno afetivo bipolar, episódio atual misto",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Lamotrigina",
+        "dose": "",
+        "cids_autorizados": "F317 - Transtorno afetivo bipolar, atualmente em remissão G400 - Epilepsia e síndr. epilépt. idiop. def. por sua local. (focal - parcial)c/ crises de iníc. focal G401 - Epilepsia e síndr. epilépt. sintom. def. por sua local. (focal - parcial) c/ crises parciais simples G402 - Epilepsia e síndr. epilépt. sintom. def. por sua local. (focal - parcial) c/ crises parc. complexas G403 - Epilepsia e síndrome epiléptica generalizadas idiopáticas G404 - Outras epilepsias e síndromes epilépticas generalizadas G405 - Síndromes epilépticas especiais G406 - Crise de grande mal, não especificada (com ou sem pequeno mal) G407 - Pequeno mal não especificado, sem crises de grande mal G408 - Outras epilepsias",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Lanreotida",
+        "dose": "90 mg",
+        "cids_autorizados": "E220 - Acromegalia e gigantismo hipofisário",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Lanreotida",
+        "dose": "120 mg",
+        "cids_autorizados": "E220 - Acromegalia e gigantismo hipofisário",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Leflunomida",
+        "dose": "20 mg",
+        "cids_autorizados": "M050 - Síndrome de Felty M053 - Artrite reumatóide com comprometimento de outros órgãos e sistemas M058 - Outras artrites reumatóides soro-positivas M060 - Artrite reumatóide soro-negativa M068 - Outras artrites reumatóides especificadas M070 - Artropatia psoriásica interfalangiana distal M073 - Outras artropatias psoriásicas M080 - Artrite reumatóide juvenil",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Leuprorrelina",
+        "dose": "3,75 mg",
+        "cids_autorizados": "D250 - Leiomioma submucoso do útero D251 - Leiomioma intramural do útero D252 - Leiomioma subseroso do útero E228 - Outras hiperfunções da hipófise N800 - Endometriose do útero N801 - Endometriose do ovário N802 - Endometriose da trompa de falópio N803 - Endometriose do peritônio pélvico N804 - Endometriose do septo retovaginal e da vagina N805 - Endometriose do intestino N808 - Outra endometriose P051 - Pequeno para a idade gestacional Q960 - Cariótipo 45, X E230 - Hipopituitarismo Q961 - Cariótipo 46, X iso (Xq) E343 - Nanismo, não classificado em outra parte Q963 - Mosaicismo cromossômico, 45, X/46, XX ou XY Q962 - Cariótipo 46, X com cromossomo sexual anormal, salvo iso (Xq) Q964 - Mosaicismo cromossômico, 45, X/outra(s) linhagens celular(es) com cromossomo sexual anormal Q968 – Outras variantes da síndrome de Turner",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Leuprorrelina",
+        "dose": "11,25 mg",
+        "cids_autorizados": "D250 - Leiomioma submucoso do útero D251 - Leiomioma intramural do útero D252 - Leiomioma subseroso do útero E228 - Outras hiperfunções da hipófise N800 - Endometriose do útero",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Leuprorrelina",
+        "dose": "",
+        "cids_autorizados": "N801 - Endometriose do ovário N802 - Endometriose da trompa de falópio N803 - Endometriose do peritônio pélvico N804 - Endometriose do septo retovaginal e da vagina N805 - Endometriose do intestino N808 - Outra endometriose P051 - Pequeno para a idade gestacional Q960 - Cariótipo 45, X E230 -- Hipopituitarismo Q961 - Cariótipo 46, X iso (Xq) E343 - Nanismo, não classificado em outra parte Q963 - Mosaicismo cromossômico, 45, X/46, XX ou XY Q962 - Cariótipo 46, X com cromossomo sexual anormal, salvo iso (Xq Q964 - Mosaicismo cromossômico, 45, X/outra(s) linhagens celular(es) com cromossomo sexual anormal Q968 - Outras variantes da síndrome de Turner",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Mesalazina",
+        "dose": "1 g",
+        "cids_autorizados": "K500 - Doença de crohn do intestino delgado K501 - Doença de crohn do intestino grosso K508 - Outra forma de doença de crohn K510 - Enterocolite ulcerativa (crônica) K511 - Ileocolite ulcerativa (crônica) K512 - Proctite ulcerativa (crônica) K513 - Retossigmoidite ulcerativa (crônica) K514 - Pseudopolipose do cólon K515 - Proctocolite mucosa K518 - Outras colites ulcerativas",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Mesalazina",
+        "dose": "3 g",
+        "cids_autorizados": "K500 - Doença de crohn do intestino delgado K501 - Doença de crohn do intestino grosso K508 - Outra forma de doença de crohn K510 - Enterocolite ulcerativa (crônica) K511 - Ileocolite ulcerativa (crônica) K512 - Proctite ulcerativa (crônica) K513 - Retossigmoidite ulcerativa (crônica) K514 - Pseudopolipose do cólon K515 - Proctocolite mucosa K518 - Outras colites ulcerativas",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Mesalazina",
+        "dose": "400 mg",
+        "cids_autorizados": "K500 - Doença de crohn do intestino delgado K501 - Doença de crohn do intestino grosso K508 - Outra forma de doença de crohn K510 - Enterocolite ulcerativa (crônica) K511 - Ileocolite ulcerativa (crônica) K512 - Proctite ulcerativa (crônica) K513 - Retossigmoidite ulcerativa (crônica) K514 - Pseudopolipose do cólon K515 - Proctocolite mucosa K518 - Outras colites ulcerativas",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Mesalazina",
+        "dose": "500 mg",
+        "cids_autorizados": "K500 - Doença de crohn do intestino delgado K501 - Doença de crohn do intestino grosso",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Mesalazina",
+        "dose": "",
+        "cids_autorizados": "K508 - Outra forma de doença de crohn K510 - Enterocolite ulcerativa (crônica) K511 - Ileocolite ulcerativa (crônica) K512 - Proctite ulcerativa (crônica) K513 - Retossigmoidite ulcerativa (crônica) K514 - Pseudopolipose do cólon K515 - Proctocolite mucosa K518 - Outras colites ulcerativas",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Mesalazina",
+        "dose": "800 mg",
+        "cids_autorizados": "K500 - Doença de crohn do intestino delgado K501 - Doença de crohn do intestino grosso K508 - Outra forma de doença de crohn K510 - Enterocolite ulcerativa (crônica) K511 - Ileocolite ulcerativa (crônica) K512 - Proctite ulcerativa (crônica) K513 - Retossigmoidite ulcerativa (crônica) K514 - Pseudopolipose do cólon K515 - Proctocolite mucosa K518 - Outras colites ulcerativas",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Mesalazina",
+        "dose": "250 mg",
+        "cids_autorizados": "K500 - Doença de crohn do intestino delgado K501 - Doença de crohn do intestino grosso K508 - Outra forma de doença de crohn K510 - Enterocolite ulcerativa (crônica) K511 - Ileocolite ulcerativa (crônica) K512 - Proctite ulcerativa (crônica) K513 - Retossigmoidite ulcerativa (crônica) K514 - Pseudopolipose do cólon K515 - Proctocolite mucosa K518 - Outras colites ulcerativas",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Mesalazina",
+        "dose": "1000 mg",
+        "cids_autorizados": "K500 - Doença de crohn do intestino delgado K501 - Doença de crohn do intestino grosso K508 - Outra forma de doença de crohn K510 - Enterocolite ulcerativa (crônica) K511 - Ileocolite ulcerativa (crônica) K512 - Proctite ulcerativa (crônica) K513 - Retossigmoidite ulcerativa (crônica) K514 - Pseudopolipose do cólon K515 - Proctocolite mucosa K518 - Outras colites ulcerativas",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Metadona",
+        "dose": "10 mg",
+        "cids_autorizados": "R521 - Dor crônica intratável R522 - Outra dor crônica",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Metadona",
+        "dose": "10 mg/mL",
+        "cids_autorizados": "R521 - Dor crônica intratável R522 - Outra dor crônica",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Metotrexato",
+        "dose": "2,5 mg",
+        "cids_autorizados": "L400 - Psoríase vulgar L401 - Psoríase pustulosa generalizada L404 - Psoríase gutata L408 - Outras formas de psoríase L930 - Lúpus eritematoso discóide",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Metotrexato",
+        "dose": "",
+        "cids_autorizados": "L931 - Lúpus eritematoso cutâneo subagudo M050 - Síndrome de Felty M053 - Artrite reumatóide com comprometimento de outros órgãos e sistemas M058 - Outras artrites reumatóides soro-positivas M060 - Artrite reumatóide soro-negativa M068 - Outras artrites reumatóides especificadas M070 - Artropatia psoriásica interfalangiana distal M073 - Outras artropatias psoriásicas M080 - Artrite reumatóide juvenil M321 - Lúpus eritematoso disseminado [sistêmico] com comprometimento de outros órgãos e sistemas M328 - Outras formas de lúpus eritematoso disseminado [sistêmico] M330 - Dermatomiosite juvenil M331 - Outras dermatomiosites M332 - Polimiosite M340 - Esclerose sistêmica progressiva M341 - Síndrome cr(e)st M348 - Outras formas de esclerose sistêmica M45 - Espondilite ancilosante M468 - Outras espondilopatias inflamatórias especificadas J991 - Transtornos respiratórios em outras doenças sistêmicas do tecido conjuntivo classificadas em outra parte M320- Transtornos respiratórios em outras doenças sistêmicas do tecido conjuntivo classificadas em outra parte M059 - Artrite reumatóide soro-positiva não especificada M460 - Entesopatia vertebral L100 - Pênfigo vulgar M461 - Sacroileíte não classificada em outra parte L102 - Pênfigo foliáceo M468 - Outras espondilopatias inflamatórias especificadas L103 - Pênfigo brasileiro [fogo selvagem] L108 - Outras formas de pênfigo M469 - Espondilopatia inflamatória não especificada L109- Pênfigo, não especificado N164 - Transtornos renais túbulo-intersticiais em doenças do tecido conjuntivo M069 - Artrite reumatóide não especificada H301 - Inflamação corrorretiniana disseminada K500 - Doença de Crohn do intestino delgado N085 - Transtornos glomerulares em doenças sistêmicas do tecido conjuntivo M062 - Bursite reumatóide M061 - Doença de Still do adulto M064 - Poliartropatia inflamatória M063 - Nódulo reumatóide L932 - Outras formas de lúpus eritematoso localizado",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Metotrexato",
+        "dose": "25 mg/mL",
+        "cids_autorizados": "K500 - Doença de crohn do intestino delgado K501 - Doença de crohn do intestino grosso K508 - Outra forma de doença de crohn L400 - Psoríase vulgar L401 - Psoríase pustulosa generalizada L404 - Psoríase gutata",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Metotrexato",
+        "dose": "",
+        "cids_autorizados": "L408 - Outras formas de psoríase L930 - Lúpus eritematoso discóide L931 - Lúpus eritematoso cutâneo subagudo M050 - Síndrome de Felty M053 - Artrite reumatóide com comprometimento de outros órgãos e sistemas M058 - Outras artrites reumatóides soro-positivas M060 - Artrite reumatóide soro-negativa M068 - Outras artrites reumatóides especificadas M070 - Artropatia psoriásica interfalangiana distal M073 - Outras artropatias psoriásicas M080 - Artrite reumatóide juvenil M321 - Lúpus eritematoso disseminado [sistêmico] com comprometimento de outros órgãos e sistemas M328 - Outras formas de lúpus eritematoso disseminado [sistêmico] M330 - Dermatomiosite juvenil M331 - Outras dermatomiosites M332 - Polimiosite M340 - Esclerose sistêmica progressiva M341 - Síndrome cr(e)st M348 - Outras formas de esclerose sistêmica M45 - Espondilite ancilosante M468 - Outras espondilopatias inflamatórias especificadas",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Micofenolato de mofetila",
+        "dose": "500 mg",
+        "cids_autorizados": "T861 - Falência ou rejeição de transplante de rim T864 - Falência ou rejeição de transplante de fígado Z940 - Rim transplantado Z941 - Coração transplantado Z944 - Fígado transplantado L108 - Outras formas de pênfigo L932 - Outras formas de lúpus eritematoso localizado L109 - Pênfigo, não especificado M328 - Outras formas de lúpus eritematoso disseminado [sistêmico] L930 - Lúpus eritematoso discóide N164 - Transtornos renais túbulo-intersticiais em doenças do tecido conjuntivo L100 - Pênfigo vulgar M320 - Lúpus eritematoso disseminado [sistêmico] induzido por drogas N085 - Transtornos glomerulares em doenças sistêmicas do tecido conjuntivo L102 - Pênfigo foliáceo L103 - Pênfigo brasileiro [fogo selvagem] M321 - Lúpus eritematoso disseminado [sistêmico] com comprometimento de outros órgãos e sistemas J991 - Transtornos respiratórios em outras doenças sistêmicas do tecido conjuntivo classificadas em outra parte",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Micofenolato de sódio",
+        "dose": "180 mg",
+        "cids_autorizados": "T861 - Falência ou rejeição de transplante de rim T864 - Falência ou rejeição de transplante de fígado Z940 - Rim transplantado Z941 - Coração transplantado Z944 - Fígado transplantado",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Micofenolato de sódio",
+        "dose": "360 mg",
+        "cids_autorizados": "T861 - Falência ou rejeição de transplante de rim T864 - Falência ou rejeição de transplante de fígado Z940 - Rim transplantado",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Micofenolato de sódio",
+        "dose": "",
+        "cids_autorizados": "Z941 - Coração transplantado Z944 - Fígado transplantado",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Miglustate",
+        "dose": "100 mg",
+        "cids_autorizados": "E752 - Outras esfingolipidoses",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Morfina",
+        "dose": "10 mg",
+        "cids_autorizados": "R521 - Dor crônica intratável R522 - Outra dor crônica",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Morfina",
+        "dose": "30 mg",
+        "cids_autorizados": "R521 - Dor crônica intratável R522 - Outra dor crônica",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Morfina",
+        "dose": "10 mg/mL",
+        "cids_autorizados": "R521 - Dor crônica intratável R522 - Outra dor crônica",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Naproxeno",
+        "dose": "500 mg",
+        "cids_autorizados": "M050 - Síndrome de Felty M053 - Artrite reumatóide com comprometimento de outros órgãos e sistemas M058 - Outras artrites reumatóides soro-positivas M060 - Artrite reumatóide soro-negativa M068 - Outras artrites reumatóides especificadas M070 - Artropatia psoriásica interfalangiana distal M073 - Outras artropatias psoriásicas M080 - Artrite reumatóide juvenil M45 - Espondilite ancilosante M468 - Outras espondilopatias inflamatórias especificadas",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Natalizumabe",
+        "dose": "300 mg",
+        "cids_autorizados": "G35 - Esclerose múltipla",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Octreotida",
+        "dose": "0,1 mg/mL",
+        "cids_autorizados": "E220 - Acromegalia e gigantismo hipofisário",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Octreotida Lar",
+        "dose": "10 mg/mL",
+        "cids_autorizados": "E220 - Acromegalia e gigantismo hipofisário",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Octreotida Lar",
+        "dose": "20 mg/mL",
+        "cids_autorizados": "E220 - Acromegalia e gigantismo hipofisário",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Octreotida Lar",
+        "dose": "30 mg/mL",
+        "cids_autorizados": "E220 - Acromegalia e gigantismo hipofisário",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Olanzapina",
+        "dose": "5 mg",
+        "cids_autorizados": "F200 - Esquizofrenia paranóide F201 - Esquizofrenia hebefrênica F202 - Esquizofrenia catatônica F203 - Esquizofrenia indiferenciada F204 - Depressão pós-esquizofrênica F205 - Esquizofrenia residual F206 - Esquizofrenia simples F208 - Outras esquizofrenias F250 - Transtorno esquizoafetivo do tipo maníaco F251 - Transtorno esquizoafetivo do tipo depressivo F252 - Transtorno esquizoafetivo do tipo misto F311 - Transtorno afetivo bipolar, episódio atual maníaco sem sintomas psicóticos F312 - Transtorno afetivo bipolar, episódio atual maníaco com sintomas psicóticos F313 - Transtorno afetivo bipolar, episódio atual depressivo leve ou moderado F314 - Transtorno afetivo bipolar, episódio atual depressivo grave sem sintomas psicóticos F315 - Transtorno afetivo bipolar, episódio atual depressivo grave com sintomas psicóticos F316 - Transtorno afetivo bipolar, episódio atual misto F317 - Transtorno afetivo bipolar, atualmente em remissão",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Olanzapina",
+        "dose": "10 mg",
+        "cids_autorizados": "F200 - Esquizofrenia paranóide F201 - Esquizofrenia hebefrênica F202 - Esquizofrenia catatônica F203 - Esquizofrenia indiferenciada F204 - Depressão pós-esquizofrênica F205 - Esquizofrenia residual F206 - Esquizofrenia simples F208 - Outras esquizofrenias F250 - Transtorno esquizoafetivo do tipo maníaco F251 - Transtorno esquizoafetivo do tipo depressivo F252 - Transtorno esquizoafetivo do tipo misto F311 - Transtorno afetivo bipolar, episódio atual maníaco sem sintomas psicóticos F312 - Transtorno afetivo bipolar, episódio atual maníaco com sintomas psicóticos F313 - Transtorno afetivo bipolar, episódio atual depressivo leve ou moderado F314 - Transtorno afetivo bipolar, episódio atual depressivo grave sem sintomas psicóticos F315 - Transtorno afetivo bipolar, episódio atual depressivo grave com sintomas psicóticos F316 - Transtorno afetivo bipolar, episódio atual misto F317 - Transtorno afetivo bipolar, atualmente em remissão",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Oxibutinina",
+        "dose": "1mg/ml",
+        "cids_autorizados": "R32 - Incontinência urinária não especificada N338 - Transtornos da bexiga em outras doenças classificadas em outra parte N394 - Outras incontinências urinárias especificadas",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Oxibutinina",
+        "dose": "5mg",
+        "cids_autorizados": "R32 - Incontinência urinária não especificada N338 - Transtornos da bexiga em outras doenças classificadas em outra parte N394 - - Outras incontinências urinárias especificadas",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Pamidronato",
+        "dose": "60 mg",
+        "cids_autorizados": "M800 - Osteoporose pós-menopáusica com fratura patológica M801 - Osteoporose pós-ooforectomia com fratura patológica M802 - Osteoporose de desuso com fratura patológica M803 - Osteoporose por má-absorção pós-cirúrgica com fratura patológica M804 - Osteoporose induzida por drogas com fratura patológica M805 - Osteoporose idiopática com fratura patológica M808 - Outras osteoporoses com fratura patológica M810 - Osteoporose pós-menopáusica M811 - Osteoporose pós-ooforectomia M812 - Osteoporose de desuso M813 - Osteoporose devida à má-absorção pós-cirúrgica M814 - Osteoporose induzida por drogas M815 - Osteoporose idiopática M816 - Osteoporose localizada [Lequesne] M818 - Outras osteoporoses M820 - Osteoporose na mielomatose múltipla M821 - Osteoporose em distúrbios endócrinos M828 - Osteoporose em outras doenças classificadas em outra parte",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Pancreatina",
+        "dose": "10.000 UI",
+        "cids_autorizados": "E841 - Fibrose cística com manifestações intestinais E848 - Fibrose cística com outras manifestações K860 - Pancreatite crônica induzida por álcool K861 - Outras pancreatites crônicas K903 - Esteatorréia pancreática",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Pancreatina",
+        "dose": "25.000UI",
+        "cids_autorizados": "E841 - Fibrose cística com manifestações intestinais E848 - Fibrose cística com outras manifestações K860 - Pancreatite crônica induzida por álcool K861 - Outras pancreatites crônicas K903 - Esteatorréia pancreática",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Penicilamina",
+        "dose": "250 mg",
+        "cids_autorizados": "E830 - Distúrbios do metabolismo do cobre M340 - Esclerose sistêmica progressiva M341 - Síndrome cr(e)st M348 - Outras formas de esclerose sistêmica",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Piridostigmina",
+        "dose": "60 mg",
+        "cids_autorizados": "G700 - Miastenia gravis",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Pramipexol",
+        "dose": "0,25 mg",
+        "cids_autorizados": "G20 - Doença de Parkinson",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Pramipexol",
+        "dose": "1 mg",
+        "cids_autorizados": "G20 - Doença de Parkinson",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Prednisona",
+        "dose": "20mg",
+        "cids_autorizados": "M069 - Artrite reumatóide não especificada M068 - Outras artrites reumatóides especificadas N180 - Doença renal em estádio final M064 - Poliartropatia inflamatória M063 - Nódulo reumatóide M062 - Bursite reumatóide M061 - Doença de Still do adulto M060 - Artrite reumatóide soro-negativa M023 - Doença de Reiter M45 - Espondilite ancilosante M808 - Outras osteoporoses com fratura patológica N164 - Transtornos renais túbulo-intersticiais em doenças do tecido conjuntivo M805 - Osteoporose idiopática com fratura patológica M804 - Osteoporose induzida por drogas com fratura patológica M803 - Osteoporose por má-absorção pós-cirúrgica com fratura patológica M802 - Osteoporose de desuso com fratura patológica M801 - Osteoporose pós-ooforectomia com fratura patológica M809 - Osteoporose não especificada com fratura patológica L102 - Pênfigo foliáceo L100 - Pênfigo vulgar H301 - Inflamação corrorretiniana disseminada L103 - Pênfigo brasileiro [fogo selvagem] N085 - Transtornos glomerulares em doenças sistêmicas do tecido conjuntivo Z940 - Rim transplantado K514 – Pseudopolipose do cólon K513 - Retossigmoidite ulcerativa (crônica) M800 - Osteoporose pós-menopáusica com fratura patológica K515 - Proctocolite mucosa K518 -Outras colites ulcerativas K519 -Colite ulcerativa, sem outra especificação M080 -Artrite reumatóide juvenil Z944 -Fígado transplantado Z941 -Coração transplantado",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Prednisona",
+        "dose": "",
+        "cids_autorizados": "M348 - Outras formas de esclerose sistêmica M328 - Outras formas de lúpus eritematoso disseminado [sistêmico] K754 - Hepatite autoimune J991 - Transtornos respiratórios em outras doenças sistêmicas do tecido conjuntivo classificadas em outra parte K509 - Doença de Crohn de localização não especificada K508 - Outra forma de doença de Crohn L932 - Outras formas de lúpus eritematoso localizado K511 - Ileocolite ulcerativa (crônica) K512 - Proctite ulcerativa (crônica) K510 - Enterocolite ulcerativa (crônica) N046 - Síndrome nefrótica - doença de depósito denso L108 - Outras formas de pênfigo N047 - Síndrome nefrótica - glomerulonefrite difusa em crescente L109 - Pênfigo, não especificado N048 - Síndrome nefrótica - outras N042 - Síndrome nefrótica - glomerulonefrite membranosa difusa N043 - Síndrome nefrótica - glomerulonefrite proliferativa mesangial difusa N044 - Síndrome nefrótica - glomerulonefrite proliferativa endocapilar difusa N045 - Síndrome nefrótica - glomerulonefrite mesangiocapilar difusa N040 - Síndrome nefrótica - anormalidade glomerular minor N041 - Síndrome nefrótica - lesões glomerulares focais e segmentares M059 - Artrite reumatóide soro-positiva não especificada M058 - Outras artrites reumatóides soro-positivas M051 - Doença reumatóide do pulmão M050 - Síndrome de Felty M053 - Artrite reumatóide com comprometimento de outros órgãos e sistemas L930 - Lúpus eritematoso discóide M052 - Vasculite reumatóide M469 - Espondilopatia inflamatória não especificada K500 - Doença de Crohn do intestino delgado M468 - Outras espondilopatias inflamatórias especificadas K501 - Doença de Crohn do intestino grosso E232 - Diabetes insípido M461 - Sacroileíte não classificada em outra parte M320 - Lúpus eritematoso disseminado [sistêmico] induzido por drogas M321 - Lúpus eritematoso disseminado [sistêmico] com comprometimento de outros órgãos e sistemas M460 - Entesopatia vertebral J449 - Doença pulmonar obstrutiva crônica não especificada J448 - Outras formas especificadas de doença pulmonar obstrutiva crônica J440 - Doença pulmonar obstrutiva crônica com infecção respiratória aguda do trato respiratório inferior J441 - Doença pulmonar obstrutiva crônica com exacerbação aguda não especificada",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Prednisona",
+        "dose": "5 mg",
+        "cids_autorizados": "M800 - Osteoporose pós-menopáusica com fratura patológica M801 - Osteoporose pós-ooforectomia com fratura patológica M803 - Osteoporose por má-absorção pós-cirúrgica com fratura patológica M051 - Doença reumatóide do pulmão M802 - Osteoporose de desuso com fratura patológica M052 - Vasculite reumatóide",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Prednisona",
+        "dose": "",
+        "cids_autorizados": "M805 - Osteoporose idiopática com fratura patológica E232 - Diabetes insípido M804 - Osteoporose induzida por drogas com fratura patológica M050 - Síndrome de Felty M809 - Osteoporose não especificada com fratura patológica M053 - Artrite reumatóide com comprometimento de outros órgãos e sistemas M808 - Outras osteoporoses com fratura patológica M059 - Artrite reumatóide soro-positiva não especificada M45 - Espondilite ancilosante M058 - Outras artrites reumatóides soro-positivas K501 - Doença de Crohn do intestino grosso K500 - Doença de Crohn do intestino delgado K754 - Hepatite autoimune H301 - Inflamação corrorretiniana disseminada N046 - Síndrome nefrótica - doença de depósito denso M320 - Lúpus eritematoso disseminado [sistêmico] induzido por drogas M060 - Artrite reumatóide soro-negativa N045 - Síndrome nefrótica - glomerulonefrite mesangiocapilar difusa M061 - Doença de Still do adulto N044 - Síndrome nefrótica - glomerulonefrite proliferativa endocapilar difusa M062 - Bursite reumatóide N043 - Síndrome nefrótica - glomerulonefrite proliferativa mesangial difusa M063 - Nódulo reumatóide N042 - Síndrome nefrótica - glomerulonefrite membranosa difusa M064 - Poliartropatia inflamatória N041 - Síndrome nefrótica - lesões glomerulares focais e segmentares N040 - Síndrome nefrótica - anormalidade glomerular minor K509 - Doença de Crohn de localização não especificada M328 - Outras formas de lúpus eritematoso disseminado [sistêmico] M068 - Outras artrites reumatóides especificadas M069 - Artrite reumatóide não especificada K508 - Outra forma de doença de Crohn Z944 - Fígado transplantado N048 - Síndrome nefrótica - outras M023 - Doença de Reiter M321 - Lúpus eritematoso disseminado [sistêmico] com comprometimento de outros órgãos e sistemas N047 - Síndrome nefrótica - glomerulonefrite difusa em crescente L108 - Outras formas de pênfigo L109 - Pênfigo, não especificado K515 - Proctocolite mucosa K514 - Pseudopolipose do cólon M461 - Sacroileíte não classificada em outra parte M460 - Entesopatia vertebral K519 - Colite ulcerativa, sem outra especificação K518 - Outras colites ulcerativas M080 - Outras colites ulcerativas M469 - Espondilopatia inflamatória não especificada",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Prednisona",
+        "dose": "",
+        "cids_autorizados": "M468 - Outras espondilopatias inflamatórias especificadas L930 - Lúpus eritematoso discóide N180 - Doença renal em estádio final N085 - Transtornos glomerulares em doenças sistêmicas do tecido conjuntivo L932 - Outras formas de lúpus eritematoso localizado M073 - Outras artropatias psoriásicas L100 - Pênfigo vulgar L103 - Pênfigo brasileiro [fogo selvagem] L102 - Pênfigo foliáceo K512 - Proctite ulcerativa (crônica) K513 - Retossigmoidite ulcerativa (crônica) K510 - Enterocolite ulcerativa (crônica) K511 - Ileocolite ulcerativa (crônica) N164 - Transtornos renais túbulo-intersticiais em doenças do tecido conjuntivo J991 - Transtornos respiratórios em outras doenças sistêmicas do tecido conjuntivo classificadas em outra parte M348 - Outras formas de esclerose sistêmica Z940 - Rim transplantado Z941 - Coração transplantado J449 - Doença pulmonar obstrutiva crônica não especificada J448 - Outras formas especificadas de doença pulmonar obstrutiva crônica J440 - Doença pulmonar obstrutiva crônica com infecção respiratória aguda do trato respiratório inferior J441 - Doença pulmonar obstrutiva crônica com exacerbação aguda não especificada",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Primidona",
+        "dose": "250 mg",
+        "cids_autorizados": "G400 - Epilepsia e síndr. epilépt. idiop. def. por sua local. (focal - parcial)c/ crises de iníc. focal G401 - Epilepsia e síndr. epilépt. sintom. def. por sua local. (focal - parcial) c/ crises parciais simples G402 - Epilepsia e síndr. epilépt. sintom. def. por sua local. (focal - parcial) c/ crises parc. complexas G403 - Epilepsia e síndrome epiléptica generalizadas idiopáticas G404 - Outras epilepsias e síndromes epilépticas generalizadas G405 - Síndromes epilépticas especiais G406 - Crise de grande mal, não especificada (com ou sem pequeno mal) G407 - Pequeno mal não especificado, sem crises de grande mal G408 - Outras epilepsias",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Quetiapina",
+        "dose": "25 mg",
+        "cids_autorizados": "F200 - Esquizofrenia paranóide F201 - Esquizofrenia hebefrênica F202 - Esquizofrenia catatônica F203 - Esquizofrenia indiferenciada F204 - Depressão pós-esquizofrênica F205 - Esquizofrenia residual F206 - Esquizofrenia simples F208 - Outras esquizofrenias F250 - Transtorno esquizoafetivo do tipo maníaco F251 - Transtorno esquizoafetivo do tipo depressivo F252 - Transtorno esquizoafetivo do tipo misto F311 - Transtorno afetivo bipolar, episódio atual maníaco sem sintomas psicóticos F312 - Transtorno afetivo bipolar, episódio atual maníaco com sintomas psicóticos F313 - Transtorno afetivo bipolar, episódio atual depressivo leve ou moderado F314 - Transtorno afetivo bipolar, episódio atual depressivo grave sem sintomas psicóticos F315 - Transtorno afetivo bipolar, episódio atual depressivo grave com sintomas psicóticos",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Quetiapina",
+        "dose": "",
+        "cids_autorizados": "F316 - Transtorno afetivo bipolar, episódio atual misto F317 - Transtorno afetivo bipolar, atualmente em remissão",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Quetiapina",
+        "dose": "100 mg",
+        "cids_autorizados": "F200 - Esquizofrenia paranóide F201 - Esquizofrenia hebefrênica F202 - Esquizofrenia catatônica F203 - Esquizofrenia indiferenciada F204 - Depressão pós-esquizofrênica F205 - Esquizofrenia residual F206 - Esquizofrenia simples F208 - Outras esquizofrenias F250 - Transtorno esquizoafetivo do tipo maníaco F251 - Transtorno esquizoafetivo do tipo depressivo F252 - Transtorno esquizoafetivo do tipo misto F311 - Transtorno afetivo bipolar, episódio atual maníaco sem sintomas psicóticos F312 - Transtorno afetivo bipolar, episódio atual maníaco com sintomas psicóticos F313 - Transtorno afetivo bipolar, episódio atual depressivo leve ou moderado F314 - Transtorno afetivo bipolar, episódio atual depressivo grave sem sintomas psicóticos F315 - Transtorno afetivo bipolar, episódio atual depressivo grave com sintomas psicóticos F316 - Transtorno afetivo bipolar, episódio atual misto F317 - Transtorno afetivo bipolar, atualmente em remissão",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Quetiapina",
+        "dose": "200 mg",
+        "cids_autorizados": "F200 - Esquizofrenia paranóide F201 - Esquizofrenia hebefrênica F202 - Esquizofrenia catatônica F203 - Esquizofrenia indiferenciada F204 - Depressão pós-esquizofrênica F205 - Esquizofrenia residual F206 - Esquizofrenia simples F208 - Outras esquizofrenias F250 - Transtorno esquizoafetivo do tipo maníaco F251 - Transtorno esquizoafetivo do tipo depressivo F252 - Transtorno esquizoafetivo do tipo misto F311 - Transtorno afetivo bipolar, episódio atual maníaco sem sintomas psicóticos F312 - Transtorno afetivo bipolar, episódio atual maníaco com sintomas psicóticos F313 - Transtorno afetivo bipolar, episódio atual depressivo leve ou moderado F314 - Transtorno afetivo bipolar, episódio atual depressivo grave sem sintomas psicóticos F315 - Transtorno afetivo bipolar, episódio atual depressivo grave com sintomas psicóticos F316 - Transtorno afetivo bipolar, episódio atual misto F317 - Transtorno afetivo bipolar, atualmente em remissão",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Raloxifeno",
+        "dose": "60 mg",
+        "cids_autorizados": "M800 - Osteoporose pós-menopáusica com fratura patológica M801 - Osteoporose pós-ooforectomia com fratura patológica M802 - Osteoporose de desuso com fratura patológica M803 - Osteoporose por má-absorção pós-cirúrgica com fratura patológica M804 - Osteoporose induzida por drogas com fratura patológica M805 - Osteoporose idiopática com fratura patológica M808 - Outras osteoporoses com fratura patológica M810 - Osteoporose pós-menopáusica M811 - Osteoporose pós-ooforectomia",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Raloxifeno",
+        "dose": "",
+        "cids_autorizados": "M812 - Osteoporose de desuso M813 - Osteoporose devida à má-absorção pós-cirúrgica M814 - Osteoporose induzida por drogas M815 - Osteoporose idiopática M816 - Osteoporose localizada [Lequesne] M818 - Outras osteoporoses M820 - Osteoporose na mielomatose múltipla M821 - Osteoporose em distúrbios endócrinos M828 - Osteoporose em outras doenças classificadas em outra parte",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Ribavirina",
+        "dose": "250 mg",
+        "cids_autorizados": "B171 - Hepatite aguda C B182 - Hepatite viral crônica C",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Riluzol",
+        "dose": "50 mg",
+        "cids_autorizados": "G122 - Doença do neurônio motor",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Risedronato",
+        "dose": "35 mg",
+        "cids_autorizados": "M800 - Osteoporose pós-menopáusica com fratura patológica M801 - Osteoporose pós-ooforectomia com fratura patológica M802 - Osteoporose de desuso com fratura patológica M803 - Osteoporose por má-absorção pós-cirúrgica com fratura patológica M804 - Osteoporose induzida por drogas com fratura patológica M805 - Osteoporose idiopática com fratura patológica M808 - Outras osteoporoses com fratura patológica M810 - Osteoporose pós-menopáusica M811 - Osteoporose pós-ooforectomia M812 - Osteoporose de desuso M813 - Osteoporose devida à má-absorção pós-cirúrgica M814 - Osteoporose induzida por drogas M815 - Osteoporose idiopática M816 - Osteoporose localizada [Lequesne] M818 - Outras osteoporoses M820 - Osteoporose na mielomatose múltipla M821 - Osteoporose em distúrbios endócrinos M828 - Osteoporose em outras doenças classificadas em outra parte",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Risperidona",
+        "dose": "1 mg",
+        "cids_autorizados": "F200 - Esquizofrenia paranóide F201 - Esquizofrenia hebefrênica F202 - Esquizofrenia catatônica F203 - Esquizofrenia indiferenciada F204 - Depressão pós-esquizofrênica F205 - Esquizofrenia residual F206 - Esquizofrenia simples F208 - Outras esquizofrenias F250 - Transtorno esquizoafetivo do tipo maníaco F251 - Transtorno esquizoafetivo do tipo depressivo F252 - Transtorno esquizoafetivo do tipo misto F311 - Transtorno afetivo bipolar, episódio atual maníaco sem sintomas psicóticos F312 - Transtorno afetivo bipolar, episódio atual maníaco com sintomas psicóticos F313 - Transtorno afetivo bipolar, episódio atual depressivo leve ou moderado F314 - Transtorno afetivo bipolar, episódio atual depressivo grave sem sintomas psicóticos F315 - Transtorno afetivo bipolar, episódio atual depressivo grave com sintomas psicóticos",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Risperidona",
+        "dose": "",
+        "cids_autorizados": "F316 - Transtorno afetivo bipolar, episódio atual misto F317 - Transtorno afetivo bipolar, atualmente em remissão F840 - Autismo infantil F841 - Autismo atípico F843 - Outro transtorno desintegrativo da infância F845 - Síndrome de asperger F848 - Outros transtornos globais do desenvolvimento",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Risperidona",
+        "dose": "2 mg",
+        "cids_autorizados": "F200 - Esquizofrenia paranóide F201 - Esquizofrenia hebefrênica F202 - Esquizofrenia catatônica F203 - Esquizofrenia indiferenciada F204 - Depressão pós-esquizofrênica F205 - Esquizofrenia residual F206 - Esquizofrenia simples F208 - Outras esquizofrenias F250 - Transtorno esquizoafetivo do tipo maníaco F251 - Transtorno esquizoafetivo do tipo depressivo F252 - Transtorno esquizoafetivo do tipo misto F311 - Transtorno afetivo bipolar, episódio atual maníaco sem sintomas psicóticos F312 - Transtorno afetivo bipolar, episódio atual maníaco com sintomas psicóticos F313 - Transtorno afetivo bipolar, episódio atual depressivo leve ou moderado F314 - Transtorno afetivo bipolar, episódio atual depressivo grave sem sintomas psicóticos F315 - Transtorno afetivo bipolar, episódio atual depressivo grave com sintomas psicóticos F316 - Transtorno afetivo bipolar, episódio atual misto F317 - Transtorno afetivo bipolar, atualmente em remissão F840 - Autismo infantil F841 - Autismo atípico F843 - Outro transtorno desintegrativo da infância F845 - Síndrome de asperger F848 - Outros transtornos globais do desenvolvimento",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Risperidona",
+        "dose": "3 mg",
+        "cids_autorizados": "F200 - Esquizofrenia paranóide F201 - Esquizofrenia hebefrênica F202 - Esquizofrenia catatônica F203 - Esquizofrenia indiferenciada F204 - Depressão pós-esquizofrênica F205 - Esquizofrenia residual F206 - Esquizofrenia simples F208 - Outras esquizofrenias F250 - Transtorno esquizoafetivo do tipo maníaco F251 - Transtorno esquizoafetivo do tipo depressivo F252 - Transtorno esquizoafetivo do tipo misto F311 - Transtorno afetivo bipolar, episódio atual maníaco sem sintomas psicóticos F312 - Transtorno afetivo bipolar, episódio atual maníaco com sintomas psicóticos F313 - Transtorno afetivo bipolar, episódio atual depressivo leve ou moderado F314 - Transtorno afetivo bipolar, episódio atual depressivo grave sem sintomas psicóticos F315 - Transtorno afetivo bipolar, episódio atual depressivo grave com sintomas psicóticos F316 - Transtorno afetivo bipolar, episódio atual misto",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Risperidona",
+        "dose": "",
+        "cids_autorizados": "F317 - Transtorno afetivo bipolar, atualmente em remissão F840 - Autismo infantil F841 - Autismo atípico F843 - Outro transtorno desintegrativo da infância F845 - Síndrome de asperger F848 - Outros transtornos globais do desenvolvimento",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Risperidona",
+        "dose": "1 mg/mL",
+        "cids_autorizados": "F840 - Autismo infantil F841 - Autismo atípico F843 - Outro transtorno desintegrativo da infância F845 - Síndrome de asperger F848 - Outros transtornos globais do desenvolvimento",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Rituximabe",
+        "dose": "500 mg",
+        "cids_autorizados": "M050 - Síndrome de Felty M053 - Artrite reumatóide com comprometimento de outros órgãos e sistemas M058 - Outras artrites reumatóides soro-positivas M060 - Artrite reumatóide soro-negativa M068 - Outras artrites reumatóides especificadas",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Rivastigmina",
+        "dose": "1,5 mg",
+        "cids_autorizados": "G300 - Doença de alzheimer de início precoce G301 - Doença de alzheimer de início tardio G308 - Outras formas de doença de Alzheimer",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Rivastigmina",
+        "dose": "3 mg",
+        "cids_autorizados": "G300 - Doença de alzheimer de início precoce G301 - Doença de alzheimer de início tardio G308 - Outras formas de doença de Alzheimer",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Rivastigmina",
+        "dose": "4,5 mg",
+        "cids_autorizados": "G300 - Doença de alzheimer de início precoce G301 - Doença de alzheimer de início tardio G308 - Outras formas de doença de Alzheimer",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Rivastigmina",
+        "dose": "6 mg",
+        "cids_autorizados": "G300 - Doença de alzheimer de início precoce G301 - Doença de alzheimer de início tardio G308 - Outras formas de doença de Alzheimer",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Rivastigmina",
+        "dose": "2 mg/mL",
+        "cids_autorizados": "G300 - Doença de alzheimer de início precoce G301 - Doença de alzheimer de início tardio G308 - Outras formas de doença de Alzheimer",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Sacarato de hidróxido férrico",
+        "dose": "100 mg",
+        "cids_autorizados": "N180 - Doença renal em estádio final N188 - Outra insuficiência renal crônica",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Salmeterol",
+        "dose": "50 mcg",
+        "cids_autorizados": "J440 - Doença pulmonar obstrutiva crônica com infecção respiratória aguda do trato respiratório inferior J441 - Doença pulmonar obstrutiva crônica com exacerbação aguda não especificada J448 - Outras formas especificadas de doença pulmonar obstrutiva crônica J450 - Asma predominantemente alérgica J451 - Asma não-alérgica J458 - Asma mista",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Selegilina",
+        "dose": "5 mg",
+        "cids_autorizados": "G20 - Doença de Parkinson",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Sevelamer",
+        "dose": "800 mg",
+        "cids_autorizados": "E833 - Distúrbios do metabolismo do fósforo N180 - Doença renal em estádio final",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Sildenafila",
+        "dose": "20 mg",
+        "cids_autorizados": "I270 - Hipertensão pulmonar primária I272 - Outra hipertensão pulmonar secundária I278 - Outras doenças pulmonares do coração especificadas",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Sildenafila",
+        "dose": "25 mg",
+        "cids_autorizados": "M340 - Esclerose sistêmica progressiva M341 - Síndrome cr(e)st M348 - Outras formas de esclerose sistêmica",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Sildenafila",
+        "dose": "50 mg",
+        "cids_autorizados": "M340 - Esclerose sistêmica progressiva M341 - Síndrome cr(e)st M348 - Outras formas de esclerose sistêmica",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Simeprevir",
+        "dose": "150 mg",
+        "cids_autorizados": "B182 - Hepatite viral crônica C",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Sirolimo",
+        "dose": "1 mg",
+        "cids_autorizados": "T861 - Falência ou rejeição de transplante de rim Z940 - Rim transplantado",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Sirolimo",
+        "dose": "2 mg",
+        "cids_autorizados": "T861 - Falência ou rejeição de transplante de rim Z940 - Rim transplantado",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Sofosbuvir",
+        "dose": "400 mg",
+        "cids_autorizados": "B182 - Hepatite viral crônica C",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Somatropina",
+        "dose": "4 UI",
+        "cids_autorizados": "E230 - Hipopituitarismo Q960 - Cariótipo 45, X Q961 - Cariótipo 46, X ISO (XQ) Q962 - Cariótipo 46, X com cromossomo sexual anormal, salvo ISO (XQ) Q963 - Mosaicismo cromossômico, 45, X/46, XX ou XY Q964 - Mosaicismo cromossômico, 45, X/outra(s) linhagens celular(es) com cromossomo sexual anormal Q968 - Outras variantes da síndrome de turner",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Somatropina",
+        "dose": "12 UI",
+        "cids_autorizados": "E230 - Hipopituitarismo Q960 - Cariótipo 45, X Q961 - Cariótipo 46, X ISO (XQ) Q962 - Cariótipo 46, X com cromossomo sexual anormal, salvo ISO (XQ) Q963 - Mosaicismo cromossômico, 45, X/46, XX ou XY Q964 - Mosaicismo cromossômico, 45, X/outra(s) linhagens celular(es) com cromossomo sexual anormal Q968 - Outras variantes da síndrome de turner",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Somatropina",
+        "dose": "60 UI",
+        "cids_autorizados": "P051 - Pequeno para a idade gestacional",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Sulfassalazina",
+        "dose": "500 mg",
+        "cids_autorizados": "K500 - Doença de crohn do intestino delgado K501 - Doença de crohn do intestino grosso K508 - Outra forma de doença de crohn K510 - Enterocolite ulcerativa (crônica) K511 - Ileocolite ulcerativa (crônica) K512 - Proctite ulcerativa (crônica) K513 - Retossigmoidite ulcerativa (crônica) K514 - Pseudopolipose do cólon K515 - Proctocolite mucosa K518 - Outras colites ulcerativas K522 - Gastroenterite e colite alérgicas ou ligadas à dieta M023 - Doença de Reiter M050 - Síndrome de Felty M053 - Artrite reumatóide com comprometimento de outros órgãos e sistemas M058 - Outras artrites reumatóides soro-positivas M060 - Artrite reumatóide soro-negativa M068 - Outras artrites reumatóides especificadas M070 - Artropatia psoriásica interfalangiana distal",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Sulfassalazina",
+        "dose": "",
+        "cids_autorizados": "M073 - Outras artropatias psoriásicas M074 - Artropatia na doença de Crohn [enterite regional] M075 - Artropatia na colite ulcerativa M076 - Outras artropatias enteropáticas M080 - Artrite reumatóide juvenil M45 - Espondilite ancilosante M468 - Outras espondilopatias inflamatórias especificadas",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Tacrolimo",
+        "dose": "1 mg",
+        "cids_autorizados": "N040 - Síndrome nefrótica - anormalidade glomerular minor N041 - Síndrome nefrótica - lesões glomerulares focais e segmentares N042 - Síndrome nefrótica - glomerulonefrite membranosa difusa N043 - Síndrome nefrótica - glomerulonefrite proliferativa mesangial difusa N044 - Síndrome nefrótica - glomerulonefrite proliferativa endocapilar difusa N045 - Síndrome nefrótica - glomerulonefrite mesangiocapilar difusa N046 - Síndrome nefrótica - doença de depósito denso N047 - Síndrome nefrótica - glomerulonefrite difusa em crescente N048 - Síndrome nefrótica - outras T861 - Falência ou rejeição de transplante de rim T864 - Falência ou rejeição de transplante de fígado Z940 - Rim transplantado Z944 - Fígado transplantado",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Tacrolimo",
+        "dose": "5 mg",
+        "cids_autorizados": "N040 - Síndrome nefrótica - anormalidade glomerular minor N041 - Síndrome nefrótica - lesões glomerulares focais e segmentares N042 - Síndrome nefrótica - glomerulonefrite membranosa difusa N043 - Síndrome nefrótica - glomerulonefrite proliferativa mesangial difusa N044 - Síndrome nefrótica - glomerulonefrite proliferativa endocapilar difusa N045 - Síndrome nefrótica - glomerulonefrite mesangiocapilar difusa N046 - Síndrome nefrótica - doença de depósito denso N047 - Síndrome nefrótica - glomerulonefrite difusa em crescente N048 - Síndrome nefrótica - outras T861 - Falência ou rejeição de transplante de rim T864 - Falência ou rejeição de transplante de fígado Z940 - Rim transplantado Z944 - Fígado transplantado",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Taliglucerase alfa",
+        "dose": "200 ui",
+        "cids_autorizados": "E752 - Outras esfingolipidoses",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Tenofovir",
+        "dose": "300 mg",
+        "cids_autorizados": "B180 - Hepatite viral crônica B com agente delta B181 - Hepatite crônica viral B sem agente delta",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Tocilizumabe",
+        "dose": "20 mg/mL",
+        "cids_autorizados": "M050 - Síndrome de Felty M053 - Artrite reumatóide com comprometimento de outros órgãos e sistemas M058 - Outras artrites reumatóides soro-positivas M060 - Artrite reumatóide soro-negativa M068 - Outras artrites reumatóides especificadas M080 - Artrite reumatóide juvenil",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Tolcapona",
+        "dose": "100 mg",
+        "cids_autorizados": "G20 - Doença de Parkinson",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Topiramato",
+        "dose": "25 mg",
+        "cids_autorizados": "G400 - Epilepsia e síndr. epilépt. idiop. def. por sua local. (focal - parcial)c/ crises de iníc. focal G401 - Epilepsia e síndr. epilépt. sintom. def. por sua local. (focal - parcial) c/ crises parciais simples",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Topiramato",
+        "dose": "",
+        "cids_autorizados": "G402 - Epilepsia e síndr. epilépt. sintom. def. por sua local. (focal - parcial) c/ crises parc. complexas G403 - Epilepsia e síndrome epiléptica generalizadas idiopáticas G404 - Outras epilepsias e síndromes epilépticas generalizadas G405 - Síndromes epilépticas especiais G406 - Crise de grande mal, não especificada (com ou sem pequeno mal) G407 - Pequeno mal não especificado, sem crises de grande mal G408 - Outras epilepsias",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Topiramato",
+        "dose": "50 mg",
+        "cids_autorizados": "G400 - Epilepsia e síndr. epilépt. idiop. def. por sua local. (focal - parcial)c/ crises de iníc. focal G401 - Epilepsia e síndr. epilépt. sintom. def. por sua local. (focal - parcial) c/ crises parciais simples G402 - Epilepsia e síndr. epilépt. sintom. def. por sua local. (focal - parcial) c/ crises parc. complexas G403 - Epilepsia e síndrome epiléptica generalizadas idiopáticas G404 - Outras epilepsias e síndromes epilépticas generalizadas G405 - Síndromes epilépticas especiais G406 - Crise de grande mal, não especificada (com ou sem pequeno mal) G407 - Pequeno mal não especificado, sem crises de grande mal G408 - Outras epilepsias",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Topiramato",
+        "dose": "100 mg",
+        "cids_autorizados": "G400 - Epilepsia e síndr. epilépt. idiop. def. por sua local. (focal - parcial)c/ crises de iníc. focal G401 - Epilepsia e síndr. epilépt. sintom. def. por sua local. (focal - parcial) c/ crises parciais simples G402 - Epilepsia e síndr. epilépt. sintom. def. por sua local. (focal - parcial) c/ crises parc. complexas G403 - Epilepsia e síndrome epiléptica generalizadas idiopáticas G404 - Outras epilepsias e síndromes epilépticas generalizadas G405 - Síndromes epilépticas especiais G406 - Crise de grande mal, não especificada (com ou sem pequeno mal) G407 - Pequeno mal não especificado, sem crises de grande mal G408 - Outras epilepsias",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Toxina Botulínica Tipo A",
+        "dose": "",
+        "cids_autorizados": "G041 - Paraplegia espástica tropical G240 - Distonia induzida por drogas G241 - Distonia familiar idiopática G242 - Distonia não-familiar idiopática G243 - Torcicolo espasmódico G244 - Distonia orofacial idiopática G245 - Blefaroespasmo G248 - Outras distonias G518 - Outros transtornos do nervo facial G800 - Paralisia cerebral quadriplágica espástica G801 - Paralisia cerebral diplégica espástica G802 - Paralisia cerebral hemiplégica espástica G811 - Hemiplegia espástica G821 - Paraplegia espástica G824 - Tetraplegia espástica I690 - Seqüelas de hemorragia subaracnoídea I691 - Seqüelas de hemorragia intracerebral I692 - Seqüelas de outras hemorragias intracranianas não traumáticas I693 - Seqüelas de infarto cerebral I694 - Seqüelas de acidente vascular cerebral não especificado como hemorrágico ou isquêmico I698 - Seqüelas de outras doenças cerebrovasculares e das não especificadas T905 - Seqüelas de traumatismo intracraniano",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Toxina Botulínica Tipo A",
+        "dose": "",
+        "cids_autorizados": "T908 - Seqüelas de outros traumatismos especificados da cabeça",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Toxina Botulínica Tipo A",
+        "dose": "500 UI",
+        "cids_autorizados": "G041 - Paraplegia espástica tropical G240 - Distonia induzida por drogas G241 - Distonia familiar idiopática G242 - Distonia não-familiar idiopática G243 - Torcicolo espasmódico G244 - Distonia orofacial idiopática G245 - Blefaroespasmo G248 - Outras distonias G518 - Outros transtornos do nervo facial G800 - Paralisia cerebral quadriplágica espástica G801 - Paralisia cerebral diplégica espástica G802 - Paralisia cerebral hemiplégica espástica G811 - Hemiplegia espástica G821 - Paraplegia espástica G824 - Tetraplegia espástica I690 - Seqüelas de hemorragia subaracnoídea I691 - Seqüelas de hemorragia intracerebral I692 - Seqüelas de outras hemorragias intracranianas não traumáticas I693 - Seqüelas de infarto cerebral I694 - Seqüelas de acidente vascular cerebral não especificado como hemorrágico ou isquêmico I698 - Seqüelas de outras doenças cerebrovasculares e das não especificadas T905 - Seqüelas de traumatismo intracraniano T908 - Seqüelas de outros traumatismos especificados da cabeça",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Triexifenidil",
+        "dose": "5 mg",
+        "cids_autorizados": "G20 - Doença de Parkinson",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Triptorrelina",
+        "dose": "3,75 mg",
+        "cids_autorizados": "D250 - Leiomioma submucoso do útero D251 - Leiomioma intramural do útero D252 - Leiomioma subseroso do útero E228 - Outras hiperfunções da hipófise N800 - Endometriose do útero N801 - Endometriose do ovário N802 - Endometriose da trompa de falópio N803 - Endometriose do peritônio pélvico N804 - Endometriose do septo retovaginal e da vagina N805 - Endometriose do intestino N808 - Outra endometriose P051 - Pequeno para a idade gestacional Q960 - Cariótipo 45, X E230 - Hipopituitarismo Q961 - Cariótipo 46, X iso (Xq) E343 - Nanismo, não classificado em outra parte Q963 - Mosaicismo cromossômico, 45, X/46, XX ou XY Q962 - Cariótipo 46, X com cromossomo sexual anormal, salvo iso (Xq) Q964 -Mosaicismo cromossômico, 45, X/outra(s) linhagens celular(es) com cromossomo sexual anormal Q968 - Outras variantes da síndrome de Turner",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Triptorrelina",
+        "dose": "11,25 mg",
+        "cids_autorizados": "D250 - Leiomioma submucoso do útero D251 - Leiomioma intramural do útero D252 - Leiomioma subseroso do útero E228 - Outras hiperfunções da hipófise N800 - Endometriose do útero N801 - Endometriose do ovário N802 - Endometriose da trompa de falópio N803 - Endometriose do peritônio pélvico N804 - Endometriose do septo retovaginal e da vagina N805 - Endometriose do intestino N808 - Outra endometriose P051 - Pequeno para a idade gestacional Q960 - Cariótipo 45, X E230 - Hipopituitarismo Q961 - Cariótipo 46, X iso (Xq) E343 - Nanismo, não classificado em outra parte Q963 - Mosaicismo cromossômico, 45, X/46, XX ou XY Q962 - Cariótipo 46, X com cromossomo sexual anormal, salvo iso (Xq) Q964 - Mosaicismo cromossômico, 45, X/outra(s) linhagens celular(es) com cromossomo sexual anormal Q968 - Outras variantes da síndrome de Turner",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Vigabatrina",
+        "dose": "500 mg",
+        "cids_autorizados": "G400 - Epilepsia e síndr. epilépt. idiop. def. por sua local. (focal - parcial)c/ crises de iníc. focal G401 - Epilepsia e síndr. epilépt. sintom. def. por sua local. (focal - parcial) c/ crises parciais simples G402 - Epilepsia e síndr. epilépt. sintom. def. por sua local. (focal - parcial) c/ crises parc. complexas G403 - Epilepsia e síndrome epiléptica generalizadas idiopáticas G404 - Outras epilepsias e síndromes epilépticas generalizadas G405 - Síndromes epilépticas especiais G406 - Crise de grande mal, não especificada (com ou sem pequeno mal) G407 - Pequeno mal não especificado, sem crises de grande mal G408 - Outras epilepsias",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Ziprasidona",
+        "dose": "40 mg",
+        "cids_autorizados": "F200 - Esquizofrenia paranóide F201 - Esquizofrenia hebefrênica F202 - Esquizofrenia catatônica F203 - Esquizofrenia indiferenciada F204 - Depressão pós-esquizofrênica F205 - Esquizofrenia residual F206 - Esquizofrenia simples F208 - Outras esquizofrenias F250 - Transtorno esquizoafetivo do tipo maníaco F251 - Transtorno esquizoafetivo do tipo depressivo F252 - Transtorno esquizoafetivo do tipo misto",
+        "origem": "ALTO CUSTO (LME)"
+    },
+    {
+        "nome": "Ziprasidona",
+        "dose": "80 mg",
+        "cids_autorizados": "F200 - Esquizofrenia paranóide F201 - Esquizofrenia hebefrênica F202 - Esquizofrenia catatônica F203 - Esquizofrenia indiferenciada F204 - Depressão pós-esquizofrênica F205 - Esquizofrenia residual F206 - Esquizofrenia simples F208 - Outras esquizofrenias F250 - Transtorno esquizoafetivo do tipo maníaco F251 - Transtorno esquizoafetivo do tipo depressivo F252 - Transtorno esquizoafetivo do tipo misto",
+        "origem": "ALTO CUSTO (LME)"
+    }
+]
