@@ -2,7 +2,11 @@ import json
 import os
 import time
 from unidecode import unidecode
-import flet_audio_recorder
+import json
+import os
+import time
+from unidecode import unidecode
+# import flet_audio_recorder # DEBUG: Commented out to test build
 
 # --- Lógica de Banco de Dados (Portada) ---
 def load_json_list(filename, key_name=None):
@@ -156,11 +160,11 @@ def main(page: ft.Page):
     results_col = ft.Ref[ft.Column]()
 
     # Audio Recorder
-    audio_recorder = flet_audio_recorder.AudioRecorder(
-        audio_encoder="wav",
-        on_state_changed=lambda e: print(f"Audio state: {e.data}")
-    )
-    page.overlay.append(audio_recorder)
+    # audio_recorder = flet_audio_recorder.AudioRecorder(
+    #     audio_encoder="wav",
+    #     on_state_changed=lambda e: print(f"Audio state: {e.data}")
+    # )
+    # page.overlay.append(audio_recorder)
 
 
     def process_gemini(audio_path):
