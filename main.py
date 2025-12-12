@@ -200,28 +200,19 @@ def main(page: ft.Page):
     try:
         # --- APP STATE ---
         api_key_field = ft.TextField(label="Google API Key", password=True)
-        btn_record = ft.ElevatedButton("Gravar", icon=ft.Icons.MIC, bgcolor="blue", color="white")
-        btn_stop = ft.ElevatedButton("Parar", icon=ft.Icons.STOP, bgcolor="red", color="white", disabled=True)
+        btn_record = ft.ElevatedButton("Gravar", icon=ft.icons.MIC, bgcolor="blue", color="white")
+        btn_stop = ft.ElevatedButton("Parar", icon=ft.icons.STOP, bgcolor="red", color="white", disabled=True)
         status_lbl = ft.Text("Pronto", size=16, weight="bold")
         results_area = ft.Column()
 
-        # --- AUDIO RECORDER ---
-        # Robust Import Strategy for Flet 0.25.2+
-        try:
-            import flet_audio_recorder
-            AudioRecorder = flet_audio_recorder.AudioRecorder
-            print("🎙️ Usando flet_audio_recorder externo.")
-        except ImportError:
-            # Fallback for older Flet or if integrated
-            AudioRecorder = ft.AudioRecorder
-            print("🎙️ Usando ft.AudioRecorder nativo.")
-
-        rec = AudioRecorder(
+        # --- AUDIO RECORDER (Native 0.22.1) ---
+        rec = ft.AudioRecorder(
             audio_encoder=ft.AudioEncoder.WAV,
             on_state_changed=lambda e: print(f"Audio Status: {e.data}")
         )
         page.overlay.append(rec)
-        print("🎙️ Gravador de Áudio Registrado.")
+        print("🎙️ Gravador Nativo (0.22.1) Registrado.")
+
 
         # --- EVENT HANDLERS ---
         def start_rec(e):
