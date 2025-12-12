@@ -1,12 +1,9 @@
+import flet as ft
+import google.generativeai as genai
 import json
 import os
 import time
 from unidecode import unidecode
-import json
-import os
-import time
-from unidecode import unidecode
-# import flet_audio_recorder # DEBUG: Commented out to test build
 
 # --- Lógica de Banco de Dados (Portada) ---
 def load_json_list(filename, key_name=None):
@@ -160,11 +157,11 @@ def main(page: ft.Page):
     results_col = ft.Ref[ft.Column]()
 
     # Audio Recorder
-    # audio_recorder = flet_audio_recorder.AudioRecorder(
-    #     audio_encoder="wav",
-    #     on_state_changed=lambda e: print(f"Audio state: {e.data}")
-    # )
-    # page.overlay.append(audio_recorder)
+    audio_recorder = ft.AudioRecorder(
+        audio_encoder="wav",
+        on_state_changed=lambda e: print(f"Audio state: {e.data}")
+    )
+    page.overlay.append(audio_recorder)
 
 
     def process_gemini(audio_path):
@@ -233,27 +230,33 @@ def main(page: ft.Page):
         page.update()
 
     def start_recording(e):
-        if page.web:
-            # Web doesn't support local file path saving easily in this logic, 
-            # but Flet native app does.
-            pass
-        audio_recorder.start_recording("consulta_temp.wav")
-        record_btn.current.disabled = True
-        stop_btn.current.disabled = False
-        status_text.current.value = "🔴 Gravando..."
-        status_text.current.color = "red"
+        if audio_recorder.check_permission() == ft.PermissionStatus.GRANTED:
+            stop_btn.current.disabled = False
+            record_btn.current.disabled = True
+            status_text.current.value = "Gravando... Fale agora!"
+            page.update()
+            audio_recorder.start_recording("consulta.wav")
+        else:
+            page.open(
+                ft.AlertDialog(title=ft.Text("Permissão de áudio negada!"),
+                content=ft.Text("Por favor, permita o acesso ao microfone nas configurações."))
+            )
+            audio_recorder.ask_permission()
+
+    def stop_recording(e):
+        stop_btn.current.disabled = True
+        record_btn.current.disabled = False
+        status_text.current.value = "Processando..."
         page.update()
 
-    async def stop_recording(e):
-        output_path = await audio_recorder.stop_recording_async()
-        record_btn.current.disabled = False
-        stop_btn.current.disabled = True
-        status_text.current.value = "⏹️ Gravação parada."
-        status_text.current.color = "black"
-        page.update()
-        
-        if output_path:
-            process_gemini(output_path)
+        # Parar gravação
+        output_path = audio_recorder.stop_recording()
+        if not output_path:
+            status_text.current.value = "Erro na gravação."
+            page.update()
+            return
+
+        process_gemini(output_path)
 
     def render_results(data):
         results_col.current.controls.clear()
