@@ -200,8 +200,8 @@ def main(page: ft.Page):
     try:
         # --- APP STATE ---
         api_key_field = ft.TextField(label="Google API Key", password=True)
-        btn_record = ft.ElevatedButton("Gravar", icon=ft.icons.MIC, bgcolor="blue", color="white")
-        btn_stop = ft.ElevatedButton("Parar", icon=ft.icons.STOP, bgcolor="red", color="white", disabled=True)
+        btn_record = ft.ElevatedButton("Gravar", icon=ft.Icons.MIC, bgcolor="blue", color="white")
+        btn_stop = ft.ElevatedButton("Parar", icon=ft.Icons.STOP, bgcolor="red", color="white", disabled=True)
         status_lbl = ft.Text("Pronto", size=16, weight="bold")
         results_area = ft.Column()
 
