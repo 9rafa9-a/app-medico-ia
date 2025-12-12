@@ -206,13 +206,17 @@ def main(page: ft.Page):
         results_area = ft.Column()
 
         # --- AUDIO RECORDER ---
-        # Try importing specific recorder library if needed, or use Flet's if version allows
-        import flet_audio_recorder # Force reference
-        
-        # AudioRecorder Config for Latest Flet
-        # Note: In latest Flet, it might be AudioRecorder() or similar. 
-        # Using standard ft.AudioRecorder which delegates to flet_audio_recorder in 0.23+
-        rec = ft.AudioRecorder(
+        # Robust Import Strategy for Flet 0.25.2+
+        try:
+            import flet_audio_recorder
+            AudioRecorder = flet_audio_recorder.AudioRecorder
+            print("🎙️ Usando flet_audio_recorder externo.")
+        except ImportError:
+            # Fallback for older Flet or if integrated
+            AudioRecorder = ft.AudioRecorder
+            print("🎙️ Usando ft.AudioRecorder nativo.")
+
+        rec = AudioRecorder(
             audio_encoder=ft.AudioEncoder.WAV,
             on_state_changed=lambda e: print(f"Audio Status: {e.data}")
         )
