@@ -40,7 +40,7 @@ jobs:
       - name: Build APK
         working-directory: app_medico_ia
         run: |
-          flet build apk --project-name app_medico_ia --product "Assistente Medico" --verbose
+          flet build apk --project . --verbose
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
@@ -78,7 +78,7 @@ jobs:
       - name: Build Windows EXE
         working-directory: app_medico_ia
         run: |
-          flet build windows --project-name app_medico_ia --product "Assistente Medico" --verbose
+          flet build windows --project . --verbose
 
       # Flet/Flutter builds usually output to build/windows/runner/Release/
       # We upload the whole folder or just the exe and necessary DLLs if needed.
