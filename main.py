@@ -167,37 +167,43 @@ class GeminiClient:
         return json.loads(r_gen.json()["candidates"][0]["content"]["parts"][0]["text"])
 
 # --- UI MAIN ---
+# --- UI MAIN ---
 def main(page: ft.Page):
     page.title = "Medico IA Debugger"
     page.scroll = "auto"
     page.theme_mode = "light"
     
-    # --- DEBUG UI COMPONENT ---
-    console_lv = ft.ListView(height=150, spacing=2, padding=10, auto_scroll=True)
+    # SAFE BOOT: Render basics first
+    console_lv = ft.ListView(height=150, spacing=2, padding=10) # Removed auto_scroll for safety
     console_container = ft.Container(
         content=console_lv,
         bgcolor="#1e1e1e",
         border_radius=10,
         padding=10,
-        visible=True # Always visible for safety
+        visible=True
+    )
+    
+    # Add to page IMMEDIATELY
+    page.add(
+        ft.Text("Debug Console (Iniciando...)", size=12, weight="bold"),
+        console_container,
+        ft.Divider()
     )
     
     def log_to_ui(msg):
-        # Clean newlines for UI
         clean_msg = msg.strip()
         if clean_msg:
             color = "red" if "Error" in msg or "Exception" in msg else "green"
             console_lv.controls.append(ft.Text(clean_msg, color=color, font_family="Consolas", size=12))
             try:
                 page.update()
-            except: pass # Initialization race condition
+            except: pass
             
-    # Connect global buffer to this UI
     debug_buffer.add_listener(log_to_ui)
-    
-    print("🖥️ UI Inicializada. Carregando componentes...")
+    print("🖥️ UI Segura Carregada.")
 
     try:
+        print("Carregando estado...")
         # --- APP STATE ---
         api_key_field = ft.TextField(label="Google API Key", password=True)
         btn_record = ft.ElevatedButton("Gravar", icon=ft.icons.MIC, bgcolor="blue", color="white")
@@ -297,11 +303,8 @@ def main(page: ft.Page):
         btn_record.on_click = start_rec
         btn_stop.on_click = stop_rec
 
-        # Assemble UI
+        # Assemble UI (Append to existing)
         page.add(
-            ft.Text("Debug Console (Monitor de Erros)", size=12, weight="bold"),
-            console_container,
-            ft.Divider(),
             ft.Text("Assistente Médico v2.0", size=24, weight="bold"),
             api_key_field,
             ft.Row([btn_record, btn_stop]),
@@ -309,7 +312,7 @@ def main(page: ft.Page):
             ft.Divider(),
             results_area
         )
-        print("✅ Interface Gráfica Montada.")
+        print("✅ Interface Gráfica Completa Montada.")
 
     except Exception as e:
         print(f"🔥 ERRO FATAL NA MAIN: {e}")
