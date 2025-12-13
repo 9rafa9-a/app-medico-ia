@@ -57,16 +57,20 @@ jobs:
           # === A MUDANÇA: Definir o local exato ===
           ASSETS_DIR="$ANDROID_ROOT/app/src/main/assets/app"
           
-          echo "=== 2. INJEÇÃO DE CÓDIGO (SOBRESCREVENDO) ==="
-          # Garante que a pasta existe
+          echo "=== 2. INJEÇÃO DE CÓDIGO (DUPLA) ==="
           mkdir -p "$ASSETS_DIR"
           
-          # Copia o main.py (Diagnóstico) para lá, forçando a substituição
-          echo "Copiando main.py para: $ASSETS_DIR"
-          cp -f "main.py" "$ASSETS_DIR/main.py"
-          
-          # CRUCIAL: Cria um __init__.py vazio para o Python reconhecer o pacote
-          touch "$ASSETS_DIR/__init__.py"
+          if [ -f "main.py" ]; then
+             echo "✅ Copiando main.py para main.py..."
+             cp -f "main.py" "$ASSETS_DIR/main.py"
+             
+             echo "✅ Copiando main.py TAMBÉM para __init__.py (Garantia)..."
+             cp -f "main.py" "$ASSETS_DIR/__init__.py"
+          else
+             echo "❌ ERRO CRÍTICO: main.py não encontrado!"
+             ls -la
+             exit 1
+          fi
           
           echo "=== 3. VERIFICAÇÃO FORENSE ==="
           echo "Conteúdo da pasta de assets:"
