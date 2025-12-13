@@ -1,0 +1,3886 @@
+[
+    {
+        "grupo": "Componente De",
+        "itens": [
+            {
+                "nome": "ácido ursodesoxicólico",
+                "detalhes": "150 mg comprimido Especializado A05AA02",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "alfa-agalsidase",
+                "detalhes": "1 mg/mL solução injetável Especializado A16AB03",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "alfa-alglicosidade",
+                "detalhes": "50 mg Especializado A16AB07",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "alfacerliponase",
+                "detalhes": "30 mg/mL solução para infusão Especializado A16AB17",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "alfaelosulfase",
+                "detalhes": "5 mg solução injetável Especializado A16AB12",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "alfavestronidase",
+                "detalhes": "2 mg/mL solução injetável Especializado A16AB18",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "beta-agalsidase",
+                "detalhes": "35 mg Especializado A16AB04",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "biotina",
+                "detalhes": "2,5 mg cápsula Especializado A11HA05",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "calcitriol",
+                "detalhes": "0,25 mcg cápsula Especializado A11CC04",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "carbonato de cálcio a",
+                "detalhes": "500 mg de cálcio comprimido Básico A12AA04",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "cloridrato de piridoxina",
+                "detalhes": "50 mg comprimido Básico A11HA02",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "cloridrato de tiamina",
+                "detalhes": "300 mg comprimido Básico A11DA01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "dicloridrato de trientina",
+                "detalhes": "250 mg cápsula Especializado A16AX12",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "fosfato de cálcio",
+                "detalhes": "1661,616 mg (600 mg de",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "galsulfase",
+                "detalhes": "5 mg solução injetável Especializado A16AB08",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "glibenclamida",
+                "detalhes": "5 mg comprimido Básico A10BB01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "hidróxido de alumínio",
+                "detalhes": "300 mg comprimido Básico A02AB01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "idursulfase",
+                "detalhes": "2 mg/mL solução injetável Especializado A16AB09",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "insulina humana NPH",
+                "detalhes": "100 UI/mL suspensão injetável Básico A10AC01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "lactulose",
+                "detalhes": "667 mg/mL xarope Básico A06AD11",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "laronidase",
+                "detalhes": "0,58 mg/mL solução injetável Especializado A16AB05",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "miglustate",
+                "detalhes": "100 mg cápsula Especializado A16AX06",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "nistatina",
+                "detalhes": "100.000 UI/mL suspensão oral Básico A07AA02",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "nitrato de miconazol",
+                "detalhes": "2% (20 mg/g) gel oral Básico A01AB09",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "palmitato de retinol",
+                "detalhes": "150.000 UI/mL solução oral Básico A11CA01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "sulfato de atropina",
+                "detalhes": "0,25 mg/mL solução injetável Básico A03BA01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "sulfato de zinco",
+                "detalhes": "10 mg comprimido mastigável Básico A12CB01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "acetato de sódio",
+                "detalhes": "2 mEq/mL solução injetável Básico B05XA08",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "ácido acetilsalicílico",
+                "detalhes": "100 mg comprimido Básico B01AC06",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "ácido tranexâmico",
+                "detalhes": "250 mg comprimido Estratégico B02AA02",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "alfaepoetina",
+                "detalhes": "2.000 UI solução injetável Especializado B03XA01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "alfaepoetina a",
+                "detalhes": "10.000 UI solução injetável Especializado B03XA01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "cianocobalamina a",
+                "detalhes": "500 mcg/mL solução injetável Básico B03BA01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "protrombínico",
+                "detalhes": "1.000UI pó para solução injetável Estratégico B02BD03",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "fator IX de coagulação",
+                "detalhes": "250 UI pó para solução injetável Estratégico B02BD04",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "fator IX de coagulação",
+                "detalhes": "1.000 UI pó para solução injetável Estratégico B02BD04",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "fator VIII de coagulação contendo fator de von",
+                "detalhes": "500 UI pó para solução injetável Estratégico B02BD02",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "fator XIII de coagulação",
+                "detalhes": "250 UI pó para solução injetável Estratégico B02BD07",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "ferripolimaltose",
+                "detalhes": "10 mg/mL xarope Básico B03AB05",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "fibrinogênio",
+                "detalhes": "1 g pó para solução injetável Estratégico B02BB01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "heparina sódica",
+                "detalhes": "5.000 UI/0,25 mL solução injetável Básico B01AB01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "iloprosta",
+                "detalhes": "10 mcg/mL solução inalatória Especializado B01AC11",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "lactato de sódio",
+                "detalhes": "3 mg/mL",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "ácido nicotínico",
+                "detalhes": "500 mg Especializado C10AD02",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "captopril",
+                "detalhes": "25 mg comprimido Básico C09AA01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "ciprofibrato",
+                "detalhes": "100 mg comprimido Especializado C10AB08",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "cloridrato de dobutamina",
+                "detalhes": "12,5 mg/mL solução injetável Básico C01CA07",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "cloridrato de dopamina",
+                "detalhes": "5 mg/mL solução injetável Básico C01CA04",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "cloridrato de verapamil",
+                "detalhes": "2,5 mg/mL solução injetável Básico C08DA01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "dinitrato de isossorbida",
+                "detalhes": "5 mg comprimido sublingual Básico C01DA08",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "epinefrina",
+                "detalhes": "1 mg/mL solução injetável Básico C01CA03",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "etofibrato",
+                "detalhes": "500 mg cápsula Especializado C10AB09",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "losartana potássica",
+                "detalhes": "50 mg comprimido Básico C09CA01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "maleato de enalapril",
+                "detalhes": "10 mg comprimido Básico C09AA02",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "metildopa",
+                "detalhes": "250 mg comprimido Básico C02AB01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "pentoxifilina",
+                "detalhes": "400 mg Estratégico C04AD03",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "pravastatina sódica",
+                "detalhes": "20 mg comprimido Especializado C10AA03",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "sinvastatina",
+                "detalhes": "20 mg comprimido Básico C10AA01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "succinato de metoprolol",
+                "detalhes": "50 mg Básico C07AB02",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "tartarato de metoprolol",
+                "detalhes": "100 mg comprimido Básico C07AB02",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "acetato de hidrocortisona",
+                "detalhes": "10 mg/g (1%) creme Básico D07AA02",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "aciclovir",
+                "detalhes": "50 mg/g (5%) creme Básico D06BB03",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "ácido salicílico (FN)",
+                "detalhes": "50 mg/g (5%) pomada Básico D02AF",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "alcatrão mineral (FN)",
+                "detalhes": "10 mg/g (1%) pomada Básico D05AA",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "calcipotriol",
+                "detalhes": "50 mcg/g (0,005%) pomada Especializado D05AX02",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "cetoconazol",
+                "detalhes": "20 mg/mL (2%) xampu Básico D01AC08",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "cloridrato de lidocaína",
+                "detalhes": "20 mg/g (2%) gel Básico D04AB01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "dexametasona",
+                "detalhes": "1 mg/g (0,1%) creme dermatológico Básico D07AB19",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "digliconato de clorexidina",
+                "detalhes": "2% a 4% solução para uso tópico Básico D08AC02",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "imiquimode",
+                "detalhes": "50 mg/g creme Básico D06BB10",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "nitrato de miconazol",
+                "detalhes": "2% (20 mg/g) pó Básico D01AC02",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "podofilotoxina",
+                "detalhes": "1,5 mg/g creme Básico D06BB04",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "sulfadiazina de prata",
+                "detalhes": "10 mg/g (1%) creme Básico D06BA01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "acetato de ciproterona",
+                "detalhes": "50 mg comprimido Especializado G03HA01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "cabergolina",
+                "detalhes": "0,5 mg comprimido Especializado",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "citrato de sildenafila",
+                "detalhes": "25 mg comprimido Especializado G04BE03",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "cloridrato de raloxifeno",
+                "detalhes": "60 mg comprimido Especializado G03XC01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "estrogênios conjugados",
+                "detalhes": "0,3 mg comprimido Básico G03CA57",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "finasterida",
+                "detalhes": "5 mg comprimido Básico G04CB01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "metronidazol",
+                "detalhes": "100 mg/g (10%) gel vaginal Básico G01AF01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "nitrato de miconazol",
+                "detalhes": "2% (20 mg/g) creme vaginal Básico G01AF04",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "noretisterona",
+                "detalhes": "0,35 mg comprimido Básico G03AC01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "acetato de lanreotida",
+                "detalhes": "120 mg Especializado H01CB03",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "calcitonina",
+                "detalhes": "200 UI/dose solução nasal Especializado H05BA01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "dexametasona",
+                "detalhes": "0,1 mg/mL elixir Básico H02AB02",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "iodo + iodeto de potássio",
+                "detalhes": "20 mg/mL + 40 mg/mL solução para uso tópico Insumos (Básico) H03CA",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "levotiroxina sódica",
+                "detalhes": "37,5 mcg comprimido Básico H03AA01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "paricalcitol",
+                "detalhes": "5 mcg/mL solução injetável Especializado H05BX02",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "propiltiouracila",
+                "detalhes": "100 mg comprimido Básico H03BA02",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "amoxicilina potássio",
+                "detalhes": "500 mg cápsula Básico J01CA04 Acesso",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "anidulafungina",
+                "detalhes": "100 mg Estratégico J02AX06 -",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "azitromicina",
+                "detalhes": "250 mg comprimido Estratégico J01FA10 Alerta",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "bedaquilina",
+                "detalhes": "100 mg comprimido Estratégico J04AK05 -",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "capreomicina",
+                "detalhes": "1 g Estratégico J04AB30",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "cefalexina",
+                "detalhes": "500 mg comprimido Básico J01DB01 Acesso",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "cefotaxima sódica",
+                "detalhes": "500 mg Básico J01DD01 Alerta",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "ceftriaxona",
+                "detalhes": "500 mg Básico J01DD04 Alerta",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "cloranfenicol",
+                "detalhes": "250 mg comprimido Básico J01BA01 Acesso",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "darunavir",
+                "detalhes": "150 mg comprimido Estratégico J05AE10 -",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "delamanida",
+                "detalhes": "50 mg comprimido Estratégico J04AK06 -",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "dolutegravir sódico",
+                "detalhes": "50 mg comprimido Estratégico J05AJ03 -",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "efavirenz",
+                "detalhes": "200 mg cápsula Estratégico J05AG03 -",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "grazoprevir",
+                "detalhes": "50 mg + 100 mg comprimido Estratégico J05AP54 -",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "enfuvirtida",
+                "detalhes": "90 mg/mL Estratégico J05AX07 -",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "espiramicina",
+                "detalhes": "1.500.000 UI comprimido Estratégico J01FA02 Alerta",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "estolato de",
+                "detalhes": "500 mg comprimido J01FA01 Alerta",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "etionamida",
+                "detalhes": "250 mg comprimido Estratégico J04AD03 -",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "fosamprenavir de tenofovir de tenofovir",
+                "detalhes": "50 mg/mL suspensão oral Estratégico J05AE07 -",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "humana anti-",
+                "detalhes": "500 UI solução injetável Estratégico J06BB04 -",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "humana antivaricela",
+                "detalhes": "125 UI/2,5 mL solução injetável Estratégico J06BB03 -",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "lopinavir + ritonavir",
+                "detalhes": "80 mg/mL + 20 mg/mL solução oral Estratégico J05AR10 -",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "maraviroque",
+                "detalhes": "150 mg comprimido Estratégico J05AX09 -",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "ofloxacino",
+                "detalhes": "400 mg comprimido Estratégico J01MA01 Alerta",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "palivizumabe",
+                "detalhes": "100 mg/mL solução injetável Estratégico J06BD01 -",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "pretomanida",
+                "detalhes": "200 mg comprimido Estratégico J04AK08 -",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "ribavirina",
+                "detalhes": "250 mg cápsula Estratégico J05AP01 -",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "rifabutina",
+                "detalhes": "150 mg cápsula Estratégico J04AB04 Alerta",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "rifapentina",
+                "detalhes": "150 mg comprimido Estratégico J04AB05 -",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "ritonavir",
+                "detalhes": "100 mg comprimido Estratégico J05AE03 -",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "sofosbuvir",
+                "detalhes": "400 mg comprimido Estratégico J05AP08 -",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "soro antibotrópico",
+                "detalhes": "5 mg de veneno de Bothrops",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "anticrotálico",
+                "detalhes": "1,5 mg de veneno de Crotalus",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "jararaca e",
+                "detalhes": "3 mg de veneno de",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "soro antirrábico que neutralizam, no mínimo,",
+                "detalhes": "200 solução injetável Estratégico J06AA06 -",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "sulfadiazina",
+                "detalhes": "500 mg comprimido Estratégico J01EC02 Acesso",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "terizidona",
+                "detalhes": "250 mg cápsula Estratégico J04AK03 -",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "tobramicina",
+                "detalhes": "300 mg solução inalatória Especializado J01GB01 Alerta",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "humano",
+                "detalhes": "6, 11, 16 e injetável",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "zanamivir",
+                "detalhes": "5 mg Estratégico J05AH01 -",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "zidovudina",
+                "detalhes": "10 mg/mL solução injetável Estratégico J05AF01 -",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "adalimumabe",
+                "detalhes": "40 mg solução injetável Especializado L04AB04",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "alentuzumabe",
+                "detalhes": "10 mg/mL Especializado L04AG06",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "alfainterferona",
+                "detalhes": "2b 5.000.000 UI pó para solução injetável Especializado L03AB05",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "alfapeginterferona",
+                "detalhes": "148 microgramas (100 microgra-",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "azatioprina",
+                "detalhes": "50 mg comprimido Especializado L04AX01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "betainterferona",
+                "detalhes": "1a 30 mcg (6.000.000 UI) solução injetável Especializado L03AB07",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "betainterferona",
+                "detalhes": "1b 300 mcg (9.600.000 UI) pó para solução injetável Especializado L03AB08",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "ciclofosfamida",
+                "detalhes": "50 mg Especializado L01AA01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "ciclosporina",
+                "detalhes": "100 mg cápsula Especializado L04AD01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "cladribina",
+                "detalhes": "10 mg comprimido Especializado L04AA40",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "eculizumabe",
+                "detalhes": "10 mg/mL Especializado L04AJ01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "everolimo",
+                "detalhes": "0,75 mg comprimido Especializado L04AH02",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "filgrastim",
+                "detalhes": "300 mcg solução injetável Especializado L03AA02",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "golimumabe",
+                "detalhes": "50 mg solução injetável Especializado L04AB06",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "infliximabe",
+                "detalhes": "100 mg pó para solução injetável Especializado L04AB02",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "leflunomida",
+                "detalhes": "20 mg comprimido Especializado L04AK01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "natalizumabe",
+                "detalhes": "20 mg/mL solução injetável Especializado L04AG03",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "ravulizumabe",
+                "detalhes": "100 mg/mL Especializado L04AJ02",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "risanquizumabe",
+                "detalhes": "75 mg/ 0,83 mL solução injetável Especializado L04AC18",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "rituximabe",
+                "detalhes": "10 mg/mL Especializado L01FA01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "secuquinumabe",
+                "detalhes": "150 mg/mL solução injetável Especializado L04AC10",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "talidomida",
+                "detalhes": "100 mg comprimido Estratégico L04AX02",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "teriflunomida",
+                "detalhes": "14 mg comprimido Especializado L04AK02",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "tocilizumabe",
+                "detalhes": "20 mg/mL solução injetável Especializado L04AC07",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "tofacitinibe",
+                "detalhes": "5 mg comprimido Especializado L04AF01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "triptorrelina",
+                "detalhes": "3,75 mg Especializado L02AE04",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "upadacitinibe",
+                "detalhes": "15 mg Especializado L04AF03",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "vedolizumabe",
+                "detalhes": "300 mg pó para solução injetável Especializado L04AG05",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "ácido zoledrônico",
+                "detalhes": "5 mg/100 mL solução para infusão Especializado M05BA08",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "burosumabe",
+                "detalhes": "20 mg/mL solução injetável Especializado M05BX05",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "ibuprofeno",
+                "detalhes": "600 mg cápsula Básico M01AE01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "nusinersena",
+                "detalhes": "2,4 mg/mL solução injetável Especializado M09AX07",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "pamidronato dissódico",
+                "detalhes": "60 mg pó para solução injetável Especializado M05BA03",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "penicilamina",
+                "detalhes": "250 mg cápsula Especializado M01CC01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "risdiplam",
+                "detalhes": "0,75 mg/mL pó para solução oral Especializado M09AX10",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "risedronato sódico",
+                "detalhes": "35 mg comprimido Especializado M05BA07",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "romosozumabe",
+                "detalhes": "90 mg/mL solução injetável Especializado M05BX06",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "ácido acetilsalicílico",
+                "detalhes": "500 mg comprimido Básico N02BA01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "brometo de piridostigmina",
+                "detalhes": "60 mg comprimido Especializado N07AA02",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "bromidrato de galantamina",
+                "detalhes": "16 mg cápsula de liberação prolongada Especializado N06DA04",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "carbamazepina",
+                "detalhes": "400 mg comprimido Básico N03AF01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "carbonato de lítio",
+                "detalhes": "300 mg comprimido Básico N05AN01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "clonazepam",
+                "detalhes": "2,5 mg/mL solução oral Básico N03AE01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "cloridrato de amantadina",
+                "detalhes": "100 mg comprimido Especializado N04BB01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "cloridrato de bupropiona",
+                "detalhes": "150 mg comprimido de liberação prolongada Estratégico N06AX12",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "cloridrato de lidocaína",
+                "detalhes": "100 mg/mL (10%) solução spray Básico N01BB02",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "cloridrato de memantina",
+                "detalhes": "10 mg comprimido Especializado N06DX01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "cloridrato de metadona",
+                "detalhes": "10 mg comprimido Especializado N07BC02",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "felipressina",
+                "detalhes": "0,03 UI/mL",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "cloridrato de selegilina",
+                "detalhes": "5 mg comprimido Especializado N04BD01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "cloridrato de triexifenidil",
+                "detalhes": "5 mg comprimido Especializado N04AA01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "diazepam",
+                "detalhes": "5 mg comprimido Básico N05BA01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "dicloridrato de pramipexol",
+                "detalhes": "0,25 mg comprimido Especializado N04BC05",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "dipirona",
+                "detalhes": "500 mg/mL solução oral Básico N02BB02",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "entacapona",
+                "detalhes": "200 mg comprimido Especializado N04BX02",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "etossuximida",
+                "detalhes": "50 mg/mL xarope Especializado N03AD01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "fenitoína",
+                "detalhes": "20 mg/mL suspensão oral Básico N03AB02",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "fenobarbital",
+                "detalhes": "100 mg comprimido Básico N03AA02",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "haloperidol",
+                "detalhes": "50 mg/mL solução injetável Básico N05AD01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "lactato de biperideno",
+                "detalhes": "5 mg/mL solução injetável Básico N04AA02",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "lamotrigina",
+                "detalhes": "50 mg comprimido Especializado N03AX09",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "levetiracetam",
+                "detalhes": "100 mg/mL solução oral Especializado N03AX14",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "levodopa + benserazida",
+                "detalhes": "100 mg + 25 mg comprimido Básico N04BA02",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "mesilato de rasagilina",
+                "detalhes": "1 mg comprimido Especializado N04BD02",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "midazolam",
+                "detalhes": "2 mg/mL solução oral Básico N05CD08",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "riluzol",
+                "detalhes": "50 mg comprimido Especializado N07XX02",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "sulfato de morfina",
+                "detalhes": "30 mg comprimido Especializado N02AA01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "tafamidis",
+                "detalhes": "61 mg cápsula Especializado N07XX08",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "tafamidis meglumina",
+                "detalhes": "20 mg cápsula Especializado N07XX08",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "topiramato",
+                "detalhes": "50 mg comprimido Especializado N03AX11",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "vigabatrina",
+                "detalhes": "500 mg comprimido Especializado N03AG04",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "antimoniato de meglumina",
+                "detalhes": "300 mg/mL solução injetável Estratégico P01CB01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "arteméter + lumefantrina",
+                "detalhes": "20 mg + 120 mg comprimido Estratégico P01BF01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "artesunato",
+                "detalhes": "60 mg/mL pó para solução injetável Estratégico P01BE03",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "benzoilmetronidazol",
+                "detalhes": "40 mg/mL suspensão oral Básico P01AB01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "difosfato de cloroquina",
+                "detalhes": "150 mg comprimido Estratégico E Especializado P01BA01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "isetionato de pentamidina",
+                "detalhes": "300 mg pó para solução injetável Estratégico P01CX01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "ivermectina",
+                "detalhes": "6 mg comprimido Básico P02CF01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "nifurtimox",
+                "detalhes": "120 mg comprimido Estratégico P01CC01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "oxamniquina",
+                "detalhes": "50 mg/mL suspensão oral Estratégico P02BA02",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "pirimetamina",
+                "detalhes": "25 mg comprimido Estratégico P01BD01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "praziquantel",
+                "detalhes": "600 mg comprimido Estratégico P02BA01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "alfadornase",
+                "detalhes": "1 mg/mL solução inalatória Especializado R05CB13",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "bromidrato de fenoterol",
+                "detalhes": "100 mcg/dose solução aerossol Especializado R03AC04",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "cloreto de sódio",
+                "detalhes": "9 mg/mL (0,9%) solução nasal Básico R01AX10",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "ivacaftor",
+                "detalhes": "150 mg comprimido Especializado R07AX02",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "mepolizumabe",
+                "detalhes": "100 mg pó para solução injetável Especializado R03DX09",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "sulfato de salbutamol",
+                "detalhes": "5 mg/mL solução para inalação Básico R03AC02",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "xinafoato de salmeterol",
+                "detalhes": "50 mcg pó inalatório Especializado R03AC12",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "bimatoprosta",
+                "detalhes": "0,3 mg/mL (0,03%) solução oftálmica Especializado S01EE03",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "brinzolamida",
+                "detalhes": "10 mg/mL (1%) suspensão oftálmica Especializado S01EC04",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "cloridrato de tetraciclina",
+                "detalhes": "5 mg/g pomada oftálmica Básico S01AA09",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "latanoprosta",
+                "detalhes": "0,05 mg/mL (0,005%) solução oftálmica Especializado S01EE01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "maleato de timolol",
+                "detalhes": "5 mg/mL (0,5%) solução oftálmica Básico E Especializado S01ED01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "tartarato de brimonidina",
+                "detalhes": "2 mg/mL (0,2%) solução oftálmica Especializado S01EA05",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "travoprosta",
+                "detalhes": "0,04 mg/mL (0,004%) solução oftálmica Especializado S01EE04",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "ácido folínico",
+                "detalhes": "15 mg comprimido V03AF03",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "cloridrato de naloxona",
+                "detalhes": "0,4 mg/mL solução injetável Básico V03AB15",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "cloridrato de protamina",
+                "detalhes": "10 mg/mL solução injetável Básico V03AB14",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "cloridrato de sevelâmer",
+                "detalhes": "800 mg comprimido Especializado V03AE02",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "deferasirox",
+                "detalhes": "250 mg Especializado V03AC03",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "deferiprona",
+                "detalhes": "500 mg comprimido Especializado V03AC02",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "flumazenil",
+                "detalhes": "0,1 mg/mL solução injetável Básico V03AB25",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "folinato de cálcio",
+                "detalhes": "15 mg comprimido V03AF03",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "glicose",
+                "detalhes": "100 mg/mL (10%) solução injetável Básico V06DC01",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "glutaral",
+                "detalhes": "0,02 solução Insumos (Básico) NC",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "cada sachê de",
+                "detalhes": "1 g contém:",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "vitamina A",
+                "detalhes": "400 mcg, vitamina D",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "vitamina B2",
+                "detalhes": "0,5 mg, vitamina B6",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "hortelã (Mentha x",
+                "detalhes": "60 a 440 mg de mentol e 28 a 256 mg de",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "salgueiro (Salix alba L.)",
+                "detalhes": "60 a 240 mg de salicina (dose diária) elixir Básico HN02BA 5008*",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "dispositivo intrauterino modelo T",
+                "detalhes": "380 Aparelho geniturinário",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "glutaral",
+                "detalhes": "0,02 solução Insumos (Básico) Vários NC",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "hipoclorito de sódio",
+                "detalhes": "10 mg/mL (1%) solução Insumos (Básico) Vários NC",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "hipoclorito de sódio",
+                "detalhes": "25 mg/mL (2,5%) solução Insumos (Estratégico) Vários NC",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "preservativo feminino - até",
+                "detalhes": "20 cm Insumos (Estratégico) Vários NC",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "n.º",
+                "detalhes": "803 – Alfagalsidase para o tratamento da doença",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "alfa-agalsidase",
+                "detalhes": "1 mg/mL Sectics/MS n.º 26,",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "alfaepoetina",
+                "detalhes": "1.000 UI pó pacientes com doença falciforme apresentando Sectics/MS n.º 12,",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "alfaepoetina",
+                "detalhes": "1.000 UI pacientes com doença falciforme apresentando Sectics/MS n.º 12,",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "alfaepoetina",
+                "detalhes": "10.000 UI pó pacientes com doença falciforme apresentando Sectics/MS n.º 12,",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "alfaepoetina",
+                "detalhes": "10.000 UI pacientes com doença falciforme apresentando Sectics/MS n.º 12,",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "alfaepoetina",
+                "detalhes": "2.000 UI pó pacientes com doença falciforme apresentando Sectics/MS n.º 12,",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "alfaepoetina",
+                "detalhes": "2.000 UI pacientes com doença falciforme apresentando Sectics/MS n.º 12,",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "alfaepoetina",
+                "detalhes": "3.000 UI pó pacientes com doença falciforme apresentando Sectics/MS n.º 12,",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "alfaepoetina",
+                "detalhes": "3.000 UI pacientes com doença falciforme apresentando Sectics/MS n.º 12,",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "alfaepoetina",
+                "detalhes": "4.000 UI pó pacientes com doença falciforme apresentando Sectics/MS n.º 12,",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "alfaepoetina",
+                "detalhes": "4.000 UI pacientes com doença falciforme apresentando Sectics/MS n.º 12,",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "beta-agalsidase",
+                "detalhes": "35 mg pó n.º 865 – Beta-agalsidase para o tratamento da Sectics/MS n.º 73,",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "citrato de sildenafila",
+                "detalhes": "20 mg n.º 730 – Ambrisentana, bosentana, iloprosta,",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "citrato de sildenafila",
+                "detalhes": "20 mg n.º 730 – Ambrisentana, bosentana, iloprosta,",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "cladribina",
+                "detalhes": "10 mg Sectics/MS n.º 62,",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "n.º",
+                "detalhes": "734 – Dapagliflozina para o tratamento adicional",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "n.º",
+                "detalhes": "773 – Dapagliflozina para tratamento de",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "n.º",
+                "detalhes": "802 – Dapagliflozina para pacientes com diabete",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "melito tipo",
+                "detalhes": "2 (DM2) com necessidade de segunda",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "elexacaftor",
+                "detalhes": "100 mg/",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "Tezacaftor",
+                "detalhes": "50 mg/Ivacaftor Sectics/MS n.º 47,",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "elexacaftor",
+                "detalhes": "50 mg/",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "Tezacaftor",
+                "detalhes": "25 mg/Ivacaftor Sectics/MS n.º 47,",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "n.º",
+                "detalhes": "717 – Embonato de triptorrelina 22,5 mg",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "n.º",
+                "detalhes": "872 – Hidroxiureia 100 mg e 1000 mg para o",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "hidroxiureia",
+                "detalhes": "100 mg Sectics/MS n.º 04,",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "hidroxiureia",
+                "detalhes": "500 mg cápsula Especializado",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "mepolizumabe",
+                "detalhes": "100 mg/mL Sectics/MS n.º 22,",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "mepolizumabe",
+                "detalhes": "40 mg/0,4 mL Sectics/MS n.º 22,",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "mesalazina",
+                "detalhes": "2g granulado",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "n.º",
+                "detalhes": "793 – Onasemnogeno abeparvoveque para o",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "ravulizumabe",
+                "detalhes": "100 mg/mL",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "rituximabe",
+                "detalhes": "10 mg/mL Sectics/MS n.º 44,",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "n.º",
+                "detalhes": "902 – Rivastigmina para o tratamento em",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "rivastigmina",
+                "detalhes": "1,5 mg cápsula indivíduos com doença Especializado",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "rivastigmina",
+                "detalhes": "18 mg adesivo n.º 902 – Rivastigmina para o tratamento em Sectics/MS n.º 27,",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "n.º",
+                "detalhes": "902 – Rivastigmina para o tratamento em Sectics/MS n.º 27,",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "rivastigmina",
+                "detalhes": "3 mg cápsula Especializado",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "n.º",
+                "detalhes": "902 – Rivastigmina para o tratamento em Sectics/MS n.º 27,",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "rivastigmina",
+                "detalhes": "4,5 mg cápsula Especializado",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "n.º",
+                "detalhes": "902 – Rivastigmina para o tratamento em Sectics/MS n.º 27,",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "rivastigmina",
+                "detalhes": "6 mg cápsula Especializado",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "rivastigmina",
+                "detalhes": "9 mg adesivo n.º 902 – Rivastigmina para o tratamento em Sectics/MS n.º 27,",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "n.º",
+                "detalhes": "899 – Tafamidis 61 mg no tratamento de",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "tafamidis",
+                "detalhes": "61 mg cápsula Especializado",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "n.º",
+                "detalhes": "864 – Ustequinumabe para o tratamento de",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "ustequinumabe",
+                "detalhes": "130 mg Sectics/MS n.º 01,",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "n.º",
+                "detalhes": "864 – Ustequinumabe para o tratamento de",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "ustequinumabe",
+                "detalhes": "45 mg/0,5 Sectics/MS n.º 01,",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "estradiol de estradiol",
+                "detalhes": "5 mg",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "ferripolimaltose",
+                "detalhes": "50 mg/ tratamento de pacientes com anemia Sectics/MS n.º 17,",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "ferripolimaltose",
+                "detalhes": "100 mg tratamento de pacientes com anemia Sectics/MS n.º 17,",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "ferripolimaltose",
+                "detalhes": "10 mg/ tratamento de pacientes com anemia Sectics/MS n.º 17,",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "hidróxido de alumínio",
+                "detalhes": "60 suspensão de 60 mg/mL para o tratamento Sectics/MS n.º 43,",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "n.º",
+                "detalhes": "743 — Anidulafungina para",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "anidulafungina",
+                "detalhes": "100 mg,",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "darunavir",
+                "detalhes": "800 mg, vivendo com HIV em falha virológica Sectics/MS n.º 34, de 3 de julho de",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "Nota Técnica n.°",
+                "detalhes": "116/2023 – CGAHV/",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "dolutegravir sódico",
+                "detalhes": "50 mg para análise sobre a aplicabilidade",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "n.º",
+                "detalhes": "830/2023 — Dolutegravir 5 mg",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "dolutegravir sódico",
+                "detalhes": "5 mg, como tratamento complementar ou Sectics/MS n.º 36, de 3 de julho de",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "n.º",
+                "detalhes": "48/2013 — Fator VIII de origem",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "recombinante",
+                "detalhes": "1.500 Estratégico",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "fostensavir trometamol trometamol",
+                "detalhes": "600 mg para o",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "Ofício n.º",
+                "detalhes": "10/2023/Cgats/Dgits/",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "ritonavir",
+                "detalhes": "100 mg em 6/5/2022",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "pretomanida",
+                "detalhes": "200 mg tratamento da tuberculose resistente Estratégico",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "n.º",
+                "detalhes": "831/2023 — Raltegravir 100",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "Isoniazida",
+                "detalhes": "300 mg pelo Mycobacterium Tuberculosis em 15/6/2020",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "n.º",
+                "detalhes": "832 — Tafenoquina e teste",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "cápsula dura,",
+                "detalhes": "100 mg em 28/7/2022",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "injetável,",
+                "detalhes": "200 mg pacientes com mucormicose",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "novembro de",
+                "detalhes": "2019. Sua pactuação (grupo 1A) deu-se",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "dezembro de",
+                "detalhes": "2019. Contudo, a Assistência Oftalmológica",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "teriparatida",
+                "detalhes": "250 osteoporose secundária a glicocorticoides, pacientes Sectics/MS",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "n.º",
+                "detalhes": "696 – Exclusão do cloridrato de clindamicina cápsula",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "cloridrato de",
+                "detalhes": "300 mg, fosfato de clindamicina solução injetável 150 mg/",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "clindamicina",
+                "detalhes": "300 mg mL, sulfato de quinina comprimido 500 mg e dicloridrato Estratégico",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "cápsula de quinina solução injetável",
+                "detalhes": "300 mg/mL para tratamento",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "n.º",
+                "detalhes": "696 – Exclusão do cloridrato de clindamicina cápsula",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "dicloridrato de quinina",
+                "detalhes": "300 mg, fosfato de clindamicina solução injetável 150 mg/",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "injetável de quinina solução injetável",
+                "detalhes": "300 mg/ mL para tratamento",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "n.º",
+                "detalhes": "696 – Exclusão do cloridrato de clindamicina cápsula",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "fosfato de clindamicina",
+                "detalhes": "300 mg, fosfato de clindamicina solução injetável 150 mg/",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "injetável de quinina solução injetável",
+                "detalhes": "300 mg/mL para tratamento",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "rifampicina",
+                "detalhes": "20 mg/mL n.º 525 - Exclusão da rifampicina para quimioprofilaxia de n.º 18, de",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "n.º",
+                "detalhes": "696 – Exclusão do cloridrato de clindamicina cápsula",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "mL, sulfato de quinina comprimido de quinina solução injetável",
+                "detalhes": "500 mg e dicloridrato Estratégico",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "olamina",
+                "detalhes": "25 mg Ampliação",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "olamina",
+                "detalhes": "50 mg Ampliação",
+                "tags": [
+                    "Rename 2024"
+                ]
+            }
+        ]
+    },
+    {
+        "grupo": "Componente Básico",
+        "itens": [
+            {
+                "nome": "acetato de hidrocortisona",
+                "detalhes": "10 mg/g (1%) creme",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "acetato de sódio",
+                "detalhes": "2 mEq/mL solução injetável",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "acetazolamida",
+                "detalhes": "250 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "aciclovir",
+                "detalhes": "50 mg/g (5%) creme",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "ácido folínico",
+                "detalhes": "15 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "ácido salicílico (FN)",
+                "detalhes": "50 mg/g (5%) pomada",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "alcatrão mineral (FN)",
+                "detalhes": "10 mg/g (1%) pomada",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "amoxicilina",
+                "detalhes": "500 mg cápsula",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "benzilpenicilina potássica",
+                "detalhes": "5.000.000 UI pó para solução injetável",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "benzoilmetronidazol a",
+                "detalhes": "40 mg/mL suspensão oral",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "budesonida",
+                "detalhes": "50 mcg",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "captopril",
+                "detalhes": "25 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "carbamazepina",
+                "detalhes": "400 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "carbonato de lítio",
+                "detalhes": "300 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "cefalexina",
+                "detalhes": "500 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "cefotaxima sódica",
+                "detalhes": "500 mg pó para solução injetável",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "ceftriaxona",
+                "detalhes": "500 mg pó para solução injetável",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "cetoconazol",
+                "detalhes": "20 mg/mL (2%) xampu",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "cianocobalamina",
+                "detalhes": "500 mcg/mL solução injetável",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "clonazepam",
+                "detalhes": "2,5 mg/mL solução oral",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "cloreto de sódio a",
+                "detalhes": "9 mg/mL (0,9%) solução nasal",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "cloridrato de dobutamina",
+                "detalhes": "12,5 mg/mL solução injetável",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "cloridrato de dopamina",
+                "detalhes": "5 mg/mL solução injetável",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "cloridrato de metoclopramida",
+                "detalhes": "5 mg/mL solução injetável",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "cloridrato de naloxona",
+                "detalhes": "0,4 mg/mL solução injetável",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "cloridrato de pilocarpina",
+                "detalhes": "20 mg/mL (2%) solução oftálmica",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "cloridrato de piridoxina",
+                "detalhes": "40 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "cloridrato de protamina",
+                "detalhes": "10 mg/mL solução injetável",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "cloridrato de tiamina",
+                "detalhes": "300 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "cloridrato de verapamil",
+                "detalhes": "2,5 mg/mL solução injetável",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "diazepam",
+                "detalhes": "5 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "dinitrato de isossorbida",
+                "detalhes": "5 mg comprimido sublingual",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "dipirona",
+                "detalhes": "500 mg/mL solução oral",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "epinefrina",
+                "detalhes": "1 mg/mL solução injetável",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "estolato de eritromicina",
+                "detalhes": "500 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "estriol",
+                "detalhes": "1 mg/g creme vaginal",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "estrogênios conjugados",
+                "detalhes": "0,3 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "etinilestradiol + levonorgestrel",
+                "detalhes": "0,03 mg + 0,15 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "fenitoína",
+                "detalhes": "20 mg/mL suspensão oral",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "fenobarbital",
+                "detalhes": "100 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "ferripolimaltose",
+                "detalhes": "100 mg comprimido mastigável",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "finasterida",
+                "detalhes": "5 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "fluconazol",
+                "detalhes": "10 mg/mL suspensão oral",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "flumazenil",
+                "detalhes": "0,1 mg/mL solução injetável",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "folinato de cálcio",
+                "detalhes": "15 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "glibenclamida",
+                "detalhes": "5 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "glicose",
+                "detalhes": "100 mg/mL (10%) solução injetável",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "guaco (Mikania glomerata",
+                "detalhes": "0,5 a 5 mg de cumarina",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "haloperidol",
+                "detalhes": "50 mg/mL solução injetável",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "hemitartarato de norepinefrina",
+                "detalhes": "2 mg/mL solução injetável",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "heparina sódica",
+                "detalhes": "5.000 UI/0,25 mL solução injetável",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "hidróxido de alumínio",
+                "detalhes": "300 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "hortelã (Mentha x piperita L.) a",
+                "detalhes": "256 mg de mentona (dose cápsula",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "ibuprofeno",
+                "detalhes": "600 mg cápsula",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "imiquimode",
+                "detalhes": "50 mg/g creme",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "insulina humana NPH",
+                "detalhes": "100 UI/mL suspensão injetável",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "insulina humana regular",
+                "detalhes": "100 UI/mL solução injetável",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "ivermectina",
+                "detalhes": "6 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "lactato de biperideno",
+                "detalhes": "5 mg/mL solução injetável",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "lactulose",
+                "detalhes": "667 mg/mL xarope",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "levodopa + benserazida",
+                "detalhes": "100 mg + 25 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "levotiroxina sódica",
+                "detalhes": "37,5 mcg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "losartana potássica",
+                "detalhes": "50 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "maleato de dexclorfeniramina",
+                "detalhes": "0,4 mg/mL solução oral",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "maleato de enalapril",
+                "detalhes": "10 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "metilsulfato de pralidoxima",
+                "detalhes": "200 mg solução injetável",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "metildopa",
+                "detalhes": "250 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "metronidazol",
+                "detalhes": "250 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "midazolam",
+                "detalhes": "2 mg/mL solução oral",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "nistatina",
+                "detalhes": "100.000 UI/mL suspensão oral",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "nitrato de miconazol",
+                "detalhes": "2% (20 mg/g) pó",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "noretisterona",
+                "detalhes": "0,35 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "palmitato de retinol",
+                "detalhes": "150.000 UI/mL solução oral",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "pasta de óxido de zinco (FN)",
+                "detalhes": "250 mg/g (25%) pasta",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "podofilotoxina",
+                "detalhes": "1,5 mg/g creme",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "propiltiouracila",
+                "detalhes": "100 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "rifampicina",
+                "detalhes": "300 mg cápsula",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "sinvastatina",
+                "detalhes": "20 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "lactato de sódio",
+                "detalhes": "3 mg/mL +",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "cloreto de sódio",
+                "detalhes": "6 mg/mL +",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "solução ringer + lactato cloreto de potássio",
+                "detalhes": "0,3 mg/ solução injetável",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "succinato de metoprolol",
+                "detalhes": "50 mg",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "sulfadiazina de prata",
+                "detalhes": "10 mg/g (1%) creme",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "sulfametoxazol + trimetoprima",
+                "detalhes": "80 mg/mL + 16 mg/mL solução injetável",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "sulfato de atropina",
+                "detalhes": "0,25 mg/mL solução injetável",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "sulfato de magnésio",
+                "detalhes": "10% (0,81 mEq/mL Mg++) solução injetável",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "sulfato de salbutamol",
+                "detalhes": "5 mg/mL solução para inalação",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "sulfato de zinco",
+                "detalhes": "10 mg comprimido mastigável",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "tartarato de metoprolol",
+                "detalhes": "100 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            }
+        ]
+    },
+    {
+        "grupo": "Componente Estratégico",
+        "itens": [
+            {
+                "nome": "ácido folínico",
+                "detalhes": "15 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "ácido paraminossalicílico",
+                "detalhes": "4 g granulado oral",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "ácido tranexâmico",
+                "detalhes": "250 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "albendazol",
+                "detalhes": "400 mg comprimido mastigável",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "alfapeginterferona",
+                "detalhes": "2a 180 mcg solução injetável",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "alfapeginterferona",
+                "detalhes": "2b pó para solução injetável",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "anfotericina B (desoxicolato)",
+                "detalhes": "50 mg pó para solução injetável",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "anfotericina B (lipossomal)",
+                "detalhes": "50 mg pó para solução injetável",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "anidulafungina",
+                "detalhes": "100 mg",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "antimoniato de meglumina",
+                "detalhes": "300 mg/mL solução injetável",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "artemeter + lumefantrina",
+                "detalhes": "20 mg + 120 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "artesunato",
+                "detalhes": "60 mg/mL pó para solução injetável",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "azitromicina",
+                "detalhes": "40 mg/mL pó para suspensão oral",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "bedaquilina",
+                "detalhes": "100 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "benzilpenicilina benzatina",
+                "detalhes": "1.200.000 UI",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "benzilpenicilina potássica",
+                "detalhes": "5.000.000 UI pó para solução injetável",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "capreomicina",
+                "detalhes": "1 g pó para solução injetável",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "citrato de dietilcarbamazina",
+                "detalhes": "50 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "claritromicina",
+                "detalhes": "500 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "cloranfenicol",
+                "detalhes": "25 mg/mL suspensão oral",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "cloridrato de bupropiona",
+                "detalhes": "150 mg",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "cloridrato de doxiciclina",
+                "detalhes": "100 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "cloridrato de etambutol",
+                "detalhes": "400 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "cloridrato de minociclina",
+                "detalhes": "100 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "cloridrato de moxifloxacino",
+                "detalhes": "400 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "cloridrato de piridoxina",
+                "detalhes": "50 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "delamanida",
+                "detalhes": "50 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "dicloridrato de sapropterina",
+                "detalhes": "100 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "difosfato de cloroquina",
+                "detalhes": "150 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "efavirenz",
+                "detalhes": "200 mg cápsula",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "espiramicina",
+                "detalhes": "1.500.000 UI comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "etionamida",
+                "detalhes": "250 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "fator VIII de coagulação contendo fator de von",
+                "detalhes": "500 UI pó para solução injetável",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "fator XIII de coagulação",
+                "detalhes": "250 UI pó para solução injetável",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "fibrinogênio",
+                "detalhes": "1 g pó para solução injetável",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "flucitosina",
+                "detalhes": "500 mg cápsula",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "fluconazol",
+                "detalhes": "2 mg/mL solução injetável",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "folinato de cálcio",
+                "detalhes": "15 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "fosamprenavir",
+                "detalhes": "50 mg/mL suspensão oral",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "fosfato de oseltamivir",
+                "detalhes": "45 mg cápsula",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "fostensavir trometamol",
+                "detalhes": "600 mg",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "glecaprevir + pibrentasvir",
+                "detalhes": "100 mg + 40 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "imunoglobulina antitetânica",
+                "detalhes": "250 UI/mL solução injetável",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "isetionato de pentamidina",
+                "detalhes": "300 mg pó para solução injetável",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "itraconazol",
+                "detalhes": "100 mg cápsula",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "ledipasvir + sofosbuvir",
+                "detalhes": "90 mg + 100 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "lopinavir + ritonavir",
+                "detalhes": "80 mg/mL + 20 mg/mL solução oral",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "maraviroque",
+                "detalhes": "150 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "cada sachê de",
+                "detalhes": "1 g contém:",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "vitamina A",
+                "detalhes": "400 mcg, vitamina",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "vitamina C",
+                "detalhes": "30 mg, vitamina B1",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "micronutrientes vitamina B6",
+                "detalhes": "0,5 mg, vitamina pó",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "vitamina B12",
+                "detalhes": "0,9 mcg, ferro 10",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "mcg, selênio",
+                "detalhes": "17 mcg, iodo 90",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "nicotina",
+                "detalhes": "21 mg adesivo transdérmico",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "nifurtimox",
+                "detalhes": "120 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "nirmatrelvir + ritonavir",
+                "detalhes": "150 mg + 100 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "ofloxacino",
+                "detalhes": "400 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "oxamniquina",
+                "detalhes": "50 mg/mL suspensão oral",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "pentoxifilina",
+                "detalhes": "400 mg",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "pirazinamida",
+                "detalhes": "30 mg/mL (3%) suspensão oral",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "pirimetamina",
+                "detalhes": "25 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "praziquantel",
+                "detalhes": "600 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "pretomanida",
+                "detalhes": "200 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "ribavirina",
+                "detalhes": "250 mg cápsula",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "rifabutina",
+                "detalhes": "150 mg cápsula",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "rifampicina*",
+                "detalhes": "150 mg* cápsula",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "rifampicina + isoniazida",
+                "detalhes": "75 mg + 50 mg comprimidos dispersíveis",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "rifapentina",
+                "detalhes": "150 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "rifapentina + isoniazida",
+                "detalhes": "300 mg + 300 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "ritonavir",
+                "detalhes": "100 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "sofosbuvir",
+                "detalhes": "400 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "sofosbuvir + velpatasvir",
+                "detalhes": "400 mg + 100 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "neutralizam, no mínimo,",
+                "detalhes": "5 mg solução injetável",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "jararaca e a",
+                "detalhes": "1,5 mg de veneno",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "soro antibotrópico neutralizam, no mínimo,",
+                "detalhes": "5 mg",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "muta (5 mg/mL e",
+                "detalhes": "3 mg/mL)",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "soro antibotulínico AB mo,",
+                "detalhes": "375 UI de toxina butolínica",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "mo,",
+                "detalhes": "1,5 mg de veneno Crotalus",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "mo,",
+                "detalhes": "1.000 UI de toxina diftérica",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "mínimo,",
+                "detalhes": "1,5 mg de veneno de",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "soro antiescorpiônico nimo",
+                "detalhes": "1,5 DMM (Dose Mínima solução injetável",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "mínimo,",
+                "detalhes": "0,35 mg de veneno de",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "mínimo,",
+                "detalhes": "15 DMN (Dose Mínima",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "nimo,",
+                "detalhes": "200 UI de vírus da raiva",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "mo,",
+                "detalhes": "1.000 UI de toxina tetânica",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "succinato de tafenoquina",
+                "detalhes": "150 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "sulfadiazina",
+                "detalhes": "500 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "sulfato de amicacina",
+                "detalhes": "250 mg/mL solução injetável",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "sulfato de atazanavir",
+                "detalhes": "300 mg cápsula",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "sulfato de estreptomicina",
+                "detalhes": "1 g pó para solução injetável",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "talidomida",
+                "detalhes": "100 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "terizidona",
+                "detalhes": "250 mg cápsula",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "humano",
+                "detalhes": "6, 11, 16 e 18 - suspensão injetável",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "zanamivir",
+                "detalhes": "5 mg pó para inalação oral",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "zidovudina",
+                "detalhes": "10 mg/mL solução injetável",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "zidovudina + lamivudina",
+                "detalhes": "300 mg + 150 mg comprimido",
+                "tags": [
+                    "Rename 2024"
+                ]
+            }
+        ]
+    },
+    {
+        "grupo": "Componente Especializado",
+        "itens": [
+            {
+                "nome": "ácido nicotínico",
+                "detalhes": "500 mg de liberação 2",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "ácido zoledrônico",
+                "detalhes": "0,05 mg/mL 2",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "adalimumabe",
+                "detalhes": "40 mg 1A",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "azatioprina",
+                "detalhes": "50 mg comprimido 2 em Adultos",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "betainterferona",
+                "detalhes": "1a (6.000.000 UI) injetável",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "cabergolina",
+                "detalhes": "0,5 mg comprimido 1A",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "calcitonina",
+                "detalhes": "200 UI/dose solução nasal 2",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "certolizumabe pegol",
+                "detalhes": "200 mg 1A",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "ciclofosfamida",
+                "detalhes": "50 mg de liberação 2",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "ciclosporina",
+                "detalhes": "10 mg cápsula 2",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "ciclosporina",
+                "detalhes": "25 mg cápsula 2 em Pediatria",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "ciclosporina",
+                "detalhes": "100 mg cápsula 2 em Pediatria",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "ciclosporina",
+                "detalhes": "50 mg cápsula 2 em Pediatria",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "ciclosporina",
+                "detalhes": "100 mg/mL solução oral 2 em Pediatria",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "ciprofibrato",
+                "detalhes": "100 mg comprimido 2",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "etofibrato",
+                "detalhes": "500 mg cápsula 2",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "everolimo",
+                "detalhes": "0,5 mg comprimido 1A",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "everolimo",
+                "detalhes": "0,75 mg comprimido 1A",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "everolimo",
+                "detalhes": "1 mg comprimido 1A",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "infliximabe",
+                "detalhes": "100 mg solução 1A",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "lamotrigina",
+                "detalhes": "50 mg comprimido 2",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "metotrexato",
+                "detalhes": "2,5 mg comprimido 1A",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "paricalcitol",
+                "detalhes": "5 mcg/mL 1A",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "pravastatina sódica",
+                "detalhes": "20 mg comprimido 2",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "risedronato sódico",
+                "detalhes": "35 mg comprimido 2",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "somatropina",
+                "detalhes": "4 UI solução 1A",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "somatropina",
+                "detalhes": "24 UI solução 1A",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "tafamidis",
+                "detalhes": "61 mg cápsula 1A",
+                "tags": [
+                    "Rename 2024"
+                ]
+            },
+            {
+                "nome": "tocilizumabe",
+                "detalhes": "20 mg/mL 1A",
+                "tags": [
+                    "Rename 2024"
+                ]
+            }
+        ]
+    }
+]

@@ -1,0 +1,1863 @@
+[
+    {
+        "id": "1",
+        "nome_completo": "Dipirona sódica 500mg/ml gotas 10 ml frasco",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "26",
+        "nome_completo": "Acido fólico5 mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "2",
+        "nome_completo": "Dipirona sódica 500mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "27",
+        "nome_completo": "Ácido Ascórbico (Vit. C) 100mg/ml ampola",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "3",
+        "nome_completo": "Dipirona sódica 500mg/ml 2ml ampola",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "28",
+        "nome_completo": "Ácido Fólico 0,2mg/ml frasco 30ml (uso gestantes)",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "4",
+        "nome_completo": "Diclofenaco sódico 75mg/3ml ampola)",
+        "disponibilidade": [
+            "UBS",
+            "FARMÁCIA POPULAR"
+        ],
+        "notas": [
+            "Gratuito na rede credenciada"
+        ]
+    },
+    {
+        "id": "29",
+        "nome_completo": "Carbonato de Cálcio 500 mg (1250 mg) comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "5",
+        "nome_completo": "Escopolamina, butilbrometo 10 mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "30",
+        "nome_completo": "Carbonato de Cálcio 600mg + Vitamina D 400UI comprimido",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "6",
+        "nome_completo": "Escopolamina 20mg/ml ampola 1ml",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "7",
+        "nome_completo": "Escopolamina 4mg/ml+dipirona 500mg/ml 5ml",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "31",
+        "nome_completo": "Complexo B ampola ampola",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "32",
+        "nome_completo": "Fitomenadiona (Vit K) Ampola",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "8",
+        "nome_completo": "Ibuprofeno 50mg/ml frasco 30 ml",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "33",
+        "nome_completo": "Glicose 50% Ampola",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "9",
+        "nome_completo": "Ibuprofeno 600mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "34",
+        "nome_completo": "Polivitamínico 100mg cápsula",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "10",
+        "nome_completo": "Paracetamol 500mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "35",
+        "nome_completo": "Polivitamínico100ml frasco",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "11",
+        "nome_completo": "Paracetamol gotas 200 mg/ml 10 ml",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "36",
+        "nome_completo": "Sais para reidratação oral 27.9g sachê",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "37",
+        "nome_completo": "Sulfato ferroso 25mg/ml gotas 30 ml frasco",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "38",
+        "nome_completo": "Sulfato ferroso 40mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "39",
+        "nome_completo": "Sulfato ferroso 5mg/ml xarope 100 ml frasco *Tratamento de gestantes",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "12",
+        "nome_completo": "Lidocaína 2% sem vasoconstritor frasco 20ml",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "13",
+        "nome_completo": "Lidocaína 2% geléia bisnaga 30g",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "14",
+        "nome_completo": "Dexametasona 0,1% sol. oftalmica 5ml",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "15",
+        "nome_completo": "Dexametasona, acetato 0,1% 10g bisnaga",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "40",
+        "nome_completo": "Acido Acetilsalicílico 100mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "16",
+        "nome_completo": "Dexametasona 4mg/ml ampola",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "41",
+        "nome_completo": "Alopurinol 100mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "17",
+        "nome_completo": "Dexclorfeniramina2mg/5ml frasco",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "42",
+        "nome_completo": "Alopurinol 300mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "18",
+        "nome_completo": "Dexclorfeniramina, maleato 2mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "43",
+        "nome_completo": "Amiodarona, cloridrato 200mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "19",
+        "nome_completo": "Hidrocortisona 100mg frasco-ampola",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "44",
+        "nome_completo": "Amiodarona, cloridrato 50mg/ml ampola",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "20",
+        "nome_completo": "Hidrocortisona 500mg frasco-ampola",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "45",
+        "nome_completo": "Anlodipino, besilato 5mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "21",
+        "nome_completo": "Prednisona 20mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "46",
+        "nome_completo": "Atenolol 25mg comp",
+        "disponibilidade": [
+            "UBS",
+            "FARMÁCIA POPULAR"
+        ],
+        "notas": [
+            "Gratuito na rede credenciada"
+        ]
+    },
+    {
+        "id": "22",
+        "nome_completo": "Prednisona 5mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "47",
+        "nome_completo": "Atenolol 50mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "23",
+        "nome_completo": "Prednisolona, fosfato sódico 3mg/ml 60ml",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "48",
+        "nome_completo": "Captopril 25mg",
+        "disponibilidade": [
+            "UBS",
+            "FARMÁCIA POPULAR"
+        ],
+        "notas": [
+            "Gratuito na rede credenciada"
+        ]
+    },
+    {
+        "id": "49",
+        "nome_completo": "Carvedilol 12,5mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "24",
+        "nome_completo": "Prometazina, cloridrato 25mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "50",
+        "nome_completo": "Carvedilol 25mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "25",
+        "nome_completo": "Prometazina 25mg/ml ampola 2ml",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "51",
+        "nome_completo": "Carvedilol 3,125mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "52",
+        "nome_completo": "Carvedilol 6,25mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "53",
+        "nome_completo": "Cinarizina 75mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "54",
+        "nome_completo": "Digoxina 0.25mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "55",
+        "nome_completo": "Enalapril, maleato 10mg comp",
+        "disponibilidade": [
+            "UBS",
+            "FARMÁCIA POPULAR"
+        ],
+        "notas": [
+            "Gratuito na rede credenciada"
+        ]
+    },
+    {
+        "id": "56",
+        "nome_completo": "Enalapril, maleato 20mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "82",
+        "nome_completo": "Glibenclamida 5mg comp",
+        "disponibilidade": [
+            "UBS",
+            "FARMÁCIA POPULAR"
+        ],
+        "notas": [
+            "Gratuito na rede credenciada"
+        ]
+    },
+    {
+        "id": "57",
+        "nome_completo": "Espironolactona 25mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "83",
+        "nome_completo": "Glicazida 30mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "58",
+        "nome_completo": "Furosemida 40mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "84",
+        "nome_completo": "Insulina Regular 100 UI/10ml frasco",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "59",
+        "nome_completo": "Furosemida 10mg/ml ampola",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "85",
+        "nome_completo": "Insulina Regular100 UI/3ml caneta",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": [
+            "Protocolo Específico/Gestante"
+        ]
+    },
+    {
+        "id": "60",
+        "nome_completo": "Hidroclortiazida 25mg",
+        "disponibilidade": [
+            "UBS",
+            "FARMÁCIA POPULAR"
+        ],
+        "notas": [
+            "Gratuito na rede credenciada"
+        ]
+    },
+    {
+        "id": "86",
+        "nome_completo": "Insulina NPH100 UI/10ml frasco",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "61",
+        "nome_completo": "Losartana 50mg",
+        "disponibilidade": [
+            "UBS",
+            "FARMÁCIA POPULAR"
+        ],
+        "notas": [
+            "Gratuito na rede credenciada"
+        ]
+    },
+    {
+        "id": "87",
+        "nome_completo": "Insulina NPH100 UI/3ml caneta",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": [
+            "Protocolo Específico/Gestante"
+        ]
+    },
+    {
+        "id": "62",
+        "nome_completo": "Metildopa 250mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": [
+            "Protocolo Específico/Gestante"
+        ]
+    },
+    {
+        "id": "88",
+        "nome_completo": "Metformina 500mg, 850mg e 500mgXR",
+        "disponibilidade": [
+            "UBS",
+            "FARMÁCIA POPULAR"
+        ],
+        "notas": [
+            "Gratuito na rede credenciada"
+        ]
+    },
+    {
+        "id": "63",
+        "nome_completo": "Metoprolol succinato, 50mg",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": [
+            "Protocolo Específico/Gestante",
+            "Exige Especialista"
+        ]
+    },
+    {
+        "id": "89",
+        "nome_completo": "Agulha 4mm p/ caneta",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "64",
+        "nome_completo": "Nifedipino 10mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "90",
+        "nome_completo": "Lanceta",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "65",
+        "nome_completo": "Propatilnitrato 10mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "91",
+        "nome_completo": "Monitor glicemia",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "66",
+        "nome_completo": "Propranolol, cloridrato 40mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "92",
+        "nome_completo": "Seringa insulina 1 ml",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "93",
+        "nome_completo": "Seringa insulina 0,5ml",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "94",
+        "nome_completo": "Tiras Reagentes (HGT)",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "67",
+        "nome_completo": "Amoxicilina 250mg/5 ml frasco 150 ml",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "68",
+        "nome_completo": "Amoxicilina 250mg/5 ml frasco 60 ml",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "95",
+        "nome_completo": "Espinheira Santa (Maytenusilicifolia) 380mg",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "69",
+        "nome_completo": "Amoxicilina 250mg + Clavulanato de potássio caps",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "96",
+        "nome_completo": "Bromoprida 5mg/ml",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "70",
+        "nome_completo": "Amoxicilina 500mg + Clavulanato de potássio",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "97",
+        "nome_completo": "Hidróxido de alumínio 61.5 mg /ml",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "98",
+        "nome_completo": "Lactulose 667mg/mL frasco",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "71",
+        "nome_completo": "Amoxicilina 500mg cápsula",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "99",
+        "nome_completo": "Metoclopramida, cloridrato 10 mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "72",
+        "nome_completo": "Benzilpenicilina benzatina 1.200.000UI/ml frasco",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "100",
+        "nome_completo": "Metoclopramida, cloridrato 4mg/ml frasco 10",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "73",
+        "nome_completo": "Benzilpenicilina 600.000UI/ml frasco ml",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "74",
+        "nome_completo": "Cefalexina 500mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "101",
+        "nome_completo": "Metoclopramida 5mg/ml ampola",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "75",
+        "nome_completo": "Cefalexina monoidratada 250mg/5 ml frasco",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "102",
+        "nome_completo": "Óleo mineral 100 % frasco mínimo 100 ml",
+        "disponibilidade": [
+            "UBS",
+            "FARMÁCIA POPULAR"
+        ],
+        "notas": [
+            "Gratuito na rede credenciada"
+        ]
+    },
+    {
+        "id": "76",
+        "nome_completo": "Eritromicina, estearato 50mg/ml frasco",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "103",
+        "nome_completo": "Omeprazol 20 mg cápsula",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "77",
+        "nome_completo": "Nitrofurantoína 100mg comp  Prescrito por Oncologista",
+        "disponibilidade": [
+            "UBS",
+            "FARMÁCIA POPULAR"
+        ],
+        "notas": [
+            "Gratuito na rede credenciada"
+        ]
+    },
+    {
+        "id": "78",
+        "nome_completo": "Norfloxacino 400mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "79",
+        "nome_completo": "Sulfadiazina de prata 1% bisnaga",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "80",
+        "nome_completo": "Sulfametoxazol + Trimetroprima 200+40 mg / 5 ml frasco",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "81",
+        "nome_completo": "Sulfametoxazol + Trimetroprima 400mg +80",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "104",
+        "nome_completo": "Albendazol 40mg / ml frasco",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "105",
+        "nome_completo": "Albendazol 400mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "106",
+        "nome_completo": "Cetoconazol 200mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "107",
+        "nome_completo": "Itraconazol 100mg comprimido",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": [
+            "Protocolo Específico/Gestante"
+        ]
+    },
+    {
+        "id": "128",
+        "nome_completo": "Cloreto de sódio solução nasal frasco",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "108",
+        "nome_completo": "Ivermectina 6mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "129",
+        "nome_completo": "Guaco (Mikaniaglomerata) solução oral",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "109",
+        "nome_completo": "Metronidazol 250mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "130",
+        "nome_completo": "Salbutamol, sulfato 0.4 mg / ml frasco 100 ml",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "110",
+        "nome_completo": "Metronidazol 500mg/5g 50g bisnaga c/10",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "131",
+        "nome_completo": "Salbutamol, sulfato 2 mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "132",
+        "nome_completo": "Salbutamol aerossol (cx emergência)",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "111",
+        "nome_completo": "Miconazol, nitrato 80g creme vaginal c/14 aplicadores",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "112",
+        "nome_completo": "Miconazol, nitrato creme dermatológico 2% bisnaga com no mínimo 28g",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "113",
+        "nome_completo": "Nistatina 100.000/ml frasco",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "114",
+        "nome_completo": "Permetrina 5% loção 50 mgml frasco 60 ml",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "133",
+        "nome_completo": "Sinvastatina 20 mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "134",
+        "nome_completo": "Sinvastatina 40 mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "135",
+        "nome_completo": "Ácido valproico 250 mg / 5 ml",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "136",
+        "nome_completo": "Ácido valproico 250 mg cápsula",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "115",
+        "nome_completo": "Acetato de Medroxiprogesterona 25 mg + cipionato de estradiol 5 mg",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "137",
+        "nome_completo": "Amitriptilina, cloridrato 25 mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "138",
+        "nome_completo": "Biperideno, cloridrato 2 mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "116",
+        "nome_completo": "Algestona acetofenida 150 mg + enantato de estradiol 10mg",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "139",
+        "nome_completo": "Biperideno, lactato 5 mg / ml ampola 1 ml",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "140",
+        "nome_completo": "Carbamazepina 20 mg / ml frasco",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "117",
+        "nome_completo": "Ciproterona, acetato 1mg + estradiol, valerato 2mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "141",
+        "nome_completo": "Carbamazepina 200 mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "142",
+        "nome_completo": "Carbonato de lítio 300 mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "118",
+        "nome_completo": "D.I.U - dispositivo intrauterino de cobre",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "143",
+        "nome_completo": "Clomipramina, cloridrato 25 mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "119",
+        "nome_completo": "Gestodeno 0,075mg + etinilestradiol 0,02mg",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "144",
+        "nome_completo": "Clonazepam2 mg comp comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "145",
+        "nome_completo": "Clorpromazina, cloridrato 100 mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "120",
+        "nome_completo": "Levonorgestrel 0,15mg + etinilestradiol 0,03",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "146",
+        "nome_completo": "Clorpromazina, cloridrato 25 mg/5 ml ampola mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "147",
+        "nome_completo": "Clorpromazina, cloridrato 25 mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "121",
+        "nome_completo": "Levonorgestrel 0,75mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "148",
+        "nome_completo": "Clorpromazina, cloridrato 40 mg / ml frasco",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "122",
+        "nome_completo": "Medroxiprogesterona, acetato 150mg/ml",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "149",
+        "nome_completo": "Diazepam 10 mg comp ampola",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "150",
+        "nome_completo": "Diazepam5 mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "123",
+        "nome_completo": "Noretisterona + estradiol 50 + 5mg/ml",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "151",
+        "nome_completo": "Diazepam5 mg/ml 2 ml ampola ampola",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "152",
+        "nome_completo": "Fenitoina 100 mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "124",
+        "nome_completo": "Noretisterona 0,35mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "153",
+        "nome_completo": "Fenitoina sódica 50 mg / ml ampola",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "154",
+        "nome_completo": "Fenobarbital 100 mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "155",
+        "nome_completo": "Fenobarbital 40 mg / ml frasco",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "156",
+        "nome_completo": "Fenobarbital sódico 100 mg/ ml im/iv ampola",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "157",
+        "nome_completo": "Fluoxetina, cloridrato 20 mg cápsula",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "158",
+        "nome_completo": "Haloperidol1 mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "125",
+        "nome_completo": "Ambroxol, cloridrato 15mg / 5 ml frasco",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "159",
+        "nome_completo": "Haloperidol2 mg / ml frasco",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "126",
+        "nome_completo": "Ambroxol, cloridrato 30mg / 5 ml frasco",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "160",
+        "nome_completo": "Haloperidol5 mg / ml ampola",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "127",
+        "nome_completo": "Aminofilina 100mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "161",
+        "nome_completo": "Haloperidol5 mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "162",
+        "nome_completo": "Haloperidol decanoato 70,52mg/ml ampola",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "186",
+        "nome_completo": "Óxido de zinco 100 mg + retinol 1000 ui + calciferol 400 ui bisnaga",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "163",
+        "nome_completo": "Imipramina, cloridrato 25 mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "164",
+        "nome_completo": "Levomepromazina, maleato 100 mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "187",
+        "nome_completo": "Varfarina 5mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "165",
+        "nome_completo": "Metilfenidato, cloridrato 10 mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": [
+            "Protocolo Específico/Gestante"
+        ]
+    },
+    {
+        "id": "166",
+        "nome_completo": "Nortriptilina, cloridrato 25 mgcap",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "167",
+        "nome_completo": "Risperidona1 mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": [
+            "Protocolo Específico/Gestante"
+        ]
+    },
+    {
+        "id": "168",
+        "nome_completo": "Risperidona2 mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": [
+            "Protocolo Específico/Gestante"
+        ]
+    },
+    {
+        "id": "169",
+        "nome_completo": "Sertralina 50 mg",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "188",
+        "nome_completo": "Carbidopa + Levodopa 25mg+250mg comprimido",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "189",
+        "nome_completo": "Levodopa +benserazida 100mg+25mg BD",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "190",
+        "nome_completo": "Levodopa + benserazida 100mg+25mg – comprimido dispersível",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "191",
+        "nome_completo": "Levodopa + benserazida 100mg+25mg – HBS – cápsula",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "192",
+        "nome_completo": "Levodopa + benserazida 200mg+50mg comprimido",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "170",
+        "nome_completo": "Aciclovir 200 mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "171",
+        "nome_completo": "Azitromicina 500 mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "172",
+        "nome_completo": "Benzilpenicilinabenzatina 1.200.000UI/ml frasco (sífilis)",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "193",
+        "nome_completo": "Bupropiona 150 mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "173",
+        "nome_completo": "Benzilpenicilina procaína 300.000UI + benzilpenicilina potássica 100.000UI/ml frasco (sífilis congênita)",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "194",
+        "nome_completo": "Nicotina 14 mg adesivo",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "195",
+        "nome_completo": "Nicotina 21 mg adesivo",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "196",
+        "nome_completo": "Nicotina 7 mg adesivo",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "174",
+        "nome_completo": "Ceftriaxona 500mg IM",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "175",
+        "nome_completo": "Ciprofloxacino, cloridrato 500 mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "176",
+        "nome_completo": "Doxiciclina, cloridrato 100 mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "177",
+        "nome_completo": "Fluconazol 150 mg cápsula",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "178",
+        "nome_completo": "Secnidazol 1 g comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "197",
+        "nome_completo": "Levotiroxina sódica 25 mcg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "198",
+        "nome_completo": "Levotiroxina sódica 50 mcg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "199",
+        "nome_completo": "Levotiroxina sódica 100 mcg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "179",
+        "nome_completo": "Ácidos graxos essenciais + componentes 200ml frasco",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "180",
+        "nome_completo": "Colagenase 1.2UI sem cloranfenicol pomada",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "200",
+        "nome_completo": "Associação de sulfato de polimixina B 10.000 UI, sulfato de neomicina 3,5mg/ml, fluocinolona acetonida 0,25mg/ml e cloridrato de lidocaína 20mg/ml, apresentada em frasco com 5ml.",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "181",
+        "nome_completo": "Agua destilada 10ml ampola",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "182",
+        "nome_completo": "Cloreto de sódio 9% 10ml ampola",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "183",
+        "nome_completo": "Cloreto de sódio 20% 10ml ampola",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "184",
+        "nome_completo": "Alendronato de sódio 70 mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "185",
+        "nome_completo": "Doxazosina, mesilato2 mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "201",
+        "nome_completo": "Oseltamivir 30 mg cápsula",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "217",
+        "nome_completo": "Isoniazida 100 mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "202",
+        "nome_completo": "Oseltamivir 45 mg cápsula",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "218",
+        "nome_completo": "Rifampicina 150 mg + isoniazida 75 mg",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "203",
+        "nome_completo": "Oseltamivir 75 mg cápsula cápsula",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "219",
+        "nome_completo": "Rifampicina 150mg + Isoniazida75,g + Pirazinamida 400mg + Cloridrato de etambutol 275mg (COXIP)",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "204",
+        "nome_completo": "Ácido Folínico 15mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "205",
+        "nome_completo": "Espiramicina 1.5 ui comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "206",
+        "nome_completo": "Pirimetamina 25 mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "220",
+        "nome_completo": "Imunoglobulina 300mcg seringa",
+        "disponibilidade": [
+            "UBS",
+            "FARMÁCIA POPULAR"
+        ],
+        "notas": [
+            "Gratuito na rede credenciada"
+        ]
+    },
+    {
+        "id": "207",
+        "nome_completo": "Sulfadiazina 500 mg comp",
+        "disponibilidade": [
+            "UBS",
+            "FARMÁCIA POPULAR"
+        ],
+        "notas": [
+            "Gratuito na rede credenciada"
+        ]
+    },
+    {
+        "id": "208",
+        "nome_completo": "Artesunato 100mg+ Mefloquina 200mg",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "221",
+        "nome_completo": "Cloridrato de Metadona 10mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "222",
+        "nome_completo": "Fosfato de Codeína 30mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "209",
+        "nome_completo": "Artesunato 100mg+ Mefloquina 200mg",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "223",
+        "nome_completo": "Gabapentina 300mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "224",
+        "nome_completo": "Sulfato de Morfina 10mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "210",
+        "nome_completo": "Cloroquina 150 mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "225",
+        "nome_completo": "Sulfato de Morfina 10mg/ml ampola",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "211",
+        "nome_completo": "Fosfato de primaquina 15 mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "226",
+        "nome_completo": "Sulfato de Morfina 30mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "212",
+        "nome_completo": "Fosfato de primaquina 5 mg comp",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "213",
+        "nome_completo": "Rifampicina 20 mg / ml;",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "214",
+        "nome_completo": "Rifampicina 300 mg",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "215",
+        "nome_completo": "Antimoniato de meglumina 300 mg/ml",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    },
+    {
+        "id": "216",
+        "nome_completo": "MDT combi MB adulto",
+        "disponibilidade": [
+            "UBS"
+        ],
+        "notas": []
+    }
+]
