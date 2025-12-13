@@ -1,13 +1,12 @@
-name: Build Flet App
-
+name: Build Android APK
 on:
   push:
-    branches: [ "main", "master" ]
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
-  build-android:
-    name: Build Android APK
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -16,75 +15,57 @@ jobs:
           path: mobile
 
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v4
         with:
-          python-version: '3.12'
+          python-version: '3.11'
 
-      - name: Install Python Dependencies
+      # === A SOLUÇÃO: Forçar Flutter Antigo (Compatível com Flet 0.24) ===
+      - name: Setup Flutter 3.19.6
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.19.6'
+          channel: 'stable'
+          cache: true
+      
+      - name: Install Dependencies
         working-directory: mobile
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.24.3'
-          # cache: true (DISABLED)
-
-      - name: Verify Flutter Version
-        run: flutter --version
-
-      - name: Accept Android Licenses
-        run: |
-          yes | flutter doctor --android-licenses || true
-
-      - name: Install Android NDK
-        run: |
-          echo "y" | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "ndk;26.1.10909125"
-
-      - name: Build APK (Correção 0.24.1)
+      - name: Build APK (Tanque de Guerra + Flutter 3.19)
         working-directory: mobile
         run: |
           echo "=== 1. LIMPEZA E PREPARAÇÃO ==="
           rm -rf build
           
-          # === CORREÇÃO: Removido --clear-cache que não existe na v0.24 ===
-          echo "Iniciando build do Flet..."
+          echo "=== 2. BUILD FLET (Usando Flutter 3.19.6) ==="
+          # Sem --clear-cache pois não existe na v0.24
           flet build apk --verbose
           
-          echo "=== 2. LOCALIZANDO O ANDROID GERADO ==="
-          # Tenta achar onde o Flet criou o projeto Android
+          echo "=== 3. LOCALIZANDO O ANDROID GERADO ==="
           ANDROID_ROOT=$(find $(pwd) -name "gradlew" -type f | xargs dirname | head -n 1)
           
           if [ -z "$ANDROID_ROOT" ]; then
-            echo "❌ ERRO: O Flet não gerou a pasta android. O build falhou antes."
+            echo "❌ ERRO: O Flet não gerou a pasta android."
             exit 1
           fi
           
           SITE_PACKAGES_PATH=$(find $(pwd) -type d -name "site-packages" | head -n 1)
           ASSETS_DIR="$ANDROID_ROOT/app/src/main/assets/app"
           
-          echo "=== 3. INJEÇÃO DE CÓDIGO (SEGURANÇA PARA 0.24) ==="
-          # Garante que a pasta existe
+          echo "=== 4. INJEÇÃO DE CÓDIGO (SEGURANÇA PARA 0.24) ==="
           mkdir -p "$ASSETS_DIR"
           
           if [ -f "main.py" ]; then
-             echo "✅ Copiando main.py para main.py..."
+             echo "✅ Copiando main.py..."
              cp -f "main.py" "$ASSETS_DIR/main.py"
-             
-             # Na versão 0.24, às vezes ele busca o main dentro de 'src' ou direto
-             # Vamos garantir criando uma cópia de segurança
              echo "✅ Criando __init__.py..."
              touch "$ASSETS_DIR/__init__.py"
           else
-             echo "❌ ERRO CRÍTICO: main.py original não encontrado para cópia!"
-             ls -la
+             echo "❌ ERRO CRÍTICO: main.py não encontrado!"
              exit 1
           fi
-          
-          echo "=== 4. VERIFICAÇÃO FINAL ==="
-          ls -la "$ASSETS_DIR"
           
           echo "=== 5. COMPILAÇÃO GRADLE ==="
           cd "$ANDROID_ROOT"
@@ -108,57 +89,8 @@ jobs:
              exit 1
           fi
 
-      # ADICIONE ESTE BLOCO AQUI PARA DIAGNÓSTICO
-      - name: Inspect APK Content (Debug)
-        working-directory: mobile
-        run: |
-          sudo apt-get install unzip
-          echo "==== CONTEÚDO DA PASTA LIB/ARM64-V8A ===="
-          unzip -l build/apk/app-release.apk | grep "lib/arm64-v8a/"
-          echo "========================================="
-
-      - name: Upload APK Artifact
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: android-apk
+          name: app-release
           path: mobile/build/apk/app-release.apk
-
-  build-windows:
-    name: Build Windows EXE
-    runs-on: windows-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          path: mobile
-
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-
-      - name: Install Python Dependencies
-        working-directory: mobile
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.24.3'
-          # cache: true (DISABLED)
-
-      - name: Build Windows EXE
-        working-directory: mobile
-        run: |
-          flet build windows --verbose
-
-      # Flet/Flutter builds usually output to build/windows/runner/Release/
-      # We upload the whole folder or just the exe and necessary DLLs if needed.
-      # For Flet localized builds, it might be simpler to just zip the Release folder.
-      - name: Upload Windows Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: windows-exe
-          path: mobile/build/windows
