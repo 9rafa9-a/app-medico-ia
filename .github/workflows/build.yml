@@ -19,9 +19,7 @@ jobs:
         with:
           python-version: '3.11'
 
-      # === A CORREÇÃO: Flutter 3.22.2 (O Ponto de Equilíbrio) ===
-      # Dart 3.4 incluso (compatível com Flet 0.24)
-      # Sem as quebras de Gradle do Flutter 3.24
+      # MANTIDO: O Alinhamento Perfeito (Flutter 3.22.2)
       - name: Setup Flutter 3.22.2
         uses: subosito/flutter-action@v2
         with:
@@ -35,59 +33,24 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Build APK (Flet 0.24 + Flutter 3.22)
+      - name: Build APK (Flet 0.23.2 + Flutter 3.22)
         working-directory: mobile
         run: |
-          echo "=== 1. LIMPEZA E PREPARAÇÃO ==="
+          echo "=== 1. LIMPEZA ==="
           rm -rf build
           
-          echo "=== 2. BUILD FLET (Usando Flutter 3.22.2) ==="
-          # Sem --clear-cache pois não existe na v0.24
+          echo "=== 2. BUILD FLET ==="
+          # O Flet 0.23 vai gerar o APK direto em build/apk
           flet build apk --verbose
           
-          echo "=== 3. LOCALIZANDO O ANDROID GERADO ==="
-          ANDROID_ROOT=$(find $(pwd) -name "gradlew" -type f | xargs dirname | head -n 1)
-          
-          if [ -z "$ANDROID_ROOT" ]; then
-            echo "❌ ERRO: O Flet não gerou a pasta android."
-            exit 1
-          fi
-          
-          SITE_PACKAGES_PATH=$(find $(pwd) -type d -name "site-packages" | head -n 1)
-          ASSETS_DIR="$ANDROID_ROOT/app/src/main/assets/app"
-          
-          echo "=== 4. INJEÇÃO DE CÓDIGO (SEGURANÇA PARA 0.24) ==="
-          mkdir -p "$ASSETS_DIR"
-          
-          if [ -f "main.py" ]; then
-             echo "✅ Copiando main.py..."
-             cp -f "main.py" "$ASSETS_DIR/main.py"
-             echo "✅ Criando __init__.py..."
-             touch "$ASSETS_DIR/__init__.py"
+          echo "=== 3. VERIFICAÇÃO ==="
+          # Vamos apenas conferir se o troféu está lá
+          if [ -f "build/apk/app-release.apk" ]; then
+             echo "✅ SUCESSO ABSOLUTO! O APK ESTÁ PRONTO."
+             ls -lh build/apk/
           else
-             echo "❌ ERRO CRÍTICO: main.py não encontrado!"
-             exit 1
-          fi
-          
-          echo "=== 5. COMPILAÇÃO GRADLE ==="
-          cd "$ANDROID_ROOT"
-          chmod +x gradlew
-          export SERIOUS_PYTHON_SITE_PACKAGES="$SITE_PACKAGES_PATH"
-          ./gradlew clean assembleRelease --stacktrace
-          
-          echo "=== 6. RESGATANDO O APK ==="
-          cd "$GITHUB_WORKSPACE/mobile"
-          BUILT_APK=$(find . -name "*.apk" | grep "release" | head -n 1)
-          
-          TARGET_DIR="build/apk"
-          mkdir -p "$TARGET_DIR"
-          TARGET_FILE="$TARGET_DIR/app-release.apk"
-          
-          if [ -f "$BUILT_APK" ]; then
-             cp "$BUILT_APK" "$TARGET_FILE"
-             echo "✅ APK PRONTO: $TARGET_FILE"
-          else
-             echo "❌ APK NÃO ENCONTRADO"
+             echo "❌ Algo estranho aconteceu. O Flet disse sucesso mas o arquivo não está lá."
+             ls -R
              exit 1
           fi
 
