@@ -46,58 +46,51 @@ jobs:
       - name: Build APK (Force Native Libs)
         working-directory: mobile
         run: |
-          echo "=== 1. RODANDO FLET BUILD (PADRÃO) ==="
-          # Removemos a flag inválida. Adicionamos '|| true' para não travar se ele falhar.
-          # O objetivo aqui é apenas gerar a pasta 'android' e o 'site-packages'.
+          echo "=== 1. RODANDO FLET BUILD (PREPARAÇÃO) ==="
           flet build apk --verbose --clear-cache || true
           
-          echo "=== 2. LOCALIZANDO PASTAS CRÍTICAS ==="
-          # Encontra a pasta 'site-packages' onde quer que ela esteja
+          echo "=== 2. LOCALIZANDO SITE-PACKAGES ==="
           SITE_PACKAGES_PATH=$(find $(pwd) -type d -name "site-packages" | head -n 1)
           
           if [ -z "$SITE_PACKAGES_PATH" ]; then
-            echo "ERRO FATAL: site-packages não foi gerado pelo Flet."
+            echo "ERRO FATAL: site-packages não encontrado."
             exit 1
           fi
-          echo "PYTHON ASSETS ENCONTRADOS EM: $SITE_PACKAGES_PATH"
+          echo "PYTHON ASSETS: $SITE_PACKAGES_PATH"
           
-          # Encontra a pasta raiz do projeto Android (onde está o gradlew)
-          # Procuramos pelo arquivo 'gradlew' e pegamos o diretório dele
+          # Localiza raiz do Android
           ANDROID_ROOT=$(find $(pwd) -name "gradlew" -type f | xargs dirname | head -n 1)
           
-          if [ -z "$ANDROID_ROOT" ]; then
-            echo "ERRO FATAL: Projeto Android não foi gerado."
-            exit 1
-          fi
-          echo "PROJETO ANDROID ENCONTRADO EM: $ANDROID_ROOT"
-          
-          echo "=== 3. INJETANDO VARIÁVEIS E COMPILANDO COM GRADLE ==="
+          echo "=== 3. COMPILANDO COM GRADLE ==="
           cd "$ANDROID_ROOT"
           chmod +x gradlew
-          
-          # AQUI ACONTECE A MÁGICA: Passamos o caminho que faltava
           export SERIOUS_PYTHON_SITE_PACKAGES="$SITE_PACKAGES_PATH"
           
-          echo "Iniciando compilação manual..."
           ./gradlew clean assembleRelease --stacktrace
           
-          echo "=== 4. RESGATANDO O APK ==="
-          # Procura o APK gerado dentro da pasta atual (android)
-          BUILT_APK=$(find . -name "app-release.apk" | head -n 1)
+          echo "=== 4. DIAGNÓSTICO E RESGATE ==="
+          # Lista o que foi gerado para você ver no log
+          echo "Conteúdo da pasta outputs:"
+          ls -R app/build/outputs
+          
+          # Procura QUALQUER .apk dentro de outputs/apk/release
+          # Isso pega tanto 'app-release.apk' quanto 'app-release-unsigned.apk'
+          BUILT_APK=$(find app/build/outputs/apk/release -name "*.apk" | head -n 1)
           
           if [ -z "$BUILT_APK" ]; then
-             echo "ERRO: O Gradle rodou mas não gerou o APK."
+             echo "ERRO: O Gradle disse sucesso, mas nenhum APK foi encontrado."
              exit 1
           fi
           
-          # Copia para o local esperado pelo GitHub Actions (3 níveis acima geralmente)
-          # O caminho final deve ser mobile/build/apk/app-release.apk
-          # Como estamos dentro de mobile/build/?????/android, vamos usar caminho absoluto do destino
+          echo "APK ENCONTRADO: $BUILT_APK"
+          
+          # Define destino (absoluto)
           DESTINATION="$GITHUB_WORKSPACE/mobile/build/apk"
           mkdir -p "$DESTINATION"
+          
           cp "$BUILT_APK" "$DESTINATION/app-release.apk"
           
-          echo "✅ APK movido com sucesso para: $DESTINATION/app-release.apk"
+          echo "✅ APK movido e renomeado com sucesso para: $DESTINATION/app-release.apk"
 
       # ADICIONE ESTE BLOCO AQUI PARA DIAGNÓSTICO
       - name: Inspect APK Content (Debug)
