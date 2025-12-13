@@ -43,10 +43,24 @@ jobs:
         run: |
           echo "y" | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "ndk;26.1.10909125"
 
-      - name: Build APK (Custom Android Entry Point)
+      - name: Build APK (Force Native Libs)
         working-directory: mobile
         run: |
-          flet build apk --clear-cache --verbose
+          # 1. Gera o código nativo do Flutter, mas não compila o APK final ainda
+          flet build apk --verbose --clear-cache --no-build
+          
+          # 2. Navega para a pasta do projeto Android gerado
+          cd build/apk/android
+          
+          # 3. Força a limpeza e compilação direta via Gradle (isso costuma ser mais rigoroso que o CLI do Flet)
+          chmod +x gradlew
+          ./gradlew clean assembleRelease --stacktrace
+          
+          # 4. Move o APK gerado para o local onde o Upload Artifact espera
+          cd ../..
+          # O APK gerado pelo Gradle fica em build/apk/android/app/build/outputs/apk/release/app-release.apk
+          # Vamos garantir que ele esteja no caminho esperado pelo próximo passo
+          cp build/apk/android/app/build/outputs/apk/release/app-release.apk build/apk/app-release.apk
 
       # ADICIONE ESTE BLOCO AQUI PARA DIAGNÓSTICO
       - name: Inspect APK Content (Debug)
