@@ -7,36 +7,38 @@ APP_VERSION = "1.0.0"
 UPDATE_URL = "https://raw.githubusercontent.com/9rafa9-a/swift-gemini/main/version.json" # Adjust repo user/name if needed
 
 def main(page: ft.Page):
-    # 1. SETUP UI SHELL
-    page.title = "Medico IA"
-    page.scroll = "auto"
-    page.theme_mode = "light"
-    page.bgcolor = "#f5f5f5"
-
-    # Header / Debug Log
-    debug_expander = ft.ExpansionTile(
-        title=ft.Text("Log do Sistema", size=12, color="grey"),
-        subtitle=ft.Text(f"v{APP_VERSION}", size=10),
-        controls=[
-            ft.ListView(height=150, spacing=2, padding=10, auto_scroll=True, id="log_view")
-        ]
-    )
-    
-    # Main Container
-    main_col = ft.Column(spacing=20)
-    page.add(debug_expander, main_col)
-
-    def log(msg, error=False):
-        # Add to log view logic (simplified for perf)
-        # We might not render everything to avoid lag, mainly prints
-        print(msg)
-        try:
-             # Just invalidating log if needed, for now keep simple print
-             pass
-        except: pass
-
-    # 2. RUNTIME LOADING
     try:
+        # 1. SETUP UI SHELL
+        page.title = "Medico IA"
+        page.scroll = "auto"
+        page.theme_mode = "light"
+        page.bgcolor = "#f5f5f5"
+
+        # Header / Debug Log
+        debug_expander = ft.ExpansionTile(
+            title=ft.Text("Log do Sistema", size=12, color="grey"),
+            subtitle=ft.Text(f"v{APP_VERSION}", size=10),
+            controls=[
+                ft.ListView(height=150, spacing=2, padding=10, auto_scroll=True, id="log_view")
+            ]
+        )
+        
+        # Main Container
+        main_col = ft.Column(spacing=20)
+        page.add(debug_expander, main_col)
+
+        def log(msg, error=False):
+            # Add to log view logic (simplified for perf)
+            # We might not render everything to avoid lag, mainly prints
+            print(msg)
+            try:
+                 # Just invalidating log if needed, for now keep simple print
+                 pass
+            except: pass
+
+        # 2. RUNTIME LOADING
+        # Previously we had a try block here, but now we wrap everything.
+        # We can keep the logging.
         log("Importando Bibliotecas...")
         import os
         import json
@@ -319,7 +321,20 @@ def main(page: ft.Page):
         page.update()
 
     except Exception as e:
-        page.add(ft.Text(f"Fatal Error: {traceback.format_exc()}", color="red"))
+        page.clean()
+        page.add(
+            ft.Column([
+                ft.Text("ERRO FATAL NO PYTHON:", color=ft.colors.RED, size=20, weight=ft.FontWeight.BOLD),
+                ft.Text(f"Erro: {str(e)}", color=ft.colors.RED),
+                ft.Container(
+                    content=ft.Text(traceback.format_exc(), size=12, font_family="monospace"),
+                    bgcolor=ft.colors.GREY_900,
+                    padding=10,
+                    border_radius=5
+                )
+            ], scroll=ft.ScrollMode.ALWAYS)
+        )
+        page.update()
 
 if __name__ == "__main__":
     ft.app(target=main)
