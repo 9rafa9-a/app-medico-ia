@@ -43,72 +43,62 @@ jobs:
         run: |
           echo "y" | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "ndk;26.1.10909125"
 
-      - name: Build APK (Force Native Libs & Main Script)
+      - name: Build APK (Injeção Tardia + Init)
         working-directory: mobile
         run: |
           echo "=== 1. LIMPEZA E PREPARAÇÃO ==="
           rm -rf build
+          # Roda o Flet primeiro para criar a estrutura base
           flet build apk --verbose --clear-cache || true
           
-          echo "=== 2. LOCALIZANDO PASTAS CRÍTICAS ==="
           SITE_PACKAGES_PATH=$(find $(pwd) -type d -name "site-packages" | head -n 1)
           ANDROID_ROOT=$(find $(pwd) -name "gradlew" -type f | xargs dirname | head -n 1)
           
-          if [ -z "$ANDROID_ROOT" ]; then
-            echo "❌ ERRO: Projeto Android não gerado."
-            exit 1
-          fi
+          # === A MUDANÇA: Definir o local exato ===
+          ASSETS_DIR="$ANDROID_ROOT/app/src/main/assets/app"
           
-          # === A CORREÇÃO DE OURO: FORÇAR O MAIN.PY ===
-          ASSETS_APP_DIR="$ANDROID_ROOT/app/src/main/assets/app"
+          echo "=== 2. INJEÇÃO DE CÓDIGO (SOBRESCREVENDO) ==="
+          # Garante que a pasta existe
+          mkdir -p "$ASSETS_DIR"
           
-          echo "=== 3. CIRURGIA NO MAIN.PY ==="
-          mkdir -p "$ASSETS_APP_DIR"
+          # Copia o main.py (Diagnóstico) para lá, forçando a substituição
+          echo "Copiando main.py para: $ASSETS_DIR"
+          cp -f "main.py" "$ASSETS_DIR/main.py"
           
-          if [ -f "main.py" ]; then
-             echo "✅ main.py encontrado. Copiando para assets..."
-             cp "main.py" "$ASSETS_APP_DIR/main.py"
-          else
-             echo "❌ ERRO CRÍTICO: main.py não encontrado!"
-             exit 1
-          fi
+          # CRUCIAL: Cria um __init__.py vazio para o Python reconhecer o pacote
+          touch "$ASSETS_DIR/__init__.py"
           
-          echo "=== 4. COMPILAÇÃO GRADLE ==="
+          echo "=== 3. VERIFICAÇÃO FORENSE ==="
+          echo "Conteúdo da pasta de assets:"
+          ls -la "$ASSETS_DIR"
+          echo "Início do arquivo main.py copiado:"
+          head -n 5 "$ASSETS_DIR/main.py"
+          
+          echo "=== 4. COMPILAÇÃO GRADLE (FINAL) ==="
           cd "$ANDROID_ROOT"
           chmod +x gradlew
           export SERIOUS_PYTHON_SITE_PACKAGES="$SITE_PACKAGES_PATH"
           ./gradlew clean assembleRelease --stacktrace
           
-          echo "=== 5. RESGATE DO APK (COM PROTEÇÃO) ==="
+          echo "=== 5. MOVENDO APK PARA SAÍDA ==="
           cd "$GITHUB_WORKSPACE/mobile"
-          
-          # Encontra o APK gerado
           BUILT_APK=$(find . -name "*.apk" | grep "release" | head -n 1)
           
-          if [ -z "$BUILT_APK" ]; then
-             echo "❌ ERRO: APK sumiu."
+          # Proteção contra falha de cópia
+          TARGET_DIR="build/apk"
+          mkdir -p "$TARGET_DIR"
+          TARGET_FILE="$TARGET_DIR/app-release.apk"
+          
+          if [ -f "$BUILT_APK" ]; then
+             # Só copia se forem arquivos diferentes (evita erro do Linux)
+             if [ "$(readlink -f $BUILT_APK)" != "$(readlink -f $TARGET_FILE)" ]; then
+                 cp "$BUILT_APK" "$TARGET_FILE"
+             fi
+             echo "✅ APK PRONTO"
+          else
+             echo "❌ APK NÃO ENCONTRADO NO SISTEMA"
              exit 1
           fi
-          
-          echo "APK ENCONTRADO EM: $BUILT_APK"
-          
-          # Define destino
-          TARGET_DIR="build/apk"
-          TARGET_FILE="$TARGET_DIR/app-release.apk"
-          mkdir -p "$TARGET_DIR"
-          
-          # === PROTEÇÃO CONTRA O ERRO DE CÓPIA ===
-          ABS_SRC=$(readlink -f "$BUILT_APK")
-          ABS_DEST=$(readlink -f "$TARGET_FILE" || echo "$PWD/$TARGET_FILE")
-          
-          if [ "$ABS_SRC" == "$ABS_DEST" ]; then
-            echo "🎉 O arquivo já está no local correto! Pulando cópia."
-          else
-            echo "Movendo arquivo para o local de upload..."
-            cp "$BUILT_APK" "$TARGET_FILE"
-          fi
-          
-          echo "✅ PROCESSO FINALIZADO COM SUCESSO"
 
       # ADICIONE ESTE BLOCO AQUI PARA DIAGNÓSTICO
       - name: Inspect APK Content (Debug)
