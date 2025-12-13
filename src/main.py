@@ -8,7 +8,8 @@ from unidecode import unidecode
 # Note: google.generativeai might need to be installed or used via REST API if the library has issues on Android.
 # Ideally we use the library if it builds, or requests if we want to be "pure python" safe.
 # Given build.yml installs it, we'll try to import it.
-import google.generativeai as genai
+# import google.generativeai as genai # REMOVIDO: Usando REST API para evitar bloatware
+
 
 # --- CONFIGURAÇÃO DE AMBIENTE ---
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -117,42 +118,88 @@ def check_meds(med_list):
     return results
 
 # Processamento Gemini
+# Processamento Gemini via REST (Sem SDK pesado)
 def run_gemini_analysis(api_key, audio_path):
     if not api_key: return {"error": "API Key não configurada"}
     
     try:
-        genai.configure(api_key=api_key)
-        audio_file = genai.upload_file(path=audio_path)
+        # Prepara a URL (Usando Flash que é rápido e multimodal)
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={api_key}"
         
-        # Espera processar
-        while audio_file.state.name == "PROCESSING":
-            time.sleep(1)
-            audio_file = genai.get_file(audio_file.name)
+        # Lê e codifica o áudio para Base64
+        import base64
+        import mimetypes
+        
+        if not os.path.exists(audio_path):
+            return {"error": "Arquivo de áudio não encontrado"}
             
-        model = genai.GenerativeModel('gemini-1.5-flash') # Usando flash para rapidez
+        mime_type, _ = mimetypes.guess_type(audio_path)
+        if not mime_type: mime_type = "audio/wav" # Fallback
         
-        prompt = """
-        Atue como médico especialista. Analise o áudio da consulta.
-        Retorne APENAS um JSON com:
-        {
-            "soap": {"s": "...", "o": "...", "a": "...", "p": "..."},
-            "diagnostico": "Hipótese principal",
-            "medicamentos": ["Nome Genérico 1", "Nome Genérico 2"]
+        with open(audio_path, "rb") as f:
+            audio_data = base64.b64encode(f.read()).decode("utf-8")
+            
+        # Payload JSON
+        payload = {
+            "contents": [{
+                "parts": [
+                    {
+                        "text": """
+                        Atue como médico especialista. Analise o áudio da consulta com extrema atenção aos detalhes clínicos.
+                        Retorne APENAS um JSON válido (sem markdown) com a seguinte estrutura:
+                        {
+                            "soap": {
+                                "s": "Subjetivo detalhado",
+                                "o": "Objetivo detalhado",
+                                "a": "Avaliação clínica",
+                                "p": "Plano terapêutico"
+                            },
+                            "diagnostico": "Hipótese diagnóstica principal",
+                            "medicamentos": ["Nome Genérico 1", "Nome Genérico 2"]
+                        }
+                        """
+                    },
+                    {
+                        "inline_data": {
+                            "mime_type": mime_type,
+                            "data": audio_data
+                        }
+                    }
+                ]
+            }]
         }
-        """
         
-        response = model.generate_content([prompt, audio_file])
-        try:
-            txt = response.text.strip()
-            if txt.startswith("```"):
-                txt = txt.split("```")[1]
-                if txt.startswith("json"): txt = txt[4:]
-            return json.loads(txt)
-        except:
-            return {"error": "Falha no parse do JSON", "raw": response.text}
+        headers = {'Content-Type': 'application/json'}
+        
+        # Request
+        response = requests.post(url, headers=headers, json=payload, timeout=60)
+        
+        if response.status_code != 200:
+            return {"error": f"Erro API ({response.status_code}): {response.text}"}
             
+        result_json = response.json()
+        
+        # Tenta extrair o texto da resposta da IA
+        try:
+            candidates = result_json.get("candidates", [])
+            if not candidates: return {"error": "API não retornou candidatos", "raw": result_json}
+            
+            raw_text = candidates[0].get("content", {}).get("parts", [])[0].get("text", "")
+            
+            # Limpeza do Markdown JSON (```json ... ```)
+            clean_text = raw_text.strip()
+            if clean_text.startswith("```"):
+                clean_text = clean_text.split("```")[1]
+                if clean_text.startswith("json"): 
+                    clean_text = clean_text[4:]
+            
+            return json.loads(clean_text)
+            
+        except Exception as parse_error:
+            return {"error": f"Erro ao processar JSON da IA: {str(parse_error)}", "raw_text": raw_text}
+
     except Exception as e:
-        return {"error": str(e)}
+        return {"error": f"Erro de conexão/processamento: {str(e)}"}
 
 # --- UI PRINCIPAL ---
 def main(page: ft.Page):
