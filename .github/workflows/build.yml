@@ -43,54 +43,70 @@ jobs:
         run: |
           echo "y" | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "ndk;26.1.10909125"
 
-      - name: Build APK (Force Native Libs)
+      - name: Build APK (Force Native Libs & Main Script)
         working-directory: mobile
         run: |
-          echo "=== 1. PREPARAÇÃO E COMPILAÇÃO ==="
+          echo "=== 1. LIMPEZA E PREPARAÇÃO ==="
+          # Limpa builds anteriores para evitar fantasmas
+          rm -rf build
+          
+          # Gera a estrutura Android base (scaffolding)
           flet build apk --verbose --clear-cache || true
           
+          echo "=== 2. LOCALIZANDO PASTAS CRÍTICAS ==="
           SITE_PACKAGES_PATH=$(find $(pwd) -type d -name "site-packages" | head -n 1)
           ANDROID_ROOT=$(find $(pwd) -name "gradlew" -type f | xargs dirname | head -n 1)
           
+          if [ -z "$ANDROID_ROOT" ]; then
+            echo "❌ ERRO: Projeto Android não gerado."
+            exit 1
+          fi
+          
+          echo "✅ Android Root: $ANDROID_ROOT"
+          
+          # === A CORREÇÃO DE OURO: FORÇAR O MAIN.PY ===
+          # O Flet espera o código em: [pasta_android]/app/src/main/assets/app/main.py
+          ASSETS_APP_DIR="$ANDROID_ROOT/app/src/main/assets/app"
+          
+          echo "=== 3. CIRURGIA NO MAIN.PY ==="
+          # Garante que a pasta existe
+          mkdir -p "$ASSETS_APP_DIR"
+          
+          # Verifica se o seu main.py existe na pasta atual (mobile)
+          if [ -f "main.py" ]; then
+             echo "✅ main.py encontrado na raiz 'mobile'. Copiando..."
+             cp "main.py" "$ASSETS_APP_DIR/main.py"
+             echo "🚀 SUCESSO: main.py injetado manualmente nos assets!"
+          else
+             echo "❌ ERRO CRÍTICO: main.py não encontrado na pasta $(pwd)"
+             ls -la
+             exit 1
+          fi
+          
+          # Lista para confirmar
+          echo "Conteúdo final da pasta assets/app:"
+          ls -la "$ASSETS_APP_DIR"
+          
+          echo "=== 4. COMPILAÇÃO GRADLE ==="
           cd "$ANDROID_ROOT"
           chmod +x gradlew
           export SERIOUS_PYTHON_SITE_PACKAGES="$SITE_PACKAGES_PATH"
           
+          # Compila
           ./gradlew clean assembleRelease --stacktrace
           
-          echo "=== 2. VERIFICAÇÃO FINAL ==="
+          echo "=== 5. RESGATE DO APK ==="
           cd "$GITHUB_WORKSPACE/mobile"
-          
-          # Procura o APK
           BUILT_APK=$(find . -name "*.apk" | grep "release" | head -n 1)
           
           if [ -z "$BUILT_APK" ]; then
-             echo "❌ ERRO CRÍTICO: APK não encontrado."
+             echo "❌ ERRO: APK não gerado."
              exit 1
           fi
           
-          echo "✅ APK LOCALIZADO EM: $BUILT_APK"
-          
-          # Define o destino desejado
-          TARGET_DIR="build/apk"
-          TARGET_FILE="$TARGET_DIR/app-release.apk"
-          
-          # Cria a pasta se não existir
-          mkdir -p "$TARGET_DIR"
-          
-          # Verifica se o arquivo encontrado já é o arquivo de destino
-          # O comando 'readlink -f' normaliza os caminhos para compararmos
-          ABS_SRC=$(readlink -f "$BUILT_APK")
-          ABS_DEST=$(readlink -f "$TARGET_FILE" || echo "$PWD/$TARGET_FILE")
-          
-          if [ "$ABS_SRC" == "$ABS_DEST" ]; then
-            echo "🎉 O arquivo já está no local correto! Nenhuma cópia necessária."
-          else
-            echo "Movendo arquivo para o local de upload..."
-            cp "$BUILT_APK" "$TARGET_FILE"
-          fi
-          
-          echo "🚀 PROCESSO CONCLUÍDO. PRONTO PARA UPLOAD."
+          mkdir -p build/apk
+          cp "$BUILT_APK" build/apk/app-release.apk
+          echo "✅ APK PRONTO PARA DOWNLOAD"
 
       # ADICIONE ESTE BLOCO AQUI PARA DIAGNÓSTICO
       - name: Inspect APK Content (Debug)
