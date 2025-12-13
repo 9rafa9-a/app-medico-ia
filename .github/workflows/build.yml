@@ -47,10 +47,7 @@ jobs:
         working-directory: mobile
         run: |
           echo "=== 1. LIMPEZA E PREPARAÇÃO ==="
-          # Limpa builds anteriores para evitar fantasmas
           rm -rf build
-          
-          # Gera a estrutura Android base (scaffolding)
           flet build apk --verbose --clear-cache || true
           
           echo "=== 2. LOCALIZANDO PASTAS CRÍTICAS ==="
@@ -62,51 +59,56 @@ jobs:
             exit 1
           fi
           
-          echo "✅ Android Root: $ANDROID_ROOT"
-          
           # === A CORREÇÃO DE OURO: FORÇAR O MAIN.PY ===
-          # O Flet espera o código em: [pasta_android]/app/src/main/assets/app/main.py
           ASSETS_APP_DIR="$ANDROID_ROOT/app/src/main/assets/app"
           
           echo "=== 3. CIRURGIA NO MAIN.PY ==="
-          # Garante que a pasta existe
           mkdir -p "$ASSETS_APP_DIR"
           
-          # Verifica se o seu main.py existe na pasta atual (mobile)
           if [ -f "main.py" ]; then
-             echo "✅ main.py encontrado na raiz 'mobile'. Copiando..."
+             echo "✅ main.py encontrado. Copiando para assets..."
              cp "main.py" "$ASSETS_APP_DIR/main.py"
-             echo "🚀 SUCESSO: main.py injetado manualmente nos assets!"
           else
-             echo "❌ ERRO CRÍTICO: main.py não encontrado na pasta $(pwd)"
-             ls -la
+             echo "❌ ERRO CRÍTICO: main.py não encontrado!"
              exit 1
           fi
-          
-          # Lista para confirmar
-          echo "Conteúdo final da pasta assets/app:"
-          ls -la "$ASSETS_APP_DIR"
           
           echo "=== 4. COMPILAÇÃO GRADLE ==="
           cd "$ANDROID_ROOT"
           chmod +x gradlew
           export SERIOUS_PYTHON_SITE_PACKAGES="$SITE_PACKAGES_PATH"
-          
-          # Compila
           ./gradlew clean assembleRelease --stacktrace
           
-          echo "=== 5. RESGATE DO APK ==="
+          echo "=== 5. RESGATE DO APK (COM PROTEÇÃO) ==="
           cd "$GITHUB_WORKSPACE/mobile"
+          
+          # Encontra o APK gerado
           BUILT_APK=$(find . -name "*.apk" | grep "release" | head -n 1)
           
           if [ -z "$BUILT_APK" ]; then
-             echo "❌ ERRO: APK não gerado."
+             echo "❌ ERRO: APK sumiu."
              exit 1
           fi
           
-          mkdir -p build/apk
-          cp "$BUILT_APK" build/apk/app-release.apk
-          echo "✅ APK PRONTO PARA DOWNLOAD"
+          echo "APK ENCONTRADO EM: $BUILT_APK"
+          
+          # Define destino
+          TARGET_DIR="build/apk"
+          TARGET_FILE="$TARGET_DIR/app-release.apk"
+          mkdir -p "$TARGET_DIR"
+          
+          # === PROTEÇÃO CONTRA O ERRO DE CÓPIA ===
+          ABS_SRC=$(readlink -f "$BUILT_APK")
+          ABS_DEST=$(readlink -f "$TARGET_FILE" || echo "$PWD/$TARGET_FILE")
+          
+          if [ "$ABS_SRC" == "$ABS_DEST" ]; then
+            echo "🎉 O arquivo já está no local correto! Pulando cópia."
+          else
+            echo "Movendo arquivo para o local de upload..."
+            cp "$BUILT_APK" "$TARGET_FILE"
+          fi
+          
+          echo "✅ PROCESSO FINALIZADO COM SUCESSO"
 
       # ADICIONE ESTE BLOCO AQUI PARA DIAGNÓSTICO
       - name: Inspect APK Content (Debug)
