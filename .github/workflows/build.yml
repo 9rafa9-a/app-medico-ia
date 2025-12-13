@@ -46,50 +46,51 @@ jobs:
       - name: Build APK (Force Native Libs)
         working-directory: mobile
         run: |
-          echo "=== 1. PREPARAÇÃO (FLET) ==="
+          echo "=== 1. PREPARAÇÃO E COMPILAÇÃO ==="
           flet build apk --verbose --clear-cache || true
           
           SITE_PACKAGES_PATH=$(find $(pwd) -type d -name "site-packages" | head -n 1)
-          echo "PYTHON ASSETS: $SITE_PACKAGES_PATH"
-          
           ANDROID_ROOT=$(find $(pwd) -name "gradlew" -type f | xargs dirname | head -n 1)
           
-          echo "=== 2. COMPILAÇÃO MANUAL (GRADLE) ==="
           cd "$ANDROID_ROOT"
           chmod +x gradlew
           export SERIOUS_PYTHON_SITE_PACKAGES="$SITE_PACKAGES_PATH"
           
           ./gradlew clean assembleRelease --stacktrace
           
-          echo "=== 3. BUSCA GLOBAL (SATÉLITE) ==="
+          echo "=== 2. VERIFICAÇÃO FINAL ==="
           cd "$GITHUB_WORKSPACE/mobile"
           
-          # Tenta achar APK (Release)
-          BUILT_FILE=$(find . -name "*.apk" | grep "release" | head -n 1)
+          # Procura o APK
+          BUILT_APK=$(find . -name "*.apk" | grep "release" | head -n 1)
           
-          # Se não achar APK, tenta achar AAB (Bundle)
-          if [ -z "$BUILT_FILE" ]; then
-             echo "APK não encontrado. Tentando achar AAB (Bundle)..."
-             BUILT_FILE=$(find . -name "*.aab" | grep "release" | head -n 1)
-          fi
-          
-          # === A REDE DE SEGURANÇA ===
-          if [ -z "$BUILT_FILE" ]; then
-             echo "❌ ERRO CRÍTICO: Nenhum arquivo .apk ou .aab foi encontrado."
-             echo "=== INICIANDO MODO SHERLOCK HOLMES (LISTAGEM TOTAL) ==="
-             echo "Vou listar tudo o que foi gerado na pasta build para descobrirmos o que aconteceu:"
-             
-             # Lista todos os arquivos ignorando pastas ocultas do git
-             find . -type f -not -path '*/.*' | grep "build"
-             
+          if [ -z "$BUILT_APK" ]; then
+             echo "❌ ERRO CRÍTICO: APK não encontrado."
              exit 1
           fi
           
-          echo "✅ ARQUIVO LOCALIZADO: $BUILT_FILE"
+          echo "✅ APK LOCALIZADO EM: $BUILT_APK"
           
-          mkdir -p build/apk
-          cp "$BUILT_FILE" build/apk/app-release.apk
-          echo "Arquivo pronto para upload."
+          # Define o destino desejado
+          TARGET_DIR="build/apk"
+          TARGET_FILE="$TARGET_DIR/app-release.apk"
+          
+          # Cria a pasta se não existir
+          mkdir -p "$TARGET_DIR"
+          
+          # Verifica se o arquivo encontrado já é o arquivo de destino
+          # O comando 'readlink -f' normaliza os caminhos para compararmos
+          ABS_SRC=$(readlink -f "$BUILT_APK")
+          ABS_DEST=$(readlink -f "$TARGET_FILE" || echo "$PWD/$TARGET_FILE")
+          
+          if [ "$ABS_SRC" == "$ABS_DEST" ]; then
+            echo "🎉 O arquivo já está no local correto! Nenhuma cópia necessária."
+          else
+            echo "Movendo arquivo para o local de upload..."
+            cp "$BUILT_APK" "$TARGET_FILE"
+          fi
+          
+          echo "🚀 PROCESSO CONCLUÍDO. PRONTO PARA UPLOAD."
 
       # ADICIONE ESTE BLOCO AQUI PARA DIAGNÓSTICO
       - name: Inspect APK Content (Debug)
