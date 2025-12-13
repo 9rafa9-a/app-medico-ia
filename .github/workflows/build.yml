@@ -43,64 +43,68 @@ jobs:
         run: |
           echo "y" | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "ndk;26.1.10909125"
 
-      - name: Build APK (Injeção Tardia + Init)
+      - name: Build APK (Correção 0.24.1)
         working-directory: mobile
         run: |
           echo "=== 1. LIMPEZA E PREPARAÇÃO ==="
           rm -rf build
-          # Roda o Flet primeiro para criar a estrutura base
-          flet build apk --verbose --clear-cache || true
           
-          SITE_PACKAGES_PATH=$(find $(pwd) -type d -name "site-packages" | head -n 1)
+          # === CORREÇÃO: Removido --clear-cache que não existe na v0.24 ===
+          echo "Iniciando build do Flet..."
+          flet build apk --verbose
+          
+          echo "=== 2. LOCALIZANDO O ANDROID GERADO ==="
+          # Tenta achar onde o Flet criou o projeto Android
           ANDROID_ROOT=$(find $(pwd) -name "gradlew" -type f | xargs dirname | head -n 1)
           
-          # === A MUDANÇA: Definir o local exato ===
+          if [ -z "$ANDROID_ROOT" ]; then
+            echo "❌ ERRO: O Flet não gerou a pasta android. O build falhou antes."
+            exit 1
+          fi
+          
+          SITE_PACKAGES_PATH=$(find $(pwd) -type d -name "site-packages" | head -n 1)
           ASSETS_DIR="$ANDROID_ROOT/app/src/main/assets/app"
           
-          echo "=== 2. INJEÇÃO DE CÓDIGO (DUPLA) ==="
+          echo "=== 3. INJEÇÃO DE CÓDIGO (SEGURANÇA PARA 0.24) ==="
+          # Garante que a pasta existe
           mkdir -p "$ASSETS_DIR"
           
           if [ -f "main.py" ]; then
              echo "✅ Copiando main.py para main.py..."
              cp -f "main.py" "$ASSETS_DIR/main.py"
              
-             echo "✅ Copiando main.py TAMBÉM para __init__.py (Garantia)..."
-             cp -f "main.py" "$ASSETS_DIR/__init__.py"
+             # Na versão 0.24, às vezes ele busca o main dentro de 'src' ou direto
+             # Vamos garantir criando uma cópia de segurança
+             echo "✅ Criando __init__.py..."
+             touch "$ASSETS_DIR/__init__.py"
           else
-             echo "❌ ERRO CRÍTICO: main.py não encontrado!"
+             echo "❌ ERRO CRÍTICO: main.py original não encontrado para cópia!"
              ls -la
              exit 1
           fi
           
-          echo "=== 3. VERIFICAÇÃO FORENSE ==="
-          echo "Conteúdo da pasta de assets:"
+          echo "=== 4. VERIFICAÇÃO FINAL ==="
           ls -la "$ASSETS_DIR"
-          echo "Início do arquivo main.py copiado:"
-          head -n 5 "$ASSETS_DIR/main.py"
           
-          echo "=== 4. COMPILAÇÃO GRADLE (FINAL) ==="
+          echo "=== 5. COMPILAÇÃO GRADLE ==="
           cd "$ANDROID_ROOT"
           chmod +x gradlew
           export SERIOUS_PYTHON_SITE_PACKAGES="$SITE_PACKAGES_PATH"
           ./gradlew clean assembleRelease --stacktrace
           
-          echo "=== 5. MOVENDO APK PARA SAÍDA ==="
+          echo "=== 6. RESGATANDO O APK ==="
           cd "$GITHUB_WORKSPACE/mobile"
           BUILT_APK=$(find . -name "*.apk" | grep "release" | head -n 1)
           
-          # Proteção contra falha de cópia
           TARGET_DIR="build/apk"
           mkdir -p "$TARGET_DIR"
           TARGET_FILE="$TARGET_DIR/app-release.apk"
           
           if [ -f "$BUILT_APK" ]; then
-             # Só copia se forem arquivos diferentes (evita erro do Linux)
-             if [ "$(readlink -f $BUILT_APK)" != "$(readlink -f $TARGET_FILE)" ]; then
-                 cp "$BUILT_APK" "$TARGET_FILE"
-             fi
-             echo "✅ APK PRONTO"
+             cp "$BUILT_APK" "$TARGET_FILE"
+             echo "✅ APK PRONTO: $TARGET_FILE"
           else
-             echo "❌ APK NÃO ENCONTRADO NO SISTEMA"
+             echo "❌ APK NÃO ENCONTRADO"
              exit 1
           fi
 
