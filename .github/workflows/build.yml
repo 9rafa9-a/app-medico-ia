@@ -46,49 +46,50 @@ jobs:
       - name: Build APK (Force Native Libs)
         working-directory: mobile
         run: |
-          echo "=== 1. RODANDO FLET BUILD (PREPARAÇÃO) ==="
+          echo "=== 1. PREPARAÇÃO (FLET) ==="
           flet build apk --verbose --clear-cache || true
           
-          echo "=== 2. LOCALIZANDO SITE-PACKAGES ==="
           SITE_PACKAGES_PATH=$(find $(pwd) -type d -name "site-packages" | head -n 1)
-          
-          if [ -z "$SITE_PACKAGES_PATH" ]; then
-            echo "ERRO FATAL: site-packages não encontrado."
-            exit 1
-          fi
           echo "PYTHON ASSETS: $SITE_PACKAGES_PATH"
           
-          # Localiza raiz do Android
           ANDROID_ROOT=$(find $(pwd) -name "gradlew" -type f | xargs dirname | head -n 1)
           
-          echo "=== 3. COMPILANDO COM GRADLE ==="
+          echo "=== 2. COMPILAÇÃO MANUAL (GRADLE) ==="
           cd "$ANDROID_ROOT"
           chmod +x gradlew
           export SERIOUS_PYTHON_SITE_PACKAGES="$SITE_PACKAGES_PATH"
           
-          # Compila
           ./gradlew clean assembleRelease --stacktrace
           
-          echo "=== 4. CÃO FAREJADOR DE APK ==="
-          # Procura o APK em QUALQUER lugar a partir daqui
-          # Ignora arquivos de teste ou intermediários, foca no release
-          BUILT_APK=$(find . -type f -name "*.apk" | grep "release" | head -n 1)
+          echo "=== 3. BUSCA GLOBAL (SATÉLITE) ==="
+          cd "$GITHUB_WORKSPACE/mobile"
           
-          if [ -z "$BUILT_APK" ]; then
-             echo "ERRO: O Gradle disse sucesso, mas o find não achou o APK. Listando tudo:"
-             find . -name "*.apk"
+          # Tenta achar APK (Release)
+          BUILT_FILE=$(find . -name "*.apk" | grep "release" | head -n 1)
+          
+          # Se não achar APK, tenta achar AAB (Bundle)
+          if [ -z "$BUILT_FILE" ]; then
+             echo "APK não encontrado. Tentando achar AAB (Bundle)..."
+             BUILT_FILE=$(find . -name "*.aab" | grep "release" | head -n 1)
+          fi
+          
+          # === A REDE DE SEGURANÇA ===
+          if [ -z "$BUILT_FILE" ]; then
+             echo "❌ ERRO CRÍTICO: Nenhum arquivo .apk ou .aab foi encontrado."
+             echo "=== INICIANDO MODO SHERLOCK HOLMES (LISTAGEM TOTAL) ==="
+             echo "Vou listar tudo o que foi gerado na pasta build para descobrirmos o que aconteceu:"
+             
+             # Lista todos os arquivos ignorando pastas ocultas do git
+             find . -type f -not -path '*/.*' | grep "build"
+             
              exit 1
           fi
           
-          echo "APK ENCONTRADO EM: $BUILT_APK"
+          echo "✅ ARQUIVO LOCALIZADO: $BUILT_FILE"
           
-          # Define destino (absoluto) para o upload
-          DESTINATION="$GITHUB_WORKSPACE/mobile/build/apk"
-          mkdir -p "$DESTINATION"
-          
-          cp "$BUILT_APK" "$DESTINATION/app-release.apk"
-          
-          echo "✅ APK RESGATADO COM SUCESSO!"
+          mkdir -p build/apk
+          cp "$BUILT_FILE" build/apk/app-release.apk
+          echo "Arquivo pronto para upload."
 
       # ADICIONE ESTE BLOCO AQUI PARA DIAGNÓSTICO
       - name: Inspect APK Content (Debug)
