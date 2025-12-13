@@ -46,22 +46,25 @@ jobs:
       - name: Build APK (Force Native Libs)
         working-directory: mobile
         run: |
-          # 1. Gera o APK e a estrutura de pastas
+          # 1. Deixa o Flet preparar o terreno (gerando APK padrão e assets)
           flet build apk --verbose --clear-cache
           
-          # Debug: Listar o conteúdo da pasta build para tirar a prova real
-          echo "=== LISTANDO PASTA BUILD (DEBUG) ==="
-          ls -R build || echo "Pasta build não encontrada"
-          echo "===================================="
+          # 2. Descobre onde o Flet colocou o site-packages e define variável obrigatória para o build manual
+          export SITE_PACKAGES_PATH=$(pwd)/build/flutter/assets/site-packages
+          echo "Site Packages Path: $SITE_PACKAGES_PATH"
           
-          # 2. Entra na pasta do projeto Android (Correção: caminho provável é build/flutter/android)
+          # Debug: Listar assets para confirmar
+          ls -R build/flutter/assets || echo "Assets não encontrados"
+          
+          # 3. Entra na pasta do projeto Android (Caminho corrigido: build/flutter/android)
           cd build/flutter/android
           
-          # 3. Força o Gradle a limpar e recompilar
+          # 4. Força o Gradle, passando a variável de ambiente que faltava
           chmod +x gradlew
+          export SERIOUS_PYTHON_SITE_PACKAGES=$SITE_PACKAGES_PATH
           ./gradlew clean assembleRelease --stacktrace
           
-          # 4. Volta para a raiz (mobile) e copia o APK
+          # 5. Resgata o APK gerado
           cd ../../..
           # Copia do output do Gradle para onde o GitHub espera
           cp build/flutter/android/app/build/outputs/apk/release/app-release.apk build/apk/app-release.apk
