@@ -46,22 +46,25 @@ jobs:
       - name: Build APK (Force Native Libs)
         working-directory: mobile
         run: |
-          # 1. Deixa o Flet rodar normal (vai gerar o APK sem a lib, mas cria a estrutura de pastas)
+          # 1. Gera o APK e a estrutura de pastas
           flet build apk --verbose --clear-cache
           
-          # 2. Entra na pasta do projeto Android que o Flet criou
-          cd build/apk/android
+          # Debug: Listar o conteúdo da pasta build para tirar a prova real
+          echo "=== LISTANDO PASTA BUILD (DEBUG) ==="
+          ls -R build || echo "Pasta build não encontrada"
+          echo "===================================="
           
-          # 3. Força o Gradle a limpar tudo e recompilar "na marra"
-          # Isso obriga o sistema a checar todas as dependências nativas novamente
+          # 2. Entra na pasta do projeto Android (Correção: caminho provável é build/flutter/android)
+          cd build/flutter/android
+          
+          # 3. Força o Gradle a limpar e recompilar
           chmod +x gradlew
           ./gradlew clean assembleRelease --stacktrace
           
-          # 4. Volta para a pasta raiz e pega o NOVO APK gerado pelo Gradle
-          cd ../..
-          # O Gradle salva o arquivo num caminho profundo, vamos trazê-lo para onde o GitHub espera
-          # Ajuste: Copiando para build/apk/app-release.apk para sobrescrever o gerado no passo 1 e ser pego pelo Upload/Debug
-          cp build/apk/android/app/build/outputs/apk/release/app-release.apk build/apk/app-release.apk
+          # 4. Volta para a raiz (mobile) e copia o APK
+          cd ../../..
+          # Copia do output do Gradle para onde o GitHub espera
+          cp build/flutter/android/app/build/outputs/apk/release/app-release.apk build/apk/app-release.apk
 
       # ADICIONE ESTE BLOCO AQUI PARA DIAGNÓSTICO
       - name: Inspect APK Content (Debug)
