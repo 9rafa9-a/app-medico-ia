@@ -46,28 +46,34 @@ jobs:
       - name: Build APK (Force Native Libs)
         working-directory: mobile
         run: |
-          # 1. Deixa o Flet preparar o terreno (gerando APK padrão e assets)
-          flet build apk --verbose --clear-cache
+          # 1. Prepara o projeto (sem build final)
+          flet build apk --verbose --clear-cache --no-build || true
           
-          # 2. Descobre onde o Flet colocou o site-packages e define variável obrigatória para o build manual
-          export SITE_PACKAGES_PATH=$(pwd)/build/flutter/assets/site-packages
-          echo "Site Packages Path: $SITE_PACKAGES_PATH"
+          # 2. Localiza site-packages
+          export SITE_PACKAGES_PATH=$(find $(pwd)/build -type d -name "site-packages" | head -n 1)
+          echo "USANDO SITE_PACKAGES EM: $SITE_PACKAGES_PATH"
           
-          # Debug: Listar assets para confirmar
-          ls -R build/flutter/assets || echo "Assets não encontrados"
-          
-          # 3. Entra na pasta do projeto Android (Caminho corrigido: build/flutter/android)
+          # 3. Entra na pasta Android e Compila (Caminho verificado: build/flutter/android)
           cd build/flutter/android
-          
-          # 4. Força o Gradle, passando a variável de ambiente que faltava
           chmod +x gradlew
           export SERIOUS_PYTHON_SITE_PACKAGES=$SITE_PACKAGES_PATH
+          
+          echo "Iniciando Gradle Build..."
           ./gradlew clean assembleRelease --stacktrace
           
-          # 5. Resgata o APK gerado
-          cd ../../..
-          # Copia do output do Gradle para onde o GitHub espera
-          cp build/flutter/android/app/build/outputs/apk/release/app-release.apk build/apk/app-release.apk
+          # 4. Operação de Resgate do APK (Usando caminho absoluto para não errar)
+          echo "Copiando APK..."
+          # Define onde o APK nasceu
+          ORIGIN_APK="$(pwd)/app/build/outputs/apk/release/app-release.apk"
+          # Define para onde ele vai (pasta build/apk dentro de mobile)
+          DEST_APK="../../../build/apk/app-release.apk"
+          
+          # Garante que o diretório de destino existe
+          mkdir -p "$(dirname "$DEST_APK")"
+          
+          cp "$ORIGIN_APK" "$DEST_APK"
+          
+          echo "✅ Sucesso! APK copiado para: $DEST_APK"
 
       # ADICIONE ESTE BLOCO AQUI PARA DIAGNÓSTICO
       - name: Inspect APK Content (Debug)
