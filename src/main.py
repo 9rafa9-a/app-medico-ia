@@ -123,8 +123,8 @@ def run_gemini_analysis(api_key, audio_path):
     if not api_key: return {"error": "API Key não configurada"}
     
     try:
-        # Prepara a URL (Usando Flash que é rápido e multimodal)
-        url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={api_key}"
+        # Prepara a URL (Usando versão solicitada 2.5)
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={api_key}"
         
         # Lê e codifica o áudio para Base64
         import base64
