@@ -208,17 +208,27 @@ def main(page: ft.Page):
     page.bgcolor = ft.colors.WHITE
     
     # Variáveis de Estado
-    api_key_val = "YOUR_API_KEY_HERE" # Idealmente ler de config
+    # api_key_val = "YOUR_API_KEY_HERE" # Removido hardcode
     audio_path = ft.Ref[str]()
+    api_key_ref = ft.Ref[ft.TextField]() # Referência para o campo de texto
     
     # Componentes UI
     txt_status = ft.Text("Aguardando áudio...", color=ft.colors.GREY)
+
+    # Input da API Key
+    txt_api_key = ft.TextField(
+        ref=api_key_ref,
+        label="Sua Google API Key",
+        password=True,
+        can_reveal_password=True,
+        icon=ft.icons.KEY,
+        helper_text="Necessário para processar com Gemini"
+    )
     
     def on_file_picked(e: ft.FilePickerResultEvent):
         if e.files:
             f = e.files[0]
             txt_status.value = f"Arquivo selecionado: {f.name}"
-            # Armazena caminho no ref (ou var global)
             audio_path.current = f.path
             btn_process.disabled = False
             page.update()
@@ -229,13 +239,21 @@ def main(page: ft.Page):
     def on_process_click(e):
         if not audio_path.current: return
         
+        # Pega o valor do campo de texto
+        api_key = api_key_ref.current.value
+        if not api_key:
+            txt_status.value = "Erro: Digite a API Key antes de processar."
+            txt_status.color = ft.colors.RED
+            page.update()
+            return
+        
         txt_status.value = "Enviando para Gemini..."
         txt_status.color = ft.colors.BLUE
         page.update()
         
         # Thread para não travar UI
         def task():
-            res = run_gemini_analysis(api_key_val, audio_path.current)
+            res = run_gemini_analysis(api_key, audio_path.current)
             if "error" in res:
                 txt_status.value = f"Erro: {res['error']}"
                 txt_status.color = ft.colors.RED
@@ -289,6 +307,7 @@ def main(page: ft.Page):
     page.add(
         ft.Column([
             ft.Text("Assistente Médico IA", size=25, weight="bold", color=ft.colors.BLUE),
+            txt_api_key, # <--- ADICIONADO AQUI
             ft.Divider(),
             ft.ElevatedButton("Selecionar Áudio (Gravação)", 
                              icon=ft.icons.AUDIO_FILE, 
