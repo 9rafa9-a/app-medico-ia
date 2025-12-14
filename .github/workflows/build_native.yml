@@ -44,12 +44,23 @@ jobs:
           grep "minSdkVersion" android/app/build.gradle || echo "minSdkVersion not found in build.gradle"
 
           echo "=== 3.2 Patching build.gradle Forcefully ==="
-          # Replace ANY 'minSdkVersion something' with 'minSdkVersion 21'
-          # We use perl for safer regex handling if available, or just standard sed
-          sed -i 's/minSdkVersion [0-9a-zA-Z._]*/minSdkVersion 21/g' android/app/build.gradle
+          # Handle Groovy (Legacy)
+          if [ -f "android/app/build.gradle" ]; then
+             echo "Found Groovy Gradle"
+             sed -i 's/minSdkVersion [0-9a-zA-Z._]*/minSdkVersion 21/g' android/app/build.gradle
+          fi
+
+          # Handle Kotlin (New Default)
+          if [ -f "android/app/build.gradle.kts" ]; then
+             echo "Found Kotlin Gradle"
+             # Kotlin syntax might be 'minSdk = 21' or 'minSdkVersion(21)'
+             # We try to replace the value blindly relying on proper regex
+             sed -i 's/minSdk = [0-9]*/minSdk = 21/g' android/app/build.gradle.kts
+             sed -i 's/minSdkVersion([0-9]*)/minSdkVersion(21)/g' android/app/build.gradle.kts
+          fi
           
           echo "=== 3.3 Verifying Patch ==="
-          grep "minSdkVersion" android/app/build.gradle
+          grep "minSdk" android/app/build.gradle* || echo "Could not grep minSdk"
 
       - name: Build APK
         working-directory: medubs_native
