@@ -113,8 +113,12 @@ def main(page: ft.Page):
     audio_path = ft.Ref[str]()
     api_key_ref = ft.Ref[ft.TextField]()
     
-    # Recupera API Key salva
-    saved_key = page.client_storage.get("gemini_api_key") or ""
+    # Recupera API Key salva (Com proteção anti-crash)
+    saved_key = ""
+    try:
+        saved_key = page.client_storage.get("gemini_api_key") or ""
+    except Exception as e:
+        print(f"Erro ao ler storage: {e}")
     
     # --- COMPONENTES VISUAIS ---
     
@@ -122,7 +126,7 @@ def main(page: ft.Page):
     header = ft.Container(
         content=ft.Row([
             ft.Column([
-                ft.Text("MEDUBS", size=26, weight="bold", color="white", font_family="Roboto"),
+                ft.Text("MEDUBS", size=26, weight="bold", color="white"), # Fonte padrão
                 ft.Text("IA Clínica Inteligente", size=12, color="white70")
             ], spacing=2),
             # Espaço para botão de update será adicionado depois
