@@ -102,6 +102,13 @@ def check_meds(med_list):
 # mas como get_rename é chamada dentro dela, não preciso mexer nela se ela só chama a função.
 # As funções auxiliares get_... são de escopo global, então check_meds_debug vai usar as novas.
 
+# --- CONFIGURAÇÃO DE UI (Temas e Cores) ---
+MEDICAL_BLUE = "#0052CC"
+MEDICAL_LIGHT_BLUE = "#E3F2FD"
+SUCCESS_GREEN = "#2E7D32"
+WARNING_ORANGE = "#EF6C00"
+NEUTRAL_GREY = "#757575"
+
 # --- UI PRINCIPAL (Refatorada - Fase 3) ---
 def main(page: ft.Page):
     try:
