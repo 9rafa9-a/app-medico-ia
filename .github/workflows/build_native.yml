@@ -44,8 +44,6 @@ jobs:
         run: python patch_gradle.py
           
       - name: Build APK
-
-      - name: Build APK
         working-directory: medubs_native
         run: |
           echo "=== 4. Installing Dependencies ==="
