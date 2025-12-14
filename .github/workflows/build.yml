@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - feature/upgrade-flet-25
   workflow_dispatch:
 
 jobs:
