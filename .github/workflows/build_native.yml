@@ -36,31 +36,14 @@ jobs:
           echo "=== 3. List Files (Debug) ==="
           ls -R medubs_native/lib
           
-      - name: Configure Android
-        working-directory: medubs_native
-        run: |
-          echo "=== 3.1 Analyzing Gradle Files (Debug) ==="
-          ls -F android/app/
-          grep "minSdkVersion" android/app/build.gradle || echo "minSdkVersion not found in build.gradle"
-
-          echo "=== 3.2 Patching build.gradle Forcefully ==="
-          # Handle Groovy (Legacy)
-          if [ -f "android/app/build.gradle" ]; then
-             echo "Found Groovy Gradle"
-             sed -i 's/minSdkVersion [0-9a-zA-Z._]*/minSdkVersion 21/g' android/app/build.gradle
-          fi
-
-          # Handle Kotlin (New Default)
-          if [ -f "android/app/build.gradle.kts" ]; then
-             echo "Found Kotlin Gradle"
-             # Kotlin syntax might be 'minSdk = 21' or 'minSdkVersion(21)'
-             # We try to replace the value blindly relying on proper regex
-             sed -i 's/minSdk = [0-9]*/minSdk = 21/g' android/app/build.gradle.kts
-             sed -i 's/minSdkVersion([0-9]*)/minSdkVersion(21)/g' android/app/build.gradle.kts
-          fi
+          # Copy our flutter/ folder content OVER the generated app
+          cp -r flutter/* medubs_native/
+          cp patch_gradle.py .
           
-          echo "=== 3.3 Verifying Patch ==="
-          grep "minSdk" android/app/build.gradle* || echo "Could not grep minSdk"
+      - name: Configure Android (Python)
+        run: python patch_gradle.py
+          
+      - name: Build APK
 
       - name: Build APK
         working-directory: medubs_native
