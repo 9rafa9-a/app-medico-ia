@@ -30,11 +30,16 @@ def generate_pdf_report(data, filename):
     pdf.add_page()
     pdf.set_auto_page_break(auto=True, margin=15)
     
+    # Helper para texto seguro (FPDF Clássico não suporta UTF-8 nativo bem)
+    def safe_txt(text):
+        if not text: return "-"
+        return unidecode(text)
+
     # Data/Hora
     pdf.set_font("Arial", size=10)
     pdf.set_text_color(100)
     now = datetime.now().strftime("%d/%m/%Y %H:%M")
-    pdf.cell(0, 10, f"Gerado em: {now}", ln=True, align='R')
+    pdf.cell(0, 10, safe_txt(f"Gerado em: {now}"), ln=True, align='R')
     pdf.ln(5)
 
     # SOAP
@@ -44,7 +49,7 @@ def generate_pdf_report(data, filename):
     sections = [
         ("Subjetivo", soap.get('s'), "s"),
         ("Objetivo", soap.get('o'), "o"),
-        ("Avaliação", soap.get('a'), "a"),
+        ("Avaliacao", soap.get('a'), "a"), # Unidecoded title
         ("Plano", soap.get('p'), "p")
     ]
 
@@ -53,11 +58,11 @@ def generate_pdf_report(data, filename):
         pdf.set_font("Arial", 'B', 12)
         pdf.set_text_color(0, 0, 0)
         pdf.set_fill_color(240, 240, 240)
-        pdf.cell(0, 8, f" {title}", 1, 1, 'L', fill=True)
+        pdf.cell(0, 8, safe_txt(f" {title}"), 1, 1, 'L', fill=True)
         
         # Conteúdo
         pdf.set_font("Arial", size=11)
-        pdf.multi_cell(0, 6, content if content else "-")
+        pdf.multi_cell(0, 6, safe_txt(content))
         pdf.ln(2)
         
         # Sugestões
@@ -65,9 +70,9 @@ def generate_pdf_report(data, filename):
         if sugs:
             pdf.set_font("Arial", 'I', 10)
             pdf.set_text_color(100, 100, 100)
-            pdf.cell(0, 6, "Sugestões da IA:", ln=True)
+            pdf.cell(0, 6, safe_txt("Sugestões da IA:"), ln=True)
             for s in sugs:
-                 pdf.multi_cell(0, 5, f" - {s}")
+                 pdf.multi_cell(0, 5, safe_txt(f" - {s}"))
             pdf.ln(3)
         
         pdf.ln(3)
@@ -77,13 +82,13 @@ def generate_pdf_report(data, filename):
     pdf.set_font("Arial", 'B', 12)
     pdf.set_text_color(0, 0, 0)
     pdf.set_fill_color(227, 242, 253) # Light Blue
-    pdf.cell(0, 8, " Prescrição & Análise", 1, 1, 'L', fill=True)
+    pdf.cell(0, 8, safe_txt(" Prescrição & Análise"), 1, 1, 'L', fill=True)
     pdf.ln(5)
 
     meds = data.get("medicamentos", [])
     if not meds:
         pdf.set_font("Arial", 'I', 11)
-        pdf.cell(0, 10, "Nenhum medicamento identificado.", ln=True)
+        pdf.cell(0, 10, safe_txt("Nenhum medicamento identificado."), ln=True)
     else:
         # Re-usa lógica de check
         audit = check_meds_debug(meds)
@@ -97,22 +102,22 @@ def generate_pdf_report(data, filename):
             if item['remume']['found']: tags.append("[REMUME]")
             if item['alto_custo']['found']: tags.append("[ALTO CUSTO]")
             if item['rename']['found']: tags.append("[RENAME]")
-            if not tags: tags.append("[NÃO CONSTA]")
+            if not tags: tags.append("[NAO CONSTA]")
             
             tag_str = " ".join(tags)
             
             pdf.set_font("Arial", 'B', 11)
-            pdf.cell(0, 6, f"{name}", ln=True)
+            pdf.cell(0, 6, safe_txt(f"{name}"), ln=True)
             pdf.set_font("Arial", size=9)
             pdf.set_text_color(0, 82, 204)
-            pdf.cell(0, 5, f"{tag_str}", ln=True)
+            pdf.cell(0, 5, safe_txt(f"{tag_str}"), ln=True)
             
             # Detalhes Match
             pdf.set_text_color(80)
             for db in ['remume', 'alto_custo', 'rename']:
                 if item[db]['found']:
                      match = item[db]['match']
-                     pdf.cell(0, 4, f"  -> {db.upper()}: {match}", ln=True)
+                     pdf.cell(0, 4, safe_txt(f"  -> {db.upper()}: {match}"), ln=True)
             
             pdf.set_text_color(0)
             pdf.ln(3)
