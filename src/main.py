@@ -6,6 +6,168 @@ import time
 import requests
 import re
 from unidecode import unidecode
+from fpdf import FPDF
+from datetime import datetime
+
+# ... (Imports e Configs) ...
+
+# --- GERADOR DE PDF ---
+class PDFReport(FPDF):
+    def header(self):
+        self.set_font('Arial', 'B', 16)
+        self.set_text_color(0, 82, 204) # MEDICAL_BLUE
+        self.cell(0, 10, 'MEDUBS - Relatório Clínico', 0, 1, 'C')
+        self.ln(5)
+
+    def footer(self):
+        self.set_y(-15)
+        self.set_font('Arial', 'I', 8)
+        self.set_text_color(128)
+        self.cell(0, 10, f'Página {self.page_no()}', 0, 0, 'C')
+
+def generate_pdf_report(data, filename):
+    pdf = PDFReport()
+    pdf.add_page()
+    pdf.set_auto_page_break(auto=True, margin=15)
+    
+    # Data/Hora
+    pdf.set_font("Arial", size=10)
+    pdf.set_text_color(100)
+    now = datetime.now().strftime("%d/%m/%Y %H:%M")
+    pdf.cell(0, 10, f"Gerado em: {now}", ln=True, align='R')
+    pdf.ln(5)
+
+    # SOAP
+    soap = data.get("soap", {})
+    suggestions = data.get("sugestoes", {})
+    
+    sections = [
+        ("Subjetivo", soap.get('s'), "s"),
+        ("Objetivo", soap.get('o'), "o"),
+        ("Avaliação", soap.get('a'), "a"),
+        ("Plano", soap.get('p'), "p")
+    ]
+
+    for title, content, key in sections:
+        # Título Seção
+        pdf.set_font("Arial", 'B', 12)
+        pdf.set_text_color(0, 0, 0)
+        pdf.set_fill_color(240, 240, 240)
+        pdf.cell(0, 8, f" {title}", 1, 1, 'L', fill=True)
+        
+        # Conteúdo
+        pdf.set_font("Arial", size=11)
+        pdf.multi_cell(0, 6, content if content else "-")
+        pdf.ln(2)
+        
+        # Sugestões
+        sugs = suggestions.get(key, [])
+        if sugs:
+            pdf.set_font("Arial", 'I', 10)
+            pdf.set_text_color(100, 100, 100)
+            pdf.cell(0, 6, "Sugestões da IA:", ln=True)
+            for s in sugs:
+                 pdf.multi_cell(0, 5, f" - {s}")
+            pdf.ln(3)
+        
+        pdf.ln(3)
+
+    # Medicamentos
+    pdf.add_page()
+    pdf.set_font("Arial", 'B', 12)
+    pdf.set_text_color(0, 0, 0)
+    pdf.set_fill_color(227, 242, 253) # Light Blue
+    pdf.cell(0, 8, " Prescrição & Análise", 1, 1, 'L', fill=True)
+    pdf.ln(5)
+
+    meds = data.get("medicamentos", [])
+    if not meds:
+        pdf.set_font("Arial", 'I', 11)
+        pdf.cell(0, 10, "Nenhum medicamento identificado.", ln=True)
+    else:
+        # Re-usa lógica de check
+        audit = check_meds_debug(meds)
+        
+        pdf.set_font("Arial", size=10)
+        
+        for item in audit["items"]:
+            name = item['ia_term'].title()
+            # Tags em texto
+            tags = []
+            if item['remume']['found']: tags.append("[REMUME]")
+            if item['alto_custo']['found']: tags.append("[ALTO CUSTO]")
+            if item['rename']['found']: tags.append("[RENAME]")
+            if not tags: tags.append("[NÃO CONSTA]")
+            
+            tag_str = " ".join(tags)
+            
+            pdf.set_font("Arial", 'B', 11)
+            pdf.cell(0, 6, f"{name}", ln=True)
+            pdf.set_font("Arial", size=9)
+            pdf.set_text_color(0, 82, 204)
+            pdf.cell(0, 5, f"{tag_str}", ln=True)
+            
+            # Detalhes Match
+            pdf.set_text_color(80)
+            for db in ['remume', 'alto_custo', 'rename']:
+                if item[db]['found']:
+                     match = item[db]['match']
+                     pdf.cell(0, 4, f"  -> {db.upper()}: {match}", ln=True)
+            
+            pdf.set_text_color(0)
+            pdf.ln(3)
+
+    return pdf.output(dest='S').encode('latin-1', 'replace') # Retorna bytes
+
+# ... (Resto do Main) ...
+
+# DENTRO DO MAIN, APÓS CHECK_UPDATE e ANTES DE SHOW_RESULTS:
+
+        def save_pdf(e):
+             if not result_col.data: # Guardamos o JSON aqui
+                 return
+             
+             save_file_dialog.save_file(file_name=f"Consulta_{datetime.now().strftime('%Y%m%d_%H%M')}.pdf")
+
+        def on_save_result(e: ft.FilePickerResultEvent):
+            if e.path:
+                try:
+                    pdf_bytes = generate_pdf_report(result_col.data, e.path)
+                    with open(e.path, "wb") as f:
+                        f.write(pdf_bytes)
+                    page.show_snack_bar(ft.SnackBar(ft.Text(f"Salvo em: {e.path}"), bgcolor=SUCCESS_GREEN))
+                except Exception as ex:
+                    page.show_snack_bar(ft.SnackBar(ft.Text(f"Erro ao salvar: {ex}"), bgcolor="red"))
+
+        save_file_dialog = ft.FilePicker(on_result=on_save_result)
+        page.overlay.append(save_file_dialog)
+
+        # Atualiza show_results para guardar dados e adicionar botão
+        def show_results(data):
+            result_col.controls.clear()
+            result_col.data = data # Persiste dados para PDF
+
+            # ... (Lógica Cards Mantida) ...
+            
+            # ... (Lógica Meds Mantida) ...
+            
+            # Botão PDF
+            btn_pdf = ft.ElevatedButton(
+                "Baixar Relatório PDF",
+                icon=ft.icons.PICTURE_AS_PDF,
+                bgcolor=MEDICAL_BLUE,
+                color="white",
+                on_click=save_pdf,
+                style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=10))
+            )
+
+            result_col.controls.append(ft.Container(height=20))
+            result_col.controls.append(ft.Row([btn_pdf], alignment=ft.MainAxisAlignment.CENTER))
+            result_col.controls.append(ft.Container(height=30))
+
+            result_col.visible = True
+            page.update()
+
 # Note: google.generativeai might need to be installed or used via REST API if the library has issues on Android.
 # Ideally we use the library if it builds, or requests if we want to be "pure python" safe.
 # Given build.yml installs it, we'll try to import it.
@@ -485,8 +647,16 @@ def main(page: ft.Page):
                             leading=ft.Icon(ft.icons.LIGHTBULB_OUTLINE, size=16, color=color),
                             controls=[
                                 ft.Column(
-                                    [ft.Row([ft.Icon(ft.icons.ARROW_RIGHT, size=12, color=NEUTRAL_GREY), ft.Text(s, size=12)]) for s in sugs],
-                                    spacing=2
+                                    [
+                                        ft.Row(
+                                            [
+                                                ft.Icon(ft.icons.ARROW_RIGHT, size=12, color=NEUTRAL_GREY),
+                                                ft.Expanded(ft.Text(s, size=12, selectable=True))
+                                            ],
+                                            vertical_alignment=ft.CrossAxisAlignment.START
+                                        ) for s in sugs
+                                    ],
+                                    spacing=4
                                 )
                             ],
                             tile_padding=ft.padding.symmetric(horizontal=0)
