@@ -20,11 +20,11 @@ jobs:
         with:
           python-version: '3.11'
 
-      # Atualizando para Flutter 3.24.3 (Compatível com Flet 0.25+)
-      - name: Setup Flutter 3.24.3
+      # Voltando para Flutter 3.22.2 (Compatível com Flet 0.24.0)
+      - name: Setup Flutter 3.22.2
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.24.3'
+          flutter-version: '3.22.2'
           channel: 'stable'
           cache: true
       
