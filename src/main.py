@@ -263,7 +263,7 @@ def main(page: ft.Page):
         # --- AUTO-UPDATE ---
         CURRENT_VERSION = "v1.0.1" # Incrementar se lançar tag nova
         REPO_OWNER = "9rafa9-a"
-        REPO_NAME = "app-medico-ia"
+        REPO_NAME = "swift-gemini"
 
         def check_update(e):
             page.show_snack_bar(ft.SnackBar(ft.Text("Buscando atualizações..."), duration=1000))
