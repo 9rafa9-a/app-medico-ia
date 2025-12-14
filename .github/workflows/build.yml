@@ -32,35 +32,31 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r mobile/requirements.txt
 
-      - name: Build APK (Estrutura SRC Padronizada)
+      - name: Build APK (Direto na Fonte)
         working-directory: mobile
         run: |
-          echo "=== 1. VERIFICANDO ESTRUTURA (REPO JÁ ESTRUTURADO) ==="
-          ls -R
+          echo "=== 1. ENTRANDO NA PASTA SRC ==="
+          cd src
+          ls -la
           
-          # A estrutura já está correta no git: mobile/src/main.py
-          # Não precisamos mover nada.
+          echo "=== 2. BUILD FLET (LOCAL) ==="
+          # Agora estamos na mesma pasta que o main.py. Não tem como ele não achar.
+          flet build apk --verbose
           
-          # Cria um arquivo de verificação
-          echo "Verificando estrutura..."
-          ls -R src
-          
-          echo "=== 2. BUILD FLET (A Partir de SRC) ==="
-          # Mandamos o Flet construir o que está dentro de 'src'
-          # Isso força ele a empacotar o main.py corretamente
-          flet build apk --project src --verbose
-          
-          echo "=== 3. VERIFICAÇÃO FINAL ==="
+          echo "=== 3. VERIFICANDO ARTEFATO ==="
+          # O Flet cria a pasta 'build' onde ele roda
           if [ -f "build/apk/app-release.apk" ]; then
              echo "✅ SUCESSO! APK CRIADO."
-             ls -lh build/apk/
           else
-             echo "❌ ERRO: APK não encontrado."
+             echo "❌ ERRO: APK não encontrado. Verificando pasta build..."
+             ls -R build || echo "Pasta build não criada."
              exit 1
           fi
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
+        if: success()
         with:
           name: app-release
-          path: mobile/build/apk/app-release.apk
+          # O caminho muda porque rodamos dentro de src
+          path: mobile/src/build/apk/app-release.apk
