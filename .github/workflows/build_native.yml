@@ -1,0 +1,52 @@
+name: Build Native MedUBS
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.3'
+          channel: 'stable'
+
+      - name: Scaffold & Overlay App
+        run: |
+          echo "=== 1. Creating Skeleton App ==="
+          flutter create medubs_native --org com.medubs.app --project-name medubs
+          
+          echo "=== 2. Injecting Our Code ==="
+          # Copy our flutter/ folder content OVER the generated app
+          cp -r flutter/* medubs_native/
+          
+          echo "=== 3. List Files (Debug) ==="
+          ls -R medubs_native/lib
+          
+      - name: Build APK
+        working-directory: medubs_native
+        run: |
+          echo "=== 4. Installing Dependencies ==="
+          flutter pub get
+          
+          echo "=== 5. Building APK ==="
+          flutter build apk --release --verbose
+          
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: medubs-native-release
+          path: medubs_native/build/app/outputs/flutter-apk/app-release.apk
