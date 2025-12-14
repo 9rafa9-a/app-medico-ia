@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - feature/upgrade-flet-25
   workflow_dispatch:
 
 jobs:
@@ -19,11 +20,11 @@ jobs:
         with:
           python-version: '3.11'
 
-      # Mantendo o alinhamento que funcionou (Flutter 3.22.2)
-      - name: Setup Flutter 3.22.2
+      # Atualizando para Flutter 3.24.3 (Compatível com Flet 0.24+)
+      - name: Setup Flutter 3.24.3
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.22.2'
+          flutter-version: '3.24.3'
           channel: 'stable'
           cache: true
       

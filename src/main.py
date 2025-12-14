@@ -469,6 +469,56 @@ def main(page: ft.Page):
             style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=12), elevation=4)
         )
 
+        # --- AUDIO RECORDER (Fase 4B - Teste Flet 0.25.2) ---
+        rec_status = ft.Text("", size=12, italic=True)
+        
+        def handle_audio_state_change(e):
+            print(f"DEBUG: AudioRecorder State: {e.data}")
+
+        audio_recorder = ft.AudioRecorder(
+            on_state_changed=handle_audio_state_change
+        )
+        page.overlay.append(audio_recorder)
+
+        def start_recording(e):
+            import tempfile
+            try:
+                temp_dir = tempfile.gettempdir()
+                out_path = os.path.join(temp_dir, "medubs_rec_test.wav")
+                audio_path.current = out_path
+                
+                if page.web:
+                   page.show_snack_bar(ft.SnackBar(ft.Text("Web nao suportado"), bgcolor="red"))
+                   return
+
+                audio_recorder.start_recording(out_path)
+                rec_status.value = "Gravando..."
+                rec_status.color = "red"
+                btn_record.visible = False
+                btn_stop.visible = True
+                btn_process.disabled = True
+                page.update()
+            except Exception as ex:
+                page.show_snack_bar(ft.SnackBar(ft.Text(f"Erro: {ex}"), bgcolor="red"))
+
+        def stop_recording(e):
+            try:
+                audio_recorder.stop_recording()
+                rec_status.value = "Gravado."
+                rec_status.color = "green"
+                btn_record.visible = True
+                btn_stop.visible = False
+                txt_status.value = "Audio Gravado"
+                txt_status.color = MEDICAL_BLUE
+                btn_process.disabled = False
+                page.update()
+            except Exception as ex:
+                page.show_snack_bar(ft.SnackBar(ft.Text(f"Erro Stop: {ex}"), bgcolor="red"))
+
+        btn_record = ft.ElevatedButton("Gravar", icon=ft.icons.MIC, on_click=start_recording, bgcolor="red", color="white")
+        btn_stop = ft.ElevatedButton("Parar", icon=ft.icons.STOP, on_click=stop_recording, bgcolor=NEUTRAL_GREY, color="white", visible=False)
+
+
 
 
         # Container de Resultados
@@ -767,8 +817,9 @@ def main(page: ft.Page):
                     ft.Container(height=10), # Espaçamento
                     txt_api_key,
                     ft.Container(height=20),
-                    # Row de Ações (Seleção)
-                    ft.Row([btn_select], alignment="center", spacing=10, wrap=True),
+                    # Row de Ações (Seleção e Gravação)
+                    ft.Row([btn_select, btn_record, btn_stop], alignment="center", spacing=10, wrap=True),
+                    ft.Container(content=rec_status, alignment=ft.alignment.center),
                     ft.Container(height=10),
                     
                     ft.Row([btn_process], alignment="center"), # Processar separado para destaque
