@@ -469,85 +469,7 @@ def main(page: ft.Page):
             style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=12), elevation=4)
         )
 
-        # --- AUDIO RECORDER (Fase 4B) ---
-        rec_status = ft.Text("", size=12, italic=True)
-        
-        def handle_audio_state_change(e):
-            print(f"DEBUG: AudioRecorder State: {e.data}")
 
-        audio_recorder = ft.AudioRecorder(
-            on_state_changed=handle_audio_state_change
-        )
-        page.overlay.append(audio_recorder)
-
-        def start_recording(e):
-            # Define output path
-            # Android: Needs a simplistic path or standard temp location.
-            # Windows: Safe to use temp.
-            # Using a fixed name allows overwriting easily.
-            import tempfile
-            temp_dir = tempfile.gettempdir()
-            out_path = os.path.join(temp_dir, "medubs_recording.wav")
-            
-            # Persist path to state
-            audio_path.current = out_path
-            
-            try:
-                if page.web:
-                   page.show_snack_bar(ft.SnackBar(ft.Text("Gravação Web não suportada neste modo."), bgcolor="red"))
-                   return
-
-                audio_recorder.start_recording(out_path)
-                rec_status.value = "Gravando... Fale agora."
-                rec_status.color = "red"
-                btn_record.visible = False
-                btn_stop.visible = True
-                
-                # Desabilita processamento enquanto grava
-                btn_process.disabled = True
-                page.update()
-            except Exception as ex:
-                page.show_snack_bar(ft.SnackBar(ft.Text(f"Erro ao Iniciar: {ex}"), bgcolor="red"))
-
-        def stop_recording(e):
-            try:
-                start_res = audio_recorder.stop_recording()
-                # stop_recording returns the path usually, but we set it in start.
-                # Let's wait a bit or assume it's done. 
-                # Note: stop_recording might be async on some platforms, but Flet wrapper is sync-ish.
-                # The output file should exist now.
-                
-                rec_status.value = "Gravação Finalizada."
-                rec_status.color = "green"
-                btn_record.visible = True
-                btn_stop.visible = False
-                
-                # Update main UI
-                txt_status.value = f"Áudio Gravado Localmente"
-                txt_status.color = MEDICAL_BLUE
-                btn_process.disabled = False
-                
-                page.update()
-                
-            except Exception as ex:
-                page.show_snack_bar(ft.SnackBar(ft.Text(f"Erro ao Parar: {ex}"), bgcolor="red"))
-
-        btn_record = ft.ElevatedButton(
-            "Gravar Áudio",
-            icon=ft.icons.MIC,
-            on_click=start_recording,
-            bgcolor="red", color="white",
-            style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=12), elevation=1)
-        )
-        
-        btn_stop = ft.ElevatedButton(
-            "Parar Gravação",
-            icon=ft.icons.STOP,
-            on_click=stop_recording,
-            bgcolor=NEUTRAL_GREY, color="white",
-            visible=False, # Hidden initially
-            style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=12), elevation=1)
-        )
 
         # Container de Resultados
         result_col = ft.Column(visible=False)
@@ -845,9 +767,8 @@ def main(page: ft.Page):
                     ft.Container(height=10), # Espaçamento
                     txt_api_key,
                     ft.Container(height=20),
-                    # Row de Ações (Seleção e Gravação)
-                    ft.Row([btn_select, btn_record, btn_stop], alignment="center", spacing=10, wrap=True),
-                    ft.Container(content=rec_status, alignment=ft.alignment.center), # Status Gravação
+                    # Row de Ações (Seleção)
+                    ft.Row([btn_select], alignment="center", spacing=10, wrap=True),
                     ft.Container(height=10),
                     
                     ft.Row([btn_process], alignment="center"), # Processar separado para destaque
