@@ -36,6 +36,18 @@ jobs:
           echo "=== 3. List Files (Debug) ==="
           ls -R medubs_native/lib
           
+      - name: Configure Android
+        working-directory: medubs_native
+        run: |
+          echo "=== 3.1 Patching build.gradle ==="
+          # Plugins like 'record' require at least SDK 21 (Android 5.0). 
+          # The default template might be lower. Forcing it to 21.
+          sed -i 's/minSdkVersion flutter.minSdkVersion/minSdkVersion 21/g' android/app/build.gradle
+          
+          # Ensure Compile SDK is decent (34 is standard for Flutter 3.24)
+          # This is usually automatic, but let's be safe if possible.
+          # (Skip for now, usually not the blocker)
+
       - name: Build APK
         working-directory: medubs_native
         run: |
