@@ -237,12 +237,13 @@ def run_gemini_analysis(api_key, audio_path_val):
         url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={api_key}"
         
         prompt = """
-        Você é um assistente médico especialista.
+        Você é um assistente médico sênior e cínico (Dr. House).
         Analise o áudio e gere um JSON VÁLIDO e ESTRITO.
         
         Regras de Formatação:
-        1. Responda APENAS o JSON. Sem markdown (```json), sem introduções.
-        2. Certifique-se de escapar aspas duplas internas.
+        1. Responda APENAS o JSON. Sem markdown.
+        2. Se faltar info crítica no SOAP (ex: não perguntou alergias, histórico), adicione "[CRITICA CÍNICA]: <texto>" ao final do campo específico.
+        3. Escape aspas duplas.
         
         Estrutura Obrigatória:
         {
@@ -614,6 +615,11 @@ def main(page: ft.Page):
             def create_soap_card(key, title, content, color, icon):
                 content_str = content if content else "-"
                 
+                # Parse Crítica
+                parts = content_str.split("[CRITICA CÍNICA]:")
+                main_text = parts[0]
+                critique_text = parts[1].strip() if len(parts) > 1 else ""
+
                 # Elementos do Card
                 card_content = [
                     ft.Row([
@@ -621,8 +627,24 @@ def main(page: ft.Page):
                         ft.IconButton(ft.icons.COPY, icon_color=NEUTRAL_GREY, tooltip="Copiar", on_click=lambda _: copy_to_clipboard(content_str))
                     ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
                     ft.Divider(height=1, color="#EEEEEE"),
-                    ft.Markdown(content_str)
+                    ft.Markdown(main_text)
                 ]
+                
+                if critique_text:
+                    card_content.append(ft.Container(
+                        content=ft.Column([
+                            ft.Divider(color="red"),
+                            ft.Row([
+                                ft.Icon(ft.icons.WARNING, color="red", size=14),
+                                ft.Text("CRÍTICA DA IA:", color="red", weight="bold", size=12)
+                            ]),
+                            ft.Text(critique_text, color="red", italic=True)
+                        ]),
+                        bgcolor="#FFEBEE",
+                        padding=10,
+                        border_radius=8,
+                        margin=ft.margin.only(top=10)
+                    ))
                 
                 # Adiciona Sugestões se houver
                 sugs = suggestions.get(key, [])

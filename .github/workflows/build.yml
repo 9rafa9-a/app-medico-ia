@@ -44,7 +44,7 @@ jobs:
           cp ../requirements.txt .
           
           # Agora estamos na mesma pasta que o main.py e requirements.txt
-          flet build apk --verbose
+          flet build apk --product-name "MedUBS" --org "com.medubs.app" --verbose
           
           echo "=== 3. VERIFICANDO ARTEFATO ==="
           # O Flet cria a pasta 'build' onde ele roda
