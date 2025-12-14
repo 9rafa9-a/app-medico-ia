@@ -4,6 +4,7 @@ import json
 import threading
 import time
 import requests
+import re
 from unidecode import unidecode
 # Note: google.generativeai might need to be installed or used via REST API if the library has issues on Android.
 # Ideally we use the library if it builds, or requests if we want to be "pure python" safe.
@@ -117,12 +118,18 @@ def run_gemini_analysis(api_key, audio_path_val):
         
         prompt = """
         Você é um assistente médico especialista.
-        Analise o áudio desta consulta e gere um JSON estrito com:
-        1. "soap": objeto com chaves "s", "o", "a", "p" (Subjetivo, Objetivo, Avaliação, Plano).
-        2. "medicamentos": lista de strings com nomes genéricos dos medicamentos prescritos ou citados.
-        3. "sugestoes": objeto com chaves "s", "o", "a", "p". Em cada chave, uma lista de strings com sugestões do que faltou perguntar ou examinar (ex: "Perguntar sobre alergias" no S, "Avaliar desidratação" no O). Se estiver completo, lista vazia.
+        Analise o áudio e gere um JSON VÁLIDO e ESTRITO.
         
-        Responda APENAS o JSON, sem markdown.
+        Regras de Formatação:
+        1. Responda APENAS o JSON. Sem markdown (```json), sem introduções.
+        2. Certifique-se de escapar aspas duplas internas.
+        
+        Estrutura Obrigatória:
+        {
+          "soap": { "s": "...", "o": "...", "a": "...", "p": "..." },
+          "medicamentos": ["..."],
+          "sugestoes": { "s": ["..."], "o": ["..."], "a": ["..."], "p": ["..."] }
+        }
         """
         
         payload = {
@@ -146,19 +153,26 @@ def run_gemini_analysis(api_key, audio_path_val):
             
         result = response.json()
         
-        # Extração Segura
+        # Extração Segura com Regex
         try:
             candidates = result.get('candidates', [])
             if not candidates:
                  return {"error": "Gemini não retornou candidatos. Áudio mudo ou bloqueado?"}
                  
             raw_text = candidates[0]['content']['parts'][0]['text']
-            # Limpeza do JSON Markdown
-            cleaned_text = raw_text.replace("```json", "").replace("```", "").strip()
-            return json.loads(cleaned_text)
+            
+            # Busca JSON com Regex
+            match = re.search(r'\{.*\}', raw_text, re.DOTALL)
+            if match:
+                json_str = match.group(0)
+            else:
+                json_str = raw_text
+
+            json_str = json_str.replace("```json", "").replace("```", "").strip()
+            return json.loads(json_str)
         except Exception as e:
             print(f"Erro Parse: {raw_text}")
-            return {"error": f"Erro ao processar JSON: {e}"}
+            return {"error": f"Erro JSON: {str(e)}"}
             
     except Exception as e:
         return {"error": f"Erro Geral: {e}"}
