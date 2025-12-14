@@ -201,122 +201,303 @@ def run_gemini_analysis(api_key, audio_path):
     except Exception as e:
         return {"error": f"Erro de conexão/processamento: {str(e)}"}
 
-# --- UI PRINCIPAL ---
+# --- CONFIGURAÇÃO DE UI (Temas e Cores) ---
+MEDICAL_BLUE = "#0052CC"
+MEDICAL_LIGHT_BLUE = "#E3F2FD"
+SUCCESS_GREEN = "#2E7D32"
+WARNING_ORANGE = "#EF6C00"
+NEUTRAL_GREY = "#757575"
+
+# --- LÓGICA DE AUDITORIA (DEBUG) ---
+def check_meds_debug(med_list):
+    remume = get_remume()
+    alto_custo = get_alto_custo()
+    rename = get_rename()
+    
+    # Normalização
+    def norm(txt): return unidecode(str(txt)).lower().strip()
+    
+    db_remume = [(norm(m), m) for m in remume]
+    db_alto_custo = [(norm(m), m) for m in alto_custo]
+    db_rename = [(norm(m), m) for m in rename]
+    
+    results = []
+    
+    for med in med_list:
+        med_n = norm(med)
+        
+        # Estrutura de Resultado Detalhada
+        item_status = {
+            "ia_term": med,
+            "remume": {"found": False, "match": None},
+            "alto_custo": {"found": False, "match": None},
+            "rename": {"found": False, "match": None}
+        }
+        
+        # Busca REMUME
+        for d_n, d_real in db_remume:
+            # Match simples (contém)
+            if len(d_n) > 3 and (med_n in d_n or d_n in med_n):
+                item_status["remume"] = {"found": True, "match": d_real}
+                break # Para no primeiro match
+                
+        # Busca Alto Custo
+        for d_n, d_real in db_alto_custo:
+            if len(d_n) > 3 and (med_n in d_n or d_n in med_n):
+                item_status["alto_custo"] = {"found": True, "match": d_real}
+                break
+
+        # Busca RENAME
+        for d_n, d_real in db_rename:
+            if len(d_n) > 3 and (med_n in d_n or d_n in med_n):
+                item_status["rename"] = {"found": True, "match": d_real}
+                break
+                
+        results.append(item_status)
+    
+    # Retorna metadata também para o painel de debug
+    return {
+        "items": results,
+        "meta": {
+            "count_remume": len(remume),
+            "count_alto_custo": len(alto_custo),
+            "count_rename": len(rename)
+        }
+    }
+
+# --- UI PRINCIPAL (Refatorada) ---
 def main(page: ft.Page):
     page.title = "Médico IA"
     page.scroll = "adaptive"
-    page.bgcolor = ft.colors.WHITE
+    page.bgcolor = "#F5F7FA" # Fundo Cinza Claro Profissional
+    page.padding = 0 # Controle total
     
-    # Variáveis de Estado
-    # api_key_val = "YOUR_API_KEY_HERE" # Removido hardcode
+    # State
     audio_path = ft.Ref[str]()
-    api_key_ref = ft.Ref[ft.TextField]() # Referência para o campo de texto
+    api_key_ref = ft.Ref[ft.TextField]()
     
-    # Componentes UI
-    txt_status = ft.Text("Aguardando áudio...", color=ft.colors.GREY)
-
-    # Input da API Key
-    txt_api_key = ft.TextField(
-        ref=api_key_ref,
-        label="Sua Google API Key",
-        password=True,
-        can_reveal_password=True,
-        icon=ft.icons.KEY,
-        helper_text="Necessário para processar com Gemini"
+    # --- COMPONENTES VISUAIS ---
+    
+    # Header
+    header = ft.Container(
+        content=ft.Column([
+            ft.Text("Assistente Médico IA", size=22, weight="bold", color="white"),
+            ft.Text("Análise Clínica & Farmacêutica", size=12, color="white70")
+        ]),
+        bgcolor=MEDICAL_BLUE,
+        padding=ft.padding.all(20),
+        border_radius=ft.border_radius.only(bottom_left=20, bottom_right=20),
+        shadow=ft.BoxShadow(blur_radius=10, color=ft.colors.with_opacity(0.3, "black"))
     )
     
-    def on_file_picked(e: ft.FilePickerResultEvent):
+    # Status Indicator
+    txt_status = ft.Text("Aguardando áudio...", color=NEUTRAL_GREY, italic=True)
+    
+    # Input API (Estilizado)
+    txt_api_key = ft.TextField(
+        ref=api_key_ref,
+        label="Google API Key",
+        password=True,
+        can_reveal_password=True,
+        prefix_icon=ft.icons.KEY,
+        border_color=MEDICAL_BLUE,
+        text_size=12,
+        height=45,
+        content_padding=10
+    )
+
+    # Imagem Placeholder (Gerada)
+    img_placeholder = ft.Image(
+        src=asset("logo_medico.png"), # Usando logo do usuário
+        width=200,
+        opacity=0.5,
+        animate_opacity=300
+    )
+    container_placeholder = ft.Container(
+        content=ft.Column([
+            img_placeholder,
+            ft.Text("Grave a consulta e selecione o áudio", color=NEUTRAL_GREY)
+        ], horizontal_alignment="center"),
+        alignment=ft.alignment.center,
+        padding=40,
+        visible=True
+    )
+
+    # Botões
+    def on_pick(e):
         if e.files:
-            f = e.files[0]
-            txt_status.value = f"Arquivo selecionado: {f.name}"
-            audio_path.current = f.path
+            audio_path.current = e.files[0].path
+            txt_status.value = f"Arquivo: {e.files[0].name}"
+            txt_status.color = MEDICAL_BLUE
             btn_process.disabled = False
             page.update()
-            
-    file_picker = ft.FilePicker(on_result=on_file_picked)
+
+    file_picker = ft.FilePicker(on_result=on_pick)
     page.overlay.append(file_picker)
     
+    btn_select = ft.ElevatedButton(
+        "Selecionar Áudio",
+        icon=ft.icons.AUDIO_FILE,
+        on_click=lambda _: file_picker.pick_files(allow_multiple=False, allowed_extensions=["mp3", "wav", "m4a"]),
+        bgcolor="white", color=MEDICAL_BLUE,
+        style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=10))
+    )
+    
+    btn_process = ft.ElevatedButton(
+        "Processar Consulta",
+        icon=ft.icons.ANALYTICS,
+        on_click=None, # Definido abaixo
+        bgcolor=MEDICAL_BLUE, color="white",
+        disabled=True,
+        style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=10))
+    )
+
+    # Container de Resultados (Cards)
+    result_col = ft.Column(visible=False)
+
     def on_process_click(e):
-        if not audio_path.current: return
-        
-        # Pega o valor do campo de texto
         api_key = api_key_ref.current.value
         if not api_key:
-            txt_status.value = "Erro: Digite a API Key antes de processar."
-            txt_status.color = ft.colors.RED
-            page.update()
+            page.show_snack_bar(ft.SnackBar(ft.Text("Insira a API Key!"), bgcolor="red"))
             return
+            
+        if not audio_path.current: return
         
-        txt_status.value = "Enviando para Gemini..."
-        txt_status.color = ft.colors.BLUE
+        container_placeholder.visible = False
+        result_col.visible = False
+        txt_status.value = "Analisando com Gemini 2.5..."
         page.update()
         
-        # Thread para não travar UI
         def task():
             res = run_gemini_analysis(api_key, audio_path.current)
             if "error" in res:
-                txt_status.value = f"Erro: {res['error']}"
-                txt_status.color = ft.colors.RED
+                page.show_snack_bar(ft.SnackBar(ft.Text(f"Erro: {res['error']}"), bgcolor="red"))
+                txt_status.value = "Erro na análise."
             else:
-                txt_status.value = "Análise Concluída!"
-                txt_status.color = ft.colors.GREEN
-                
-                # Atualiza UI com Resultado
+                txt_status.value = "Análise Concluída."
                 show_results(res)
             page.update()
             
         threading.Thread(target=task).start()
 
-    btn_process = ft.ElevatedButton("Processar Consulta", on_click=on_process_click, disabled=True)
-    
-    # Area de Resultados
-    result_col = ft.Column()
-    
+    btn_process.on_click = on_process_click
+
     def show_results(data):
         result_col.controls.clear()
         
-        # SOAP
+        # Card SOAP
         soap = data.get("soap", {})
-        result_col.controls.append(ft.Text("SOAP", size=20, weight="bold", color=ft.colors.BLACK))
-        result_col.controls.append(ft.Text(f"S: {soap.get('s','-')}", color=ft.colors.BLACK))
-        result_col.controls.append(ft.Text(f"O: {soap.get('o','-')}", color=ft.colors.BLACK))
-        result_col.controls.append(ft.Text(f"A: {soap.get('a','-')}", color=ft.colors.BLACK))
-        result_col.controls.append(ft.Text(f"P: {soap.get('p','-')}", color=ft.colors.BLACK))
+        card_soap = ft.Card(
+            content=ft.Container(
+                content=ft.Column([
+                    ft.Text("SOAP", weight="bold", size=18, color=MEDICAL_BLUE),
+                    ft.Divider(),
+                    ft.Markdown(f"**S:** {soap.get('s','-')}"),
+                    ft.Markdown(f"**O:** {soap.get('o','-')}"),
+                    ft.Markdown(f"**A:** {soap.get('a','-')}"),
+                    ft.Markdown(f"**P:** {soap.get('p','-')}"),
+                ]),
+                padding=15
+            ),
+            elevation=2,
+            margin=10
+        )
+        result_col.controls.append(card_soap)
         
-        # Meds
+        # Card Medicamentos
         meds = data.get("medicamentos", [])
         if meds:
-            result_col.controls.append(ft.Divider())
-            result_col.controls.append(ft.Text("Medicamentos", size=18, weight="bold", color=ft.colors.BLACK))
+            med_rows = []
             
-            checked = check_meds(meds)
-            for m in checked:
-                row = ft.Row([
-                    ft.Text(m['name'], weight="bold", color=ft.colors.BLACK),
+            # Roda Auditoria
+            audit = check_meds_debug(meds)
+            
+            for item in audit["items"]:
+                name = item['ia_term']
+                
+                # Tags
+                tags = []
+                if item['remume']['found']: 
+                    tags.append(ft.Container(content=ft.Text("REMUME", size=10, color="white"), bgcolor=SUCCESS_GREEN, padding=5, border_radius=4))
+                if item['alto_custo']['found']:
+                     tags.append(ft.Container(content=ft.Text("ALTO CUSTO", size=10, color="white"), bgcolor=WARNING_ORANGE, padding=5, border_radius=4))
+                if item['rename']['found']:
+                     tags.append(ft.Container(content=ft.Text("RENAME", size=10, color="white"), bgcolor=MEDICAL_BLUE, padding=5, border_radius=4))
+                
+                if not tags:
+                    tags.append(ft.Container(content=ft.Text("NÃO ENCONTRADO", size=10, color="white"), bgcolor=NEUTRAL_GREY, padding=5, border_radius=4))
+
+                med_rows.append(
                     ft.Container(
-                        content=ft.Text("REMUME", size=10, color=ft.colors.WHITE),
-                        bgcolor=ft.colors.GREEN if m['remume'] else ft.colors.GREY,
-                        padding=5, border_radius=5
+                        content=ft.Column([
+                            ft.Text(name, weight="bold", size=16),
+                            ft.Row(tags)
+                        ]),
+                        padding=10,
+                        border=ft.border.only(bottom=ft.border.BorderSide(1, "#E0E0E0"))
                     )
-                ])
-                result_col.controls.append(row)
-        
+                )
+
+            card_meds = ft.Card(
+                content=ft.Container(
+                    content=ft.Column([
+                        ft.Row([ft.Icon(ft.icons.MEDICATION, color=MEDICAL_BLUE), ft.Text("Medicamentos Sugeridos", size=18, weight="bold")]),
+                        ft.Divider(),
+                        *med_rows
+                    ]),
+                    padding=15
+                ),
+                elevation=2,
+                margin=10
+            )
+            result_col.controls.append(card_meds)
+
+            # --- PAINEL DE DEBUG (AUDITORIA) ---
+            debug_info = []
+            debug_info.append(ft.Text(f"Bancos Carregados: REMUME({audit['meta']['count_remume']}), Alto Custo({audit['meta']['count_alto_custo']})", size=12, color="grey"))
+            
+            for item in audit["items"]:
+                debug_info.append(ft.Divider())
+                debug_info.append(ft.Text(f"IA: '{item['ia_term']}'", weight="bold", size=12))
+                
+                if item['remume']['found']:
+                     debug_info.append(ft.Text(f"✅ REMUME Match: {item['remume']['match']}", color=SUCCESS_GREEN, size=11, font_family="monospace"))
+                else:
+                     debug_info.append(ft.Text(f"❌ REMUME: Sem match", color="red", size=11))
+                     
+                if item['alto_custo']['found']:
+                     debug_info.append(ft.Text(f"✅ Alto Custo Match: {item['alto_custo']['match']}", color=WARNING_ORANGE, size=11, font_family="monospace"))
+                     
+            expansion_debug = ft.ExpansionTile(
+                title=ft.Text("🕵️ Auditoria Técnica (Debug)", size=14, color=NEUTRAL_GREY),
+                controls=[
+                    ft.Container(
+                        content=ft.Column(debug_info),
+                        padding=15,
+                        bgcolor="#FFF8E1", # Amarelo clarinho debug
+                        border=ft.border.all(1, "#FFECB3")
+                    )
+                ]
+            )
+            result_col.controls.append(ft.Container(expansion_debug, margin=10))
+
+        result_col.visible = True
         page.update()
 
-    # Layout Principal
+    # Montagem Final
     page.add(
-        ft.Column([
-            ft.Text("Assistente Médico IA", size=25, weight="bold", color=ft.colors.BLUE),
-            txt_api_key, # <--- ADICIONADO AQUI
-            ft.Divider(),
-            ft.ElevatedButton("Selecionar Áudio (Gravação)", 
-                             icon=ft.icons.AUDIO_FILE, 
-                             on_click=lambda _: file_picker.pick_files(allow_multiple=False, allowed_extensions=["mp3", "wav", "m4a", "ogg"])),
-            txt_status,
-            btn_process,
-            ft.Divider(),
-            result_col
-        ])
+        header,
+        ft.Container(
+            content=ft.Column([
+                txt_api_key,
+                ft.Row([btn_select, btn_process], alignment="center", spacing=20),
+                txt_status,
+                ft.Divider(),
+                container_placeholder,
+                result_col
+            ]),
+            padding=20
+        )
     )
 
 if __name__ == "__main__":
