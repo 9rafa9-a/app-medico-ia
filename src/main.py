@@ -382,41 +382,112 @@ def main(page: ft.Page):
 
     btn_process.on_click = on_process_click
 
+    # --- AUTO-UPDATE ---
+    CURRENT_VERSION = "v1.0.1"
+    REPO_OWNER = "9rafa9-a"
+    REPO_NAME = "app-medico-ia"
+
+    def check_update(e):
+        try:
+            url = f"https://api.github.com/repos/{REPO_OWNER}/{REPO_NAME}/releases/latest"
+            resp = requests.get(url, timeout=5)
+            if resp.status_code == 200:
+                data = resp.json()
+                latest_tag = data.get("tag_name", "v0.0.0")
+                
+                if latest_tag != CURRENT_VERSION:
+                    # Encontrou update
+                    assets = data.get("assets", [])
+                    apk_url = ""
+                    for asset in assets:
+                        if asset["name"].endswith(".apk"):
+                            apk_url = asset["browser_download_url"]
+                            break
+                    
+                    if apk_url:
+                        # Dialogo de Confirmação
+                        def close_dlg(e):
+                            dlg_update.open = False
+                            page.update()
+                        
+                        def do_update(e):
+                            page.launch_url(apk_url) # Abre navegador para baixar/instalar
+                            close_dlg(e)
+
+                        dlg_update = ft.AlertDialog(
+                            modal=True,
+                            title=ft.Text("Atualização Disponível! 🚀"),
+                            content=ft.Text(f"Nova versão {latest_tag} encontrada.\nDeseja baixar e instalar?"),
+                            actions=[
+                                ft.TextButton("Depois", on_click=close_dlg),
+                                ft.TextButton("Atualizar Agora", on_click=do_update),
+                            ],
+                            actions_alignment=ft.MainAxisAlignment.END,
+                        )
+                        page.dialog = dlg_update
+                        dlg_update.open = True
+                        page.update()
+                    else:
+                        page.show_snack_bar(ft.SnackBar(ft.Text("Versão nova detectada, mas sem APK."), bgcolor=WARNING_ORANGE))
+                else:
+                    page.show_snack_bar(ft.SnackBar(ft.Text("Você já está na versão mais atual!"), bgcolor=SUCCESS_GREEN))
+            else:
+                page.show_snack_bar(ft.SnackBar(ft.Text("Erro ao checar atualizações."), bgcolor="red"))
+        except Exception as ex:
+             page.show_snack_bar(ft.SnackBar(ft.Text(f"Erro de conexão: {ex}"), bgcolor="red"))
+
+    # Botão de Update no Header
+    btn_update = ft.IconButton(
+        icon=ft.icons.SYSTEM_UPDATE_ALT,
+        icon_color="white",
+        tooltip="Buscar Atualizações",
+        on_click=check_update
+    )
+    
+    # Atualiza Header para incluir botão
+    header.content.controls.append(ft.Container(content=btn_update, alignment=ft.alignment.center_right))
+
     def show_results(data):
         result_col.controls.clear()
         
-        # Card SOAP
+        # --- BLOCOS SOAP (Separados e Estilizados) ---
         soap = data.get("soap", {})
-        card_soap = ft.Card(
-            content=ft.Container(
-                content=ft.Column([
-                    ft.Text("SOAP", weight="bold", size=18, color=MEDICAL_BLUE),
-                    ft.Divider(),
-                    ft.Markdown(f"**S:** {soap.get('s','-')}"),
-                    ft.Markdown(f"**O:** {soap.get('o','-')}"),
-                    ft.Markdown(f"**A:** {soap.get('a','-')}"),
-                    ft.Markdown(f"**P:** {soap.get('p','-')}"),
-                ]),
-                padding=15
-            ),
-            elevation=2,
-            margin=10
-        )
-        result_col.controls.append(card_soap)
         
-        # Card Medicamentos
+        def create_soap_card(title, content, color, icon):
+            return ft.Card(
+                content=ft.Container(
+                    content=ft.Column([
+                        ft.Row([ft.Icon(icon, color=color), ft.Text(title, weight="bold", size=16, color=color)]),
+                        ft.Markdown(content) if content else ft.Text("-", italic=True, color="grey")
+                    ]),
+                    padding=15,
+                    border=ft.border.only(left=ft.border.BorderSide(5, color))
+                ),
+                elevation=1,
+                margin=ft.margin.only(bottom=10)
+            )
+
+        result_col.controls.append(create_soap_card("Subjetivo", soap.get('s'), MEDICAL_BLUE, ft.icons.PERSON))
+        result_col.controls.append(create_soap_card("Objetivo", soap.get('o'), SUCCESS_GREEN, ft.icons.MONITOR_HEART))
+        result_col.controls.append(create_soap_card("Avaliação", soap.get('a'), WARNING_ORANGE, ft.icons.ANALYTICS))
+        result_col.controls.append(create_soap_card("Plano", soap.get('p'), "#8E24AA", ft.icons.MEDICAL_SERVICES)) # Roxo
+        
+        # --- MEDICAMENTOS ---
         meds = data.get("medicamentos", [])
-        if meds:
-            med_rows = []
-            
+        
+        # Card Principal de Medicamentos
+        med_content = []
+        if not meds:
+             med_content.append(ft.Text("Nenhum medicamento identificado pela IA.", italic=True, color="grey"))
+        else:
             # Roda Auditoria
             audit = check_meds_debug(meds)
             
+            # --- ÁREA VISUAL (Resumida) ---
             for item in audit["items"]:
                 name = item['ia_term']
-                
-                # Tags
                 tags = []
+                
                 if item['remume']['found']: 
                     tags.append(ft.Container(content=ft.Text("REMUME", size=10, color="white"), bgcolor=SUCCESS_GREEN, padding=5, border_radius=4))
                 if item['alto_custo']['found']:
@@ -425,51 +496,43 @@ def main(page: ft.Page):
                      tags.append(ft.Container(content=ft.Text("RENAME", size=10, color="white"), bgcolor=MEDICAL_BLUE, padding=5, border_radius=4))
                 
                 if not tags:
-                    tags.append(ft.Container(content=ft.Text("NÃO ENCONTRADO", size=10, color="white"), bgcolor=NEUTRAL_GREY, padding=5, border_radius=4))
+                    tags.append(ft.Container(content=ft.Text("NÃO CONSTA NOS BANCOS", size=10, color="white"), bgcolor="red", padding=5, border_radius=4))
 
-                med_rows.append(
+                med_content.append(
                     ft.Container(
                         content=ft.Column([
-                            ft.Text(name, weight="bold", size=16),
-                            ft.Row(tags)
+                            ft.Text(name.title(), weight="bold", size=16),
+                            ft.Row(tags, wrap=True)
                         ]),
                         padding=10,
                         border=ft.border.only(bottom=ft.border.BorderSide(1, "#E0E0E0"))
                     )
                 )
 
-            card_meds = ft.Card(
-                content=ft.Container(
-                    content=ft.Column([
-                        ft.Row([ft.Icon(ft.icons.MEDICATION, color=MEDICAL_BLUE), ft.Text("Medicamentos Sugeridos", size=18, weight="bold")]),
-                        ft.Divider(),
-                        *med_rows
-                    ]),
-                    padding=15
-                ),
-                elevation=2,
-                margin=10
-            )
-            result_col.controls.append(card_meds)
-
-            # --- PAINEL DE DEBUG (AUDITORIA) ---
+            # --- PAINEL DE DEBUG (DETALHADO) ---
             debug_info = []
-            debug_info.append(ft.Text(f"Bancos Carregados: REMUME({audit['meta']['count_remume']}), Alto Custo({audit['meta']['count_alto_custo']})", size=12, color="grey"))
+            debug_info.append(ft.Text(f"Total Sugerido pela IA: {len(meds)}", weight="bold"))
+            debug_info.append(ft.Text(f"Bancos: REMUME({audit['meta']['count_remume']}), Alto Custo({audit['meta']['count_alto_custo']})", size=12, color="grey"))
             
             for item in audit["items"]:
                 debug_info.append(ft.Divider())
-                debug_info.append(ft.Text(f"IA: '{item['ia_term']}'", weight="bold", size=12))
+                debug_info.append(ft.Text(f"IA Input: '{item['ia_term']}'", weight="bold", size=13))
                 
+                # REMUME
                 if item['remume']['found']:
-                     debug_info.append(ft.Text(f"✅ REMUME Match: {item['remume']['match']}", color=SUCCESS_GREEN, size=11, font_family="monospace"))
+                     debug_info.append(ft.Text(f"✅ REMUME: {item['remume']['match']}", color=SUCCESS_GREEN, size=11, font_family="monospace"))
                 else:
-                     debug_info.append(ft.Text(f"❌ REMUME: Sem match", color="red", size=11))
-                     
+                     debug_info.append(ft.Text(f"❌ REMUME: Não encontrado", color="red", size=11))
+                
+                # ALTO CUSTO 
                 if item['alto_custo']['found']:
-                     debug_info.append(ft.Text(f"✅ Alto Custo Match: {item['alto_custo']['match']}", color=WARNING_ORANGE, size=11, font_family="monospace"))
-                     
+                     debug_info.append(ft.Text(f"✅ Alto Custo: {item['alto_custo']['match']}", color=WARNING_ORANGE, size=11, font_family="monospace"))
+                else:
+                     debug_info.append(ft.Text(f"❌ Alto Custo: Não encontrado", color="red", size=11))
+
             expansion_debug = ft.ExpansionTile(
-                title=ft.Text("🕵️ Auditoria Técnica (Debug)", size=14, color=NEUTRAL_GREY),
+                title=ft.Row([ft.Icon(ft.icons.BUG_REPORT, size=16), ft.Text("Auditoria de Cruzamento (Debug)", size=14)]),
+                subtitle=ft.Text("Toque para ver detalhes da busca", size=12, italic=True),
                 controls=[
                     ft.Container(
                         content=ft.Column(debug_info),
@@ -479,7 +542,21 @@ def main(page: ft.Page):
                     )
                 ]
             )
-            result_col.controls.append(ft.Container(expansion_debug, margin=10))
+            result_col.controls.append(ft.Container(expansion_debug, margin=20))
+
+        # Adiciona Card de Medicamentos Visuais
+        result_col.controls.insert(4, ft.Card(
+            content=ft.Container(
+                content=ft.Column([
+                    ft.Row([ft.Icon(ft.icons.MEDICATION, color=MEDICAL_BLUE), ft.Text("Medicamentos Sugeridos", size=18, weight="bold")]),
+                    ft.Divider(),
+                    *med_content
+                ]),
+                padding=15
+            ),
+            elevation=2,
+            margin=10
+        ))
 
         result_col.visible = True
         page.update()
