@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - feature/debug-flet-28
   workflow_dispatch:
 
 jobs:
@@ -19,11 +20,11 @@ jobs:
         with:
           python-version: '3.11'
 
-      # Mantendo o alinhamento que funcionou (Flutter 3.22.2)
-      - name: Setup Flutter 3.22.2
+      # Debug Flet 0.28.3 - Flutter 3.24.3
+      - name: Setup Flutter 3.24.3
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.22.2'
+          flutter-version: '3.24.3'
           channel: 'stable'
           cache: true
       
