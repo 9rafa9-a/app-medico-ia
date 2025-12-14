@@ -163,11 +163,279 @@ def run_gemini_analysis(api_key, audio_path_val):
     except Exception as e:
         return {"error": f"Erro Geral: {e}"}
 
-# ... (check_meds_debug mantida) ...
+# --- INTEGRAÇÃO GEMINI (REST API) ---
+# (run_gemini_analysis já está acima)
 
-# ... (UI Config mantida) ...
+def check_meds_debug(meds_found):
+    try:
+        remume_list = [unidecode(x).lower() for x in get_remume()]
+        rename_list = [unidecode(x).lower() for x in get_rename()]
+        alto_custo_list = [unidecode(x).lower() for x in get_alto_custo()]
+        
+        audit_items = []
+        
+        for med in meds_found:
+            med_norm = unidecode(med).lower()
+            
+            # Helper de busca fuzzy ou exata
+            def search_db(db_list):
+                # Busca Exata
+                if med_norm in db_list:
+                    return {"found": True, "match": med}
+                # Busca Parcial (Simples)
+                for item in db_list:
+                    if med_norm in item or item in med_norm:
+                         return {"found": True, "match": item}
+                return {"found": False, "match": None}
+    
+            audit_items.append({
+                "ia_term": med,
+                "remume": search_db(remume_list),
+                "rename": search_db(rename_list),
+                "alto_custo": search_db(alto_custo_list)
+            })
+            
+        return {
+            "items": audit_items,
+            "meta": {
+                "count_remume": sum(1 for x in audit_items if x['remume']['found']),
+                "count_rename": sum(1 for x in audit_items if x['rename']['found'])
+            }
+        }
+    except Exception as e:
+        print(f"Erro Check Meds: {e}")
+        return {"items": [], "meta": {"error": str(e)}}
 
-# ... (Main Init mantida) ...
+# --- CONFIGURAÇÃO DE UI (Temas e Cores) ---
+MEDICAL_BLUE = "#0052CC"
+MEDICAL_LIGHT_BLUE = "#E3F2FD"
+SUCCESS_GREEN = "#2E7D32"
+WARNING_ORANGE = "#EF6C00"
+NEUTRAL_GREY = "#757575"
+
+# --- UI PRINCIPAL (Refatorada - Fase 3) ---
+def main(page: ft.Page):
+    try:
+        page.title = "MEDUBS" # Nome Novo
+        page.scroll = "adaptive"
+        page.bgcolor = "#F5F7FA"
+        page.padding = 0
+        
+        # State
+        audio_path = ft.Ref[str]()
+        api_key_ref = ft.Ref[ft.TextField]()
+        
+        # Recupera API Key salva (Com proteção anti-crash)
+        saved_key = ""
+        try:
+            # Tenta ler, se falhar ou se a propriedade não existir, segue vazio
+            if hasattr(page, 'client_storage') and page.client_storage:
+                saved_key = page.client_storage.get("gemini_api_key") or ""
+        except Exception as e:
+            print(f"Erro ao ler storage: {e}")
+            # Não faz nada, segue sem chave
+        
+        # --- COMPONENTES VISUAIS ---
+        
+        # Header MEDUBS
+        header = ft.Container(
+            content=ft.Row([
+                ft.Column([
+                    ft.Text("MEDUBS", size=26, weight="bold", color="white"), # Fonte padrão
+                    ft.Text("IA Clínica Inteligente", size=12, color="white70")
+                ], spacing=2),
+                # Espaço para botão de update será adicionado depois
+            ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
+            bgcolor=MEDICAL_BLUE,
+            padding=ft.padding.symmetric(horizontal=20, vertical=25), # Mais espaço
+            border_radius=ft.border_radius.only(bottom_left=25, bottom_right=25), # Mais arredondado
+            shadow=ft.BoxShadow(blur_radius=15, color=ft.colors.with_opacity(0.4, "black"))
+        )
+        
+        # Status Indicator
+        txt_status = ft.Text("Aguardando áudio...", color=NEUTRAL_GREY, italic=True)
+        
+        # Input API (Com persistência)
+        def save_api_key(e):
+            try:
+                page.client_storage.set("gemini_api_key", api_key_ref.current.value)
+            except: pass # Ignora erro de save
+            
+        txt_api_key = ft.TextField(
+            ref=api_key_ref,
+            value=saved_key,
+            label="Google API Key",
+            password=True,
+            can_reveal_password=True,
+            prefix_icon=ft.icons.KEY,
+            border_color=MEDICAL_BLUE,
+            text_size=12,
+            height=45,
+            content_padding=10,
+            on_change=save_api_key # Salva ao digitar
+        )
+
+        # Imagem Placeholder
+        # PROTEÇÃO DE ASSET: Se não achar, não quebra
+        img_src = "https://placehold.co/200x200?text=MEDUBS" # Fallback Online
+        try:
+             local_asset = asset("logo_medico.png")
+             if os.path.exists(local_asset):
+                 img_src = local_asset
+        except: pass
+
+        img_placeholder = ft.Image(
+            src=img_src,
+            width=200,
+            opacity=0.8, # Um pouco mais visível
+            animate_opacity=300,
+            error_content=ft.Text("Logo não enc.", color="red") # Fallback visual
+        )
+        container_placeholder = ft.Container(
+            content=ft.Column([
+                img_placeholder,
+                ft.Text("Toque em Selecionar Áudio para começar", color=NEUTRAL_GREY, weight="bold")
+            ], horizontal_alignment="center", spacing=20),
+            alignment=ft.alignment.center,
+            padding=40,
+            visible=True
+        )
+
+        # Botões
+        def on_pick(e):
+            if e.files:
+                audio_path.current = e.files[0].path
+                txt_status.value = f"Arquivo: {e.files[0].name}"
+                txt_status.color = MEDICAL_BLUE
+                btn_process.disabled = False
+                page.update()
+
+        file_picker = ft.FilePicker(on_result=on_pick)
+        page.overlay.append(file_picker)
+        
+        btn_select = ft.ElevatedButton(
+            "Selecionar Áudio",
+            icon=ft.icons.AUDIO_FILE,
+            on_click=lambda _: file_picker.pick_files(allow_multiple=False, allowed_extensions=["mp3", "wav", "m4a"]),
+            bgcolor="white", color=MEDICAL_BLUE,
+            style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=12), elevation=1)
+        )
+        
+        btn_process = ft.ElevatedButton(
+            "Processar Consulta",
+            icon=ft.icons.ANALYTICS,
+            on_click=None,
+            bgcolor=MEDICAL_BLUE, color="white",
+            disabled=True,
+            style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=12), elevation=4)
+        )
+
+        # Container de Resultados
+        result_col = ft.Column(visible=False)
+
+        def on_process_click(e):
+            api_key = api_key_ref.current.value
+            if not api_key:
+                page.show_snack_bar(ft.SnackBar(ft.Text("Insira a API Key!"), bgcolor="red"))
+                return
+                
+            # Garante salvamento
+            try: page.client_storage.set("gemini_api_key", api_key)
+            except: pass
+                
+            if not audio_path.current: return
+            
+            container_placeholder.visible = False
+            result_col.visible = False
+            txt_status.value = "Analisando com Gemini 2.5..."
+            page.update()
+            
+            def task():
+                try:
+                    res = run_gemini_analysis(api_key, audio_path.current)
+                    if "error" in res:
+                        page.show_snack_bar(ft.SnackBar(ft.Text(f"Erro: {res['error']}"), bgcolor="red"))
+                        txt_status.value = f"Erro: {res['error'][:30]}..."
+                    else:
+                        txt_status.value = "Análise Concluída."
+                        show_results(res)
+                except Exception as e:
+                     page.show_snack_bar(ft.SnackBar(ft.Text(f"Erro Thread: {e}"), bgcolor="red"))
+                     txt_status.value = "Erro Fatal na Thread."
+                
+                page.update()
+                
+            threading.Thread(target=task).start()
+
+        btn_process.on_click = on_process_click
+
+        # --- AUTO-UPDATE ---
+        CURRENT_VERSION = "v1.0.1" # Incrementar se lançar tag nova
+        REPO_OWNER = "9rafa9-a"
+        REPO_NAME = "swift-gemini"
+
+        def check_update(e):
+            page.show_snack_bar(ft.SnackBar(ft.Text("Buscando atualizações..."), duration=1000))
+            def update_task():
+                try:
+                    # Debug URL
+                    url = f"https://api.github.com/repos/{REPO_OWNER}/{REPO_NAME}/releases/latest"
+                    print(f"DEBUG: Checking update at {url}")
+                    
+                    resp = requests.get(url, timeout=10)
+                    if resp.status_code == 200:
+                        data = resp.json()
+                        latest_tag = data.get("tag_name", "v0.0.0")
+                        
+                        if latest_tag != CURRENT_VERSION:
+                            assets = data.get("assets", [])
+                            apk_url = ""
+                            for asset in assets:
+                                if asset["name"].endswith(".apk"):
+                                    apk_url = asset["browser_download_url"]
+                                    break
+                            
+                            if apk_url:
+                                def close_dlg(e):
+                                    page.dialog.open = False
+                                    page.update()
+                                
+                                def do_update(e):
+                                    page.launch_url(apk_url)
+                                    close_dlg(e)
+
+                                dlg = ft.AlertDialog(
+                                    modal=True,
+                                    title=ft.Text("Atualização Disponível! 🚀"),
+                                    content=ft.Text(f"Nova versão {latest_tag}.\nInstalar agora?"),
+                                    actions=[
+                                        ft.TextButton("Não", on_click=close_dlg),
+                                        ft.TextButton("Sim", on_click=do_update),
+                                    ],
+                                )
+                                page.dialog = dlg
+                                dlg.open = True
+                                page.update()
+                            else:
+                                page.show_snack_bar(ft.SnackBar(ft.Text(f"Nova versão {latest_tag} sem APK."), bgcolor=WARNING_ORANGE))
+                        else:
+                            page.show_snack_bar(ft.SnackBar(ft.Text(f"Versão {CURRENT_VERSION} é a mais atual!"), bgcolor=SUCCESS_GREEN))
+                    else:
+                        page.show_snack_bar(ft.SnackBar(ft.Text(f"Erro GitHub: {resp.status_code}"), bgcolor="red"))
+                except Exception as ex:
+                     page.show_snack_bar(ft.SnackBar(ft.Text(f"Erro Update: {ex}"), bgcolor="red"))
+            
+            threading.Thread(target=update_task).start()
+
+        btn_update = ft.IconButton(
+            icon=ft.icons.AUTORENEW, # Corrigido Case
+            icon_color="white",
+            tooltip="Buscar Atualizações",
+            on_click=check_update
+        )
+        
+        # Atualiza Header para incluir botão
+        header.content.controls.append(btn_update)
 
         def show_results(data):
             result_col.controls.clear()
