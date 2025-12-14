@@ -97,10 +97,110 @@ def check_meds(med_list):
     # ... (lógica antiga, pode manter ou remover se só usar o debug)
     return [] 
 
-# ... (Função Gemni Mantida) ...
-# Preciso re-declarar check_meds_debug pois ela usa get_rename que mudou, 
-# mas como get_rename é chamada dentro dela, não preciso mexer nela se ela só chama a função.
-# As funções auxiliares get_... são de escopo global, então check_meds_debug vai usar as novas.
+# --- INTEGRAÇÃO GEMINI (REST API) ---
+import base64
+
+def run_gemini_analysis(api_key, audio_path_val):
+    print(f"DEBUG: Iniciando análise para {audio_path_val}")
+    if not api_key:
+        return {"error": "API Key não fornecida."}
+    
+    if not os.path.exists(audio_path_val):
+        return {"error": "Arquivo de áudio não encontrado."}
+
+    try:
+        # Lê e codifica o áudio
+        with open(audio_path_val, "rb") as f:
+            audio_data = base64.b64encode(f.read()).decode("utf-8")
+            
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={api_key}"
+        
+        prompt = """
+        Você é um assistente médico especialista.
+        Analise o áudio desta consulta e gere um JSON estrito com:
+        1. "soap": objeto com chaves "s", "o", "a", "p" (Subjetivo, Objetivo, Avaliação, Plano).
+        2. "medicamentos": lista de strings com nomes genéricos dos medicamentos prescritos ou citados.
+        
+        Responda APENAS o JSON, sem markdown.
+        """
+        
+        payload = {
+            "contents": [{
+                "parts": [
+                    {"text": prompt},
+                    {"inline_data": {
+                        "mime_type": "audio/mp3", # Genérico para audio
+                        "data": audio_data
+                    }}
+                ]
+            }]
+        }
+        
+        headers = {"Content-Type": "application/json"}
+        # Timeout aumentado para áudios longos
+        response = requests.post(url, json=payload, headers=headers, timeout=120)
+        
+        if response.status_code != 200:
+            return {"error": f"Erro API Gemini ({response.status_code}): {response.text}"}
+            
+        result = response.json()
+        
+        # Extração Segura
+        try:
+            candidates = result.get('candidates', [])
+            if not candidates:
+                 return {"error": "Gemini não retornou candidatos. Áudio mudo ou bloqueado?"}
+                 
+            raw_text = candidates[0]['content']['parts'][0]['text']
+            # Limpeza do JSON Markdown
+            cleaned_text = raw_text.replace("```json", "").replace("```", "").strip()
+            return json.loads(cleaned_text)
+        except Exception as e:
+            print(f"Erro Parse: {raw_text}")
+            return {"error": f"Erro ao processar JSON: {e}"}
+            
+    except Exception as e:
+        return {"error": f"Erro Geral: {e}"}
+
+def check_meds_debug(meds_found):
+    try:
+        remume_list = [unidecode(x).lower() for x in get_remume()]
+        rename_list = [unidecode(x).lower() for x in get_rename()]
+        alto_custo_list = [unidecode(x).lower() for x in get_alto_custo()]
+        
+        audit_items = []
+        
+        for med in meds_found:
+            med_norm = unidecode(med).lower()
+            
+            # Helper de busca fuzzy ou exata
+            def search_db(db_list):
+                # Busca Exata
+                if med_norm in db_list:
+                    return {"found": True, "match": med}
+                # Busca Parcial (Simples)
+                for item in db_list:
+                    if med_norm in item or item in med_norm:
+                         return {"found": True, "match": item}
+                return {"found": False, "match": None}
+    
+            audit_items.append({
+                "ia_term": med,
+                "remume": search_db(remume_list),
+                "rename": search_db(rename_list),
+                "alto_custo": search_db(alto_custo_list)
+            })
+            
+        return {
+            "items": audit_items,
+            "meta": {
+                "count_remume": sum(1 for x in audit_items if x['remume']['found']),
+                "count_rename": sum(1 for x in audit_items if x['rename']['found'])
+            }
+        }
+    except Exception as e:
+        print(f"Erro Check Meds: {e}")
+        return {"items": [], "meta": {"error": str(e)}}
 
 # --- CONFIGURAÇÃO DE UI (Temas e Cores) ---
 MEDICAL_BLUE = "#0052CC"
@@ -247,13 +347,18 @@ def main(page: ft.Page):
             page.update()
             
             def task():
-                res = run_gemini_analysis(api_key, audio_path.current)
-                if "error" in res:
-                    page.show_snack_bar(ft.SnackBar(ft.Text(f"Erro: {res['error']}"), bgcolor="red"))
-                    txt_status.value = "Erro na análise."
-                else:
-                    txt_status.value = "Análise Concluída."
-                    show_results(res)
+                try:
+                    res = run_gemini_analysis(api_key, audio_path.current)
+                    if "error" in res:
+                        page.show_snack_bar(ft.SnackBar(ft.Text(f"Erro: {res['error']}"), bgcolor="red"))
+                        txt_status.value = f"Erro: {res['error'][:30]}..."
+                    else:
+                        txt_status.value = "Análise Concluída."
+                        show_results(res)
+                except Exception as e:
+                     page.show_snack_bar(ft.SnackBar(ft.Text(f"Erro Thread: {e}"), bgcolor="red"))
+                     txt_status.value = "Erro Fatal na Thread."
+                
                 page.update()
                 
             threading.Thread(target=task).start()
