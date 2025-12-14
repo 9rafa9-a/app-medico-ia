@@ -489,7 +489,6 @@ def main(page: ft.Page):
                                     spacing=2
                                 )
                             ],
-                            min_tile_height=30,
                             tile_padding=ft.padding.symmetric(horizontal=0)
                         )
                     )
