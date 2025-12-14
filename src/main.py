@@ -261,7 +261,10 @@ def run_gemini_analysis(api_key, audio_path_val):
                         "data": audio_data
                     }}
                 ]
-            }]
+            }],
+            "generationConfig": {
+                "responseMimeType": "application/json"
+            }
         }
         
         headers = {"Content-Type": "application/json"}
