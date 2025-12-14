@@ -35,14 +35,11 @@ jobs:
       - name: Build APK (Estrutura SRC Padronizada)
         working-directory: mobile
         run: |
-          echo "=== 1. ORGANIZANDO A CASA (PADRÃO FLET) ==="
-          # O Flet funciona melhor quando o código está numa subpasta 'src'
-          # Vamos criar essa estrutura agora para garantir que ele ache o main.py
-          mkdir -p src
+          echo "=== 1. VERIFICANDO ESTRUTURA (REPO JÁ ESTRUTURADO) ==="
+          ls -R
           
-          # Copia o main.py e assets para dentro de src
-          cp main.py src/
-          if [ -d "assets" ]; then cp -r assets src/; fi
+          # A estrutura já está correta no git: mobile/src/main.py
+          # Não precisamos mover nada.
           
           # Cria um arquivo de verificação
           echo "Verificando estrutura..."
