@@ -39,8 +39,30 @@ jobs:
           # Copy our flutter/ folder content OVER the generated app
           cp -r flutter/* medubs_native/
           
-      - name: Configure Android (Python)
-        run: python patch_gradle.py
+      - name: Configure Android (Safe Mode)
+        working-directory: medubs_native
+        run: |
+          echo "=== 3.1 Debug: Reading build.gradle BEFORE ==="
+          cat android/app/build.gradle || echo "Groovy not found"
+          cat android/app/build.gradle.kts || echo "Kotlin not found"
+          
+          echo "=== 3.2 Injecting local.properties ==="
+          # Standard Flutter override
+          echo "flutter.minSdkVersion=23" > android/local.properties
+          echo "flutter.targetSdkVersion=34" >> android/local.properties
+          echo "flutter.compileSdkVersion=34" >> android/local.properties
+          
+          echo "=== 3.3 Patching build.gradle (Targeted) ==="
+          # Replace the VARIABLE 'flutter.minSdkVersion' with literal '23'
+          # This avoids touching the method name 'minSdkVersion'
+          sed -i 's/flutter.minSdkVersion/23/g' android/app/build.gradle || true
+          sed -i 's/flutter.minSdk/23/g' android/app/build.gradle.kts || true
+          
+          # Enable MultiDex via Sed injection
+          sed -i 's/defaultConfig {/defaultConfig {\n        multiDexEnabled true/g' android/app/build.gradle || true
+          
+          echo "=== 3.4 Debug: Reading build.gradle AFTER ==="
+          cat android/app/build.gradle || true
           
       - name: Build APK
         working-directory: medubs_native
