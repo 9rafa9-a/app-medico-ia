@@ -119,54 +119,7 @@ def generate_pdf_report(data, filename):
 
     return pdf.output(dest='S').encode('latin-1', 'replace') # Retorna bytes
 
-# ... (Resto do Main) ...
 
-# DENTRO DO MAIN, APÓS CHECK_UPDATE e ANTES DE SHOW_RESULTS:
-
-        def save_pdf(e):
-             if not result_col.data: # Guardamos o JSON aqui
-                 return
-             
-             save_file_dialog.save_file(file_name=f"Consulta_{datetime.now().strftime('%Y%m%d_%H%M')}.pdf")
-
-        def on_save_result(e: ft.FilePickerResultEvent):
-            if e.path:
-                try:
-                    pdf_bytes = generate_pdf_report(result_col.data, e.path)
-                    with open(e.path, "wb") as f:
-                        f.write(pdf_bytes)
-                    page.show_snack_bar(ft.SnackBar(ft.Text(f"Salvo em: {e.path}"), bgcolor=SUCCESS_GREEN))
-                except Exception as ex:
-                    page.show_snack_bar(ft.SnackBar(ft.Text(f"Erro ao salvar: {ex}"), bgcolor="red"))
-
-        save_file_dialog = ft.FilePicker(on_result=on_save_result)
-        page.overlay.append(save_file_dialog)
-
-        # Atualiza show_results para guardar dados e adicionar botão
-        def show_results(data):
-            result_col.controls.clear()
-            result_col.data = data # Persiste dados para PDF
-
-            # ... (Lógica Cards Mantida) ...
-            
-            # ... (Lógica Meds Mantida) ...
-            
-            # Botão PDF
-            btn_pdf = ft.ElevatedButton(
-                "Baixar Relatório PDF",
-                icon=ft.icons.PICTURE_AS_PDF,
-                bgcolor=MEDICAL_BLUE,
-                color="white",
-                on_click=save_pdf,
-                style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=10))
-            )
-
-            result_col.controls.append(ft.Container(height=20))
-            result_col.controls.append(ft.Row([btn_pdf], alignment=ft.MainAxisAlignment.CENTER))
-            result_col.controls.append(ft.Container(height=30))
-
-            result_col.visible = True
-            page.update()
 
 # Note: google.generativeai might need to be installed or used via REST API if the library has issues on Android.
 # Ideally we use the library if it builds, or requests if we want to be "pure python" safe.
@@ -613,8 +566,30 @@ def main(page: ft.Page):
         # Atualiza Header para incluir botão
         header.content.controls.append(btn_update)
 
+        def save_pdf(e):
+             # Verifica se há dados guardados no Column (monkey-patch)
+             if not hasattr(result_col, 'data') or not result_col.data: 
+                 return
+             
+             save_file_dialog.save_file(file_name=f"Consulta_{datetime.now().strftime('%Y%m%d_%H%M')}.pdf")
+
+        def on_save_result(e: ft.FilePickerResultEvent):
+            if e.path:
+                try:
+                    pdf_bytes = generate_pdf_report(result_col.data, e.path)
+                    with open(e.path, "wb") as f:
+                        f.write(pdf_bytes)
+                    page.show_snack_bar(ft.SnackBar(ft.Text(f"Salvo em: {e.path}"), bgcolor=SUCCESS_GREEN))
+                except Exception as ex:
+                    page.show_snack_bar(ft.SnackBar(ft.Text(f"Erro ao salvar: {ex}"), bgcolor="red"))
+
+        save_file_dialog = ft.FilePicker(on_result=on_save_result)
+        page.overlay.append(save_file_dialog)
+
         def show_results(data):
             result_col.controls.clear()
+            result_col.data = data # Persiste dados para PDF
+
             
             # --- BLOCOS SOAP ---
             soap = data.get("soap", {})
@@ -754,6 +729,20 @@ def main(page: ft.Page):
                 elevation=2,
                 margin=ft.margin.only(bottom=20)
             ))
+
+            # Botão PDF
+            btn_pdf = ft.ElevatedButton(
+                "Baixar Relatório PDF",
+                icon=ft.icons.PICTURE_AS_PDF,
+                bgcolor=MEDICAL_BLUE,
+                color="white",
+                on_click=save_pdf,
+                style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=10))
+            )
+
+            result_col.controls.append(ft.Container(height=20))
+            result_col.controls.append(ft.Row([btn_pdf], alignment=ft.MainAxisAlignment.CENTER))
+            result_col.controls.append(ft.Container(height=30))
 
             result_col.visible = True
             page.update()
