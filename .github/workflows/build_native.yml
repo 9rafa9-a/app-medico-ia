@@ -38,7 +38,6 @@ jobs:
           
           # Copy our flutter/ folder content OVER the generated app
           cp -r flutter/* medubs_native/
-          cp patch_gradle.py .
           
       - name: Configure Android (Python)
         run: python patch_gradle.py
