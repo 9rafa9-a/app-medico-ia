@@ -1,13 +1,14 @@
 import os
 
-root_gradle = "medubs_native/android/build.gradle"
-app_gradle = "medubs_native/android/app/build.gradle"
+# We are running INSIDE medubs_native/
+root_gradle = "android/build.gradle"
+app_gradle = "android/app/build.gradle"
+app_gradle_kts = "android/app/build.gradle.kts"
 
-# 1. Patch Root build.gradle to force plugins to behave
+# 1. Patch Root build.gradle
 if os.path.exists(root_gradle):
     print(f"Patching {root_gradle}...")
     with open(root_gradle, "a") as f:
-        # We append a subprojects block that forces configuration on all plugins
         f.write("""
 
 // INCISION BY MEDUBS BUILD FIXER
@@ -26,16 +27,20 @@ subprojects {
 }
 """)
     print("Injected global configuration into root build.gradle")
+elif os.path.exists(root_gradle + ".kts"):
+   print("Found root build.gradle.kts - (Script not optimized for Root Kotlin yet, skipping root injection)")
 else:
     print(f"ERROR: {root_gradle} not found!")
 
-# 2. Patch App build.gradle (just to be safe/redundant)
-if os.path.exists(app_gradle):
-    print(f"Patching {app_gradle}...")
-    with open(app_gradle, "r") as f:
+# 2. Patch App build.gradle (Groovy or Kotlin)
+target_app_gradle = app_gradle if os.path.exists(app_gradle) else (app_gradle_kts if os.path.exists(app_gradle_kts) else None)
+
+if target_app_gradle:
+    print(f"Patching {target_app_gradle}...")
+    with open(target_app_gradle, "r") as f:
         content = f.read()
     
-    # Replace flutter.minSdkVersion if present
+    # Simple Replacements
     content = content.replace("flutter.minSdkVersion", "23")
     content = content.replace("flutter.targetSdkVersion", "34")
     content = content.replace("flutter.compileSdkVersion", "34")
@@ -44,12 +49,14 @@ if os.path.exists(app_gradle):
     if "multiDexEnabled" not in content and "defaultConfig {" in content:
         content = content.replace("defaultConfig {", "defaultConfig {\\n        multiDexEnabled true")
         
-    with open(app_gradle, "w") as f:
+    with open(target_app_gradle, "w") as f:
         f.write(content)
-    print("Patched app/build.gradle")
+    print("Patched app gradle file")
+else:
+    print("No app build.gradle found!")
 
 # 3. Create properties file just in case
-with open("medubs_native/android/local.properties", "w") as f:
+with open("android/local.properties", "w") as f:
     f.write("flutter.minSdkVersion=23\\n")
     f.write("flutter.targetSdkVersion=34\\n")
     f.write("flutter.compileSdkVersion=34\\n")
