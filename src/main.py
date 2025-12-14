@@ -113,7 +113,7 @@ def run_gemini_analysis(api_key, audio_path_val):
         with open(audio_path_val, "rb") as f:
             audio_data = base64.b64encode(f.read()).decode("utf-8")
             
-        url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={api_key}"
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={api_key}"
         
         prompt = """
         Você é um assistente médico especialista.
