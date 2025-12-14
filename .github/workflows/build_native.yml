@@ -39,40 +39,26 @@ jobs:
           # Copy our flutter/ folder content OVER the generated app
           cp -r flutter/* medubs_native/
           
-      - name: Configure Android (Safe Mode)
+      - name: Configure Android (God Mode)
         working-directory: medubs_native
         run: |
-          echo "=== 3.1 Debug: Reading build.gradle BEFORE ==="
-          cat android/app/build.gradle || echo "Groovy not found"
-          cat android/app/build.gradle.kts || echo "Kotlin not found"
+          # Copy script from root
+          cp ../fix_android_build.py .
           
-          echo "=== 3.2 Injecting local.properties ==="
-          # Standard Flutter override
-          echo "flutter.minSdkVersion=23" > android/local.properties
-          echo "flutter.targetSdkVersion=34" >> android/local.properties
-          echo "flutter.compileSdkVersion=34" >> android/local.properties
+          echo "=== 3.1 Running Fixer Script ==="
+          python fix_android_build.py
           
-          echo "=== 3.3 Patching build.gradle (Targeted) ==="
-          # Replace the VARIABLE 'flutter.minSdkVersion' with literal '23'
-          # This avoids touching the method name 'minSdkVersion'
-          sed -i 's/flutter.minSdkVersion/23/g' android/app/build.gradle || true
-          sed -i 's/flutter.minSdk/23/g' android/app/build.gradle.kts || true
+          echo "=== 3.2 Verifying Root Gradle ==="
+          cat android/build.gradle
           
-          # Enable MultiDex via Sed injection
-          sed -i 's/defaultConfig {/defaultConfig {\n        multiDexEnabled true/g' android/app/build.gradle || true
-          
-          echo "=== 3.4 Debug: Reading build.gradle AFTER ==="
-          cat android/app/build.gradle || true
-          
-      - name: Build APK
+      - name: Build APK (Trapped)
         working-directory: medubs_native
         run: |
           echo "=== 4. Installing Dependencies ==="
           flutter pub get
           
-          echo "=== 5. Building APK (With Error Trapping) ==="
-          # We pipe stderr to a log file but also show it in valid console
-          set +e # Don't exit immediately on error so we can process log
+          echo "=== 5. Building APK ==="
+          set +e
           flutter build apk --release --verbose > build.log 2>&1
           EXIT_CODE=$?
           set -e
@@ -80,7 +66,6 @@ jobs:
           if [ $EXIT_CODE -ne 0 ]; then
              echo "!!! BUILD FAILED !!!"
              echo "=== CRITICAL ERROR EXTRACT ==="
-             # Extract 'What went wrong' and following lines
              grep -A 20 "What went wrong" build.log || tail -n 100 build.log
              exit 1
           else
