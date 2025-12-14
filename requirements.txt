@@ -2,3 +2,5 @@ flet==0.25.2
 requests
 unidecode
 fpdf
+setuptools
+wheel
