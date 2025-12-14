@@ -40,7 +40,10 @@ jobs:
           ls -la
           
           echo "=== 2. BUILD FLET (LOCAL) ==="
-          # Agora estamos na mesma pasta que o main.py. Não tem como ele não achar.
+          # Copia requirements para que o Flet os inclua no APK
+          cp ../requirements.txt .
+          
+          # Agora estamos na mesma pasta que o main.py e requirements.txt
           flet build apk --verbose
           
           echo "=== 3. VERIFICANDO ARTEFATO ==="
