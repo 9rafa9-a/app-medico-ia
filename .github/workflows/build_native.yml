@@ -60,13 +60,12 @@ jobs:
             echo "=== 4.2 Verifying Assets ==="
             ls -R assets || echo "Assets folder missing!"
 
-      - name: Build APK (Debug Mode)
+      - name: Build APK (Release Mode)
         working-directory: medubs_native
         run: |
-          echo "=== 5. Building APK (Debug) ==="
-          # Debug builds are faster and give better errors.
+          echo "=== 5. Building APK (Release) ==="
           set +e
-          flutter build apk --debug > build.log 2>&1
+          flutter build apk --release > build.log 2>&1
           EXIT_CODE=$?
           set -e
           
