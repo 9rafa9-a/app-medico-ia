@@ -66,7 +66,7 @@ jobs:
           echo "=== 5. Building APK (Debug) ==="
           # Debug builds are faster and give better errors.
           set +e
-          flutter build apk --debug --verbose > build.log 2>&1
+          flutter build apk --debug > build.log 2>&1
           EXIT_CODE=$?
           set -e
           

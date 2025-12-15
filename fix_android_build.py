@@ -27,6 +27,7 @@ with open("android/local.properties", "w") as f:
 
 with open("android/gradle.properties", "w") as f:
     f.write("org.gradle.jvmargs=-Xmx2048m -Dfile.encoding=UTF-8\n")
+    f.write("org.gradle.daemon=false\n") # Disable daemon for CI stability
     f.write("android.useAndroidX=true\n")
     f.write("android.enableJetifier=true\n")
     f.write("flutter.minSdkVersion=23\n")
