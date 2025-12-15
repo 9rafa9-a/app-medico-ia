@@ -51,18 +51,22 @@ jobs:
           echo "=== 3.2 Verifying Root Gradle ==="
           cat android/build.gradle
           
-      - name: Analyze Dart Code (Pre-check)
+      - name: Analyze Dart Code (Strict)
         working-directory: medubs_native
         run: |
             echo "=== 4.1 Running Flutter Analyze ==="
-            flutter analyze || echo "Code issues found (non-fatal for now)"
+            flutter analyze
+            
+            echo "=== 4.2 Verifying Assets ==="
+            ls -R assets || echo "Assets folder missing!"
 
-      - name: Build APK
+      - name: Build APK (Debug Mode)
         working-directory: medubs_native
         run: |
-          echo "=== 5. Building APK ==="
+          echo "=== 5. Building APK (Debug) ==="
+          # Debug builds are faster and give better errors.
           set +e
-          flutter build apk --release --verbose > build.log 2>&1
+          flutter build apk --debug --verbose > build.log 2>&1
           EXIT_CODE=$?
           set -e
           
