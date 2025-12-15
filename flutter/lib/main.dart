@@ -223,7 +223,8 @@ class _HomePageState extends State<HomePage> {
             
             ESTRUTURA:
             Use o formato SOAP. Preencha cada campo com detalhes técnicos.
-            Dr. House Mode ON: Para cada seção (S, O, A, P), se identificar erros, negligências, faltas de perguntas sobre alergias ou riscos, inclua uma crítica específica.
+            Dr. House Mode ON: Para cada seção (S, O, A, P), se identificar erros, negligências, faltas de perguntas sobre alergias ou riscos, inclua uma crítica.
+            IMPORTANTE: A crítica deve ser EXCLUSIVAMENTE TÉCNICA, OBJETIVA E BASEADA EM EVIDÊNCIAS. Evite tom emocional, sarcasmo desnecessário ou julgamento moral. Foque no erro clínico.
             
             SAÍDA JSON OBRIGATÓRIA:
             {
