@@ -1,4 +1,5 @@
 import os
+import subprocess
 
 # We are running INSIDE medubs_native/
 root_gradle = "android/build.gradle"
@@ -7,7 +8,6 @@ app_gradle_kts = "android/app/build.gradle.kts"
 
 # 3. Create/Overwrite gradle.properties (Critical for Plugins)
 print("Creating gradle.properties...")
-import subprocess
 
 try:
     # Find where flutter is installed
@@ -73,17 +73,27 @@ if os.path.exists(root_gradle):
         # Prepend
         new_content = variables + "\n" + content
         
-    # NOTE: We REMOVED the 'subprojects { afterEvaluate ... }' block here.
-    # It was causing the 'already evaluated' crash.
-    # The global variables above (ext { ... }) should be sufficient for plugins to pick up the versions.
+    # INJECT NAMESPACE PATCH FOR LEGACY PLUGINS (CRITICAL FIX)
+    namespace_patch = """
+    subprojects {
+        afterEvaluate { project ->
+            if (project.hasProperty("android")) {
+                project.android {
+                    if (namespace == null) {
+                        println "Fixing missing namespace for ${project.name}"
+                        namespace project.group ?: "com.example.${project.name}"
+                    }
+                }
+            }
+        }
+    }
+    """
+    new_content = new_content + namespace_patch
 
     with open(root_gradle, "w") as f:
         f.write(new_content)
-    print("Injected global configuration variables into root build.gradle")
-    
-    print("--- ROOT BUILD.GRADLE CONTENT ---")
-    print(new_content)
-    print("---------------------------------")
+    print("Injected global configuration variables and namespace patcher")
+
 else:
     print(f"ERROR: {root_gradle} not found!")
 
@@ -97,8 +107,8 @@ if target_app_gradle:
     
     # Simple Replacements
     content = content.replace("flutter.minSdkVersion", "23")
-    content = content.replace("flutter.targetSdkVersion", "34")
-    content = content.replace("flutter.compileSdkVersion", "34")
+    content = content.replace("flutter.targetSdkVersion", "35")
+    content = content.replace("flutter.compileSdkVersion", "35")
     
     # Inject MultiDex
     if "multiDexEnabled" not in content and "defaultConfig {" in content:
@@ -111,9 +121,5 @@ if target_app_gradle:
 else:
     print("No app build.gradle found!")
 
-# 3. Create properties file just in case
-with open("android/local.properties", "w") as f:
-    f.write("flutter.minSdkVersion=23\\n")
-    f.write("flutter.targetSdkVersion=34\\n")
-    f.write("flutter.compileSdkVersion=34\\n")
-    f.write("sdk.dir=/usr/lib/android-sdk\\n") # Generic placeholder
+if __name__ == "__main__":
+    pass
