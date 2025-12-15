@@ -536,7 +536,7 @@ class _HomePageState extends State<HomePage> {
             
             if (critiqueText != null) 
               Container(
-                margin: const EdgeInsets.top(12),
+                margin: const EdgeInsets.only(top: 12),
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
                   color: Colors.red[50],
