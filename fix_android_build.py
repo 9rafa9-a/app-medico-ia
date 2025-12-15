@@ -7,6 +7,24 @@ app_gradle_kts = "android/app/build.gradle.kts"
 
 # 3. Create/Overwrite gradle.properties (Critical for Plugins)
 print("Creating gradle.properties...")
+import subprocess
+
+try:
+    # Find where flutter is installed
+    flutter_bin = subprocess.check_output(["which", "flutter"]).decode("utf-8").strip()
+    # flutter_bin is likely .../bin/flutter. SDK root is one level up.
+    flutter_sdk_root = os.path.dirname(os.path.dirname(flutter_bin))
+    print(f"Found Flutter SDK at: {flutter_sdk_root}")
+except Exception as e:
+    print(f"Could not resolve Flutter SDK: {e}")
+    flutter_sdk_root = "/usr/local/flutter" # Fallback
+
+with open("android/local.properties", "w") as f:
+    f.write(f"flutter.sdk={flutter_sdk_root}\n")
+    f.write("flutter.buildMode=release\n")
+    f.write("flutter.versionName=1.0.0\n")
+    f.write("flutter.versionCode=1\n")
+
 with open("android/gradle.properties", "w") as f:
     f.write("org.gradle.jvmargs=-Xmx2048m -Dfile.encoding=UTF-8\n")
     f.write("android.useAndroidX=true\n")
@@ -14,9 +32,6 @@ with open("android/gradle.properties", "w") as f:
     f.write("flutter.minSdkVersion=23\n")
     f.write("flutter.targetSdkVersion=34\n")
     f.write("flutter.compileSdkVersion=34\n")
-    f.write("flutter.sdk=/usr/local/flutter\n") # Fake path to satisfy null checks
-    f.write("flutter.versionName=1.0.0\n")
-    f.write("flutter.versionCode=1\n")
 
 # 1. Patch Root build.gradle
 if os.path.exists(root_gradle):
