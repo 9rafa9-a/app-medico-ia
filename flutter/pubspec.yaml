@@ -19,7 +19,7 @@ dependencies:
   diacritic: ^0.1.5
 
   # Audio
-  record: ^5.1.0
+  record: 5.0.5
   audioplayers: ^6.0.0
   permission_handler: ^11.3.0
   
