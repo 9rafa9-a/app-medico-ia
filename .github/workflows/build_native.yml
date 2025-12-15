@@ -51,12 +51,15 @@ jobs:
           echo "=== 3.2 Verifying Root Gradle ==="
           cat android/build.gradle
           
-      - name: Build APK (Trapped)
+      - name: Analyze Dart Code (Pre-check)
         working-directory: medubs_native
         run: |
-          echo "=== 4. Installing Dependencies ==="
-          flutter pub get
-          
+            echo "=== 4.1 Running Flutter Analyze ==="
+            flutter analyze || echo "Code issues found (non-fatal for now)"
+
+      - name: Build APK
+        working-directory: medubs_native
+        run: |
           echo "=== 5. Building APK ==="
           set +e
           flutter build apk --release --verbose > build.log 2>&1
@@ -65,8 +68,8 @@ jobs:
           
           if [ $EXIT_CODE -ne 0 ]; then
              echo "!!! BUILD FAILED !!!"
-             echo "=== CRITICAL ERROR EXTRACT ==="
-             grep -A 20 "What went wrong" build.log || tail -n 100 build.log
+             echo "=== FULL BUILD LOG ==="
+             cat build.log
              exit 1
           else
              echo "Build Successful."
