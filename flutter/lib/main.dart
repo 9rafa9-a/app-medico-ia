@@ -140,6 +140,7 @@ class _HomePageState extends State<HomePage> {
       return;
     }
     await _saveSettings();
+    if (!mounted) return; // Fix use_build_context_synchronously
 
     if (_currentAudioPath == null) {
       ScaffoldMessenger.of(context).showSnackBar(
