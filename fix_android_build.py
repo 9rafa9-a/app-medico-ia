@@ -47,7 +47,8 @@ if target_app_gradle:
     
     # Inject MultiDex
     if "multiDexEnabled" not in content and "defaultConfig {" in content:
-        content = content.replace("defaultConfig {", "defaultConfig {\\n        multiDexEnabled true")
+        # Use simple string replacement with native newline
+        content = content.replace("defaultConfig {", "defaultConfig {\n        multiDexEnabled true")
         
     with open(target_app_gradle, "w") as f:
         f.write(content)
