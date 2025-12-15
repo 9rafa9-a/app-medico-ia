@@ -65,15 +65,7 @@ if os.path.exists(root_gradle):
     }
     """
     
-    # Smart Insertion: Try to put it inside buildscript if possible, or just at top
-    if "buildscript {" in content:
-        # Insert inside buildscript, at the top of it
-        new_content = content.replace("buildscript {", "buildscript {\n" + variables)
-    else:
-        # Prepend
-        new_content = variables + "\n" + content
-        
-    # INJECT NAMESPACE PATCH FOR LEGACY PLUGINS (CRITICAL FIX)
+    # NAMESPACE PATCH (Moved to TOP just after logic vars)
     namespace_patch = """
     subprojects {
         afterEvaluate { project ->
@@ -88,11 +80,23 @@ if os.path.exists(root_gradle):
         }
     }
     """
-    new_content = new_content + namespace_patch
+
+    # Prepend both to ensure they run BEFORE any other evaluation
+    new_content = variables + "\n" + namespace_patch + "\n" + content.replace("buildscript {", "// buildscript moved implicitly via prepending\nbuildscript {")
+    
+    # Clean up potential duplicates if buildscript was already top
+    if "buildscript {" in content:
+        # If buildscript was there, we basically just put our stuff before it.
+        # But we need buildscript to be first for classpath? 
+        # Actually, ext variables are usually fine at top level in Groovy.
+        
+        # Better approach: Insert INSIDE buildscript? No, ext goes outside often.
+        # Let's try inserting purely at the very start of the file string.
+        new_content = variables + "\n" + namespace_patch + "\n" + content
 
     with open(root_gradle, "w") as f:
         f.write(new_content)
-    print("Injected global configuration variables and namespace patcher")
+    print("Injected global configuration variables and namespace patcher at TOP")
 
 else:
     print(f"ERROR: {root_gradle} not found!")
