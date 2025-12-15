@@ -342,7 +342,12 @@ class _HomeTabState extends State<HomeTab> {
     setState(() { _isProcessing = true; _processingStep = "1/4 Preparando Áudio..."; });
     
     try {
-      final model = GenerativeModel(model: 'gemini-2.5-flash', apiKey: widget.apiKey);
+      // FORCE JSON MODE
+      final model = GenerativeModel(
+        model: 'gemini-2.5-flash', 
+        apiKey: widget.apiKey,
+        generationConfig: GenerationConfig(responseMimeType: 'application/json')
+      );
       final bytes = await File(_currentAudioPath!).readAsBytes();
       
       setState(() => _processingStep = "2/4 Consultando API IA...");
@@ -366,9 +371,26 @@ class _HomeTabState extends State<HomeTab> {
       
       setState(() => _processingStep = "3/4 Processando Dados...");
       
-      final clean = response.text!.replaceAll('```json','').replaceAll('```','').trim();
-      final data = json.decode(clean);
-      if (data.containsKey('paciente')) {
+      String clean = response.text!.replaceAll('```json','').replaceAll('```','').trim();
+      
+      // Fallback: Try to find raw JSON if text still contains noise
+      if (!clean.startsWith('{')) {
+        final startIndex = clean.indexOf('{');
+        final endIndex = clean.lastIndexOf('}');
+        if (startIndex != -1 && endIndex != -1) {
+          clean = clean.substring(startIndex, endIndex + 1);
+        }
+      }
+
+      dynamic data;
+      try {
+        data = json.decode(clean);
+      } catch (e) {
+        // Ultimate Fallback: Treat text as plain SOAP S
+        data = { "soap": { "s": response.text, "o": "", "a": "", "p": "" }, "medicamentos": [] };
+      }
+
+      if (data is Map && data.containsKey('paciente')) {
         widget.onMetaDataFound(data['paciente']['idade'], data['paciente']['sexo']);
       }
       
