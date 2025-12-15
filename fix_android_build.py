@@ -72,29 +72,9 @@ if os.path.exists(root_gradle):
         # Prepend
         new_content = variables + "\n" + content
         
-    # Also Force Subprojects configuration (Safe Mode)
-    # We use a safer injection that checks for 'android' convention
-    subprojects_fix = """
-    subprojects {
-        afterEvaluate { project ->
-            if (project.extensions.findByName("android") != null) {
-                try {
-                project.android {
-                    compileSdkVersion 34
-                    defaultConfig {
-                        minSdkVersion 23
-                        targetSdkVersion 34
-                    }
-                }
-                } catch (Exception e) {
-                   println "Failed to force android config: " + e
-                }
-            }
-        }
-    }
-    """
-    
-    new_content = new_content + "\n" + subprojects_fix
+    # NOTE: We REMOVED the 'subprojects { afterEvaluate ... }' block here.
+    # It was causing the 'already evaluated' crash.
+    # The global variables above (ext { ... }) should be sufficient for plugins to pick up the versions.
 
     with open(root_gradle, "w") as f:
         f.write(new_content)
