@@ -86,12 +86,6 @@ if os.path.exists(root_gradle):
     
     # Clean up potential duplicates if buildscript was already top
     if "buildscript {" in content:
-        # If buildscript was there, we basically just put our stuff before it.
-        # But we need buildscript to be first for classpath? 
-        # Actually, ext variables are usually fine at top level in Groovy.
-        
-        # Better approach: Insert INSIDE buildscript? No, ext goes outside often.
-        # Let's try inserting purely at the very start of the file string.
         new_content = variables + "\n" + namespace_patch + "\n" + content
 
     with open(root_gradle, "w") as f:
@@ -125,5 +119,51 @@ if target_app_gradle:
 else:
     print("No app build.gradle found!")
 
+# 4. Patch AndroidManifest.xml (Inject Permissions)
+def patch_manifest():
+    \"\"\"Injects permissions into AndroidManifest.xml\"\"\"
+    manifest_paths = [
+        "android/app/src/main/AndroidManifest.xml",
+        "medubs_native/android/app/src/main/AndroidManifest.xml", 
+        "AndroidManifest.xml" # Fallback
+    ]
+    
+    target_path = None
+    for p in manifest_paths:
+        if os.path.exists(p):
+            target_path = p
+            break
+            
+    if not target_path:
+        print(f"❌ Manifest not found in checked paths.")
+        return
+
+    print(f"🔧 Patching Manifest: {target_path}")
+    with open(target_path, "r", encoding="utf-8") as f:
+        content = f.read()
+
+    # Permissions to add
+    permissions = [
+        '<uses-permission android:name="android.permission.INTERNET"/>',
+        '<uses-permission android:name="android.permission.RECORD_AUDIO"/>',
+        '<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>',
+        '<uses-permission android:name="android.permission.READ_MEDIA_AUDIO"/>',
+    ]
+    
+    if "android.permission.INTERNET" in content:
+        print("ℹ️ Manifest already has permissions.")
+        return
+
+    # Inject permissions before the <application> tag
+    if "<application" in content:
+        perm_block = "\n    ".join(permissions)
+        content = content.replace("<application", f"{perm_block}\n    <application")
+        
+        with open(target_path, "w", encoding="utf-8") as f:
+            f.write(content)
+        print("✅ Permissions injected into AndroidManifest.xml")
+    else:
+        print("❌ Could not find <application> tag in Manifest.")
+
 if __name__ == "__main__":
-    pass
+    patch_manifest()
