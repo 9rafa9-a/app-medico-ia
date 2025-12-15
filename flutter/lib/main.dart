@@ -15,6 +15,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:diacritic/diacritic.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:open_file/open_file.dart';
 
 void main() {
   runApp(const MedUBSApp());
@@ -26,7 +27,7 @@ class MedUBSApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'MedUBS v2.2',
+      title: 'MedUBS v2.4',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
@@ -68,6 +69,7 @@ class _MainScreenState extends State<MainScreen> {
   final _apiKeyController = TextEditingController();
   int? _patientAge;
   String _patientSex = "Feminino";
+  String? _activeSpecialty;
   final GlobalKey<_OfflineTabState> _offlineTabKey = GlobalKey();
 
   @override
@@ -80,8 +82,6 @@ class _MainScreenState extends State<MainScreen> {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       _apiKeyController.text = prefs.getString('gemini_api_key') ?? '';
-      // If empty, we NO LONGER force the dialog immediately on init to avoid blocking the view of the beautiful UI.
-      // We will let the user explore and click "Configure" when they try to use an AI feature.
     });
   }
 
@@ -103,6 +103,21 @@ class _MainScreenState extends State<MainScreen> {
 
   void _notifyOfflineFileSaved() {
     _offlineTabKey.currentState?.loadFiles(); 
+  }
+
+  void _activateSpecialty(String name) {
+    setState(() {
+      _activeSpecialty = name;
+      _currentIndex = 0; // Switch to Home
+    });
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text("Modo $name Ativado! O prompt será ajustado."),
+      backgroundColor: Colors.indigo,
+    ));
+  }
+
+  void _clearSpecialty() {
+    setState(() => _activeSpecialty = null);
   }
 
   void _showSettings(BuildContext context) {
@@ -133,7 +148,7 @@ class _MainScreenState extends State<MainScreen> {
           TextButton(onPressed: () async {
             final prefs = await SharedPreferences.getInstance();
             await prefs.setString('gemini_api_key', _apiKeyController.text);
-            setState(() {}); // Trigger rebuild to update 'hasKey'
+            setState(() {}); 
             if (context.mounted) Navigator.pop(ctx);
           }, child: const Text("SALVAR"))
         ],
@@ -149,12 +164,18 @@ class _MainScreenState extends State<MainScreen> {
       HomeTab(
         apiKey: _apiKeyController.text, 
         hasKey: hasKey,
+        activeSpecialty: _activeSpecialty,
+        onClearSpecialty: _clearSpecialty,
         onMetaDataFound: _updateDemographics,
         onFileSaved: _notifyOfflineFileSaved,
         onRequestKey: () => _showSettings(context),
       ),
       LiveTab(apiKey: _apiKeyController.text, hasKey: hasKey),
-      SpecialtiesTab(apiKey: _apiKeyController.text, hasKey: hasKey),
+      SpecialtiesTab(
+        apiKey: _apiKeyController.text, 
+        hasKey: hasKey,
+        onSpecialtySelected: _activateSpecialty,
+      ),
       ScreeningTab(
         apiKey: _apiKeyController.text,
         hasKey: hasKey,
@@ -190,6 +211,8 @@ class _MainScreenState extends State<MainScreen> {
 class HomeTab extends StatefulWidget {
   final String apiKey;
   final bool hasKey;
+  final String? activeSpecialty;
+  final VoidCallback onClearSpecialty;
   final Function(int?, String?) onMetaDataFound;
   final VoidCallback onFileSaved;
   final VoidCallback onRequestKey;
@@ -198,6 +221,8 @@ class HomeTab extends StatefulWidget {
     super.key, 
     required this.apiKey, 
     required this.hasKey,
+    this.activeSpecialty,
+    required this.onClearSpecialty,
     required this.onMetaDataFound,
     required this.onFileSaved,
     required this.onRequestKey,
@@ -214,8 +239,6 @@ class _HomeTabState extends State<HomeTab> {
   String? _currentAudioPath;
   Map<String, dynamic>? _analysisResult;
   String _statusText = "Pronto";
-  
-  // State for DBs removed for brevity in this full-write tool but included in real app
   List<String> _dbRemumeNames = [];
   List<String> _dbRenameNames = [];
   List<String> _dbAltoCustoNames = [];
@@ -280,13 +303,13 @@ class _HomeTabState extends State<HomeTab> {
         setState(() { 
           _isRecording = false; 
           _currentAudioPath = safePath; 
-          _statusText = "Gravado e Salvo."; 
+          _statusText = "Salvo (Backup). Toque em Enviar ->"; 
         });
       }
     } else {
       if (await Permission.microphone.request().isGranted) {
         final dir = await getTemporaryDirectory();
-        final path = '${dir.path}/temp_rec_${DateTime.now().millisecondsSinceEpoch}.m4a';
+        final path = '${dir.path}/rec_${DateTime.now().millisecondsSinceEpoch}.m4a';
         await _audioRecorder.start(path: path, encoder: AudioEncoder.aacLc);
         setState(() { _isRecording = true; _statusText = "Gravando..."; _analysisResult = null; });
       }
@@ -297,17 +320,26 @@ class _HomeTabState extends State<HomeTab> {
     if (!widget.hasKey) { widget.onRequestKey(); return; }
     if (_currentAudioPath == null) return;
     setState(() => _isProcessing = true);
+    
     try {
       final model = GenerativeModel(model: 'gemini-2.5-flash', apiKey: widget.apiKey);
       final bytes = await File(_currentAudioPath!).readAsBytes();
+      
+      String specialtyContext = "";
+      if (widget.activeSpecialty != null) {
+        specialtyContext = "MODO ESPECIALISTA ATIVADO: ${widget.activeSpecialty}. Focar exames, diagnósticos e condutas específicas desta área.";
+      }
+
       final content = [Content.multi([
         TextPart('''
-          Gere JSON SOAP. IMPORTANTE: Extraia 'paciente': {'idade': int, 'sexo': 'Masculino'/'Feminino'}.
-          Critica TÉCNICA apenas.
+          ATUE COMO MÉDICO DE FAMÍLIA. $specialtyContext
+          Gere JSON SOAP. Metadados 'paciente': {'idade': int, 'sexo': 'Masculino'/'Feminino'}.
+          Critica TÉCNICA apenas (Dr. House Mode).
           { "soap": {"s":"", "o":"", "a":"", "p":""}, "criticas": {"s":"", "o":"", "a":"", "p":""}, "medicamentos": [], "paciente": {} }
         '''),
         DataPart('audio/mp4', bytes)
       ])];
+      
       var response = await model.generateContent(content);
       final clean = response.text!.replaceAll('```json','').replaceAll('```','').trim();
       final data = json.decode(clean);
@@ -316,9 +348,15 @@ class _HomeTabState extends State<HomeTab> {
       }
       
       data['audit'] = _auditMedicines(List<String>.from(data['medicamentos']??[]));
-      setState(() { _analysisResult = data; _isProcessing = false; });
+      setState(() { _analysisResult = data; _isProcessing = false; _statusText = "Análise Pronta."; });
+
     } catch (e) {
-      setState(() { _isProcessing = false; _statusText = "Erro AI (Salvo Offline)"; });
+      setState(() { _isProcessing = false; _statusText = "Falha no Envio."; });
+      if(mounted) showDialog(context: context, builder: (ctx) => AlertDialog(
+        title: const Text("Erro na Análise IA", style: TextStyle(color: Colors.red)),
+        content: SingleChildScrollView(child: Text("Ocorreu um erro ao conectar com o Gemini.\n\nDetalhe técnico:\n$e\n\nVerifique:\n1. Sua Internet\n2. Se a API Key é válida\n3. Se o modelo gemini-2.5-flash está disponível.")),
+        actions: [TextButton(onPressed: () => Navigator.pop(ctx), child: const Text("OK"))],
+      ));
     }
   }
 
@@ -330,24 +368,43 @@ class _HomeTabState extends State<HomeTab> {
     return {"items": meds.map((m) => {"term": m, "remume": chk(_dbRemumeNames,m), "rename": chk(_dbRenameNames,m), "alto": chk(_dbAltoCustoNames,m)}).toList()};
   }
 
- @override
+  Widget _buildSpecialtyBanner() {
+    if (widget.activeSpecialty == null) return const SizedBox.shrink();
+    return Container(
+      color: Colors.indigo,
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(children: [const Icon(Icons.star, color: Colors.white, size: 16), const SizedBox(width: 8), Text("Modo: ${widget.activeSpecialty}", style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold))]),
+          InkWell(onTap: widget.onClearSpecialty, child: const Icon(Icons.close, color: Colors.white, size: 20))
+        ],
+      )
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Consultório")),
       body: Column(children: [
+        _buildSpecialtyBanner(),
         Expanded(child: _analysisResult == null ? 
            Center(child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
               Icon(Icons.mic, size: 64, color: widget.hasKey ? Colors.blue[100] : Colors.grey[300]),
               const SizedBox(height: 10),
-              Text(widget.hasKey ? _statusText : "Toque em Configurar par iniciar", style: const TextStyle(color: Colors.grey))
+              Text(widget.hasKey ? _statusText : "Configure a Key para usar a IA", style: const TextStyle(color: Colors.grey)),
+              if (_currentAudioPath != null) ...[
+                 const SizedBox(height: 20),
+                 const Text("✅ Áudio salvo! Toque no avião para enviar.", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.green))
+              ]
            ])) 
            : _buildResultList()),
         const SizedBox(height: 10),
-        // ACTIONS
         Padding(padding: const EdgeInsets.all(16), child: 
           widget.hasKey 
           ? Row(children: [
-              IconButton.outlined(onPressed: _isRecording ? null : () {}, icon: const Icon(Icons.upload)), // Upload Logic omitted
+              IconButton.outlined(onPressed: _isRecording ? null : () {}, icon: const Icon(Icons.upload)), // Upload omitted
               const SizedBox(width: 10),
               Expanded(child: ElevatedButton.icon(
                 onPressed: _toggleRecording, 
@@ -356,7 +413,7 @@ class _HomeTabState extends State<HomeTab> {
                 style: ElevatedButton.styleFrom(backgroundColor: _isRecording?Colors.red:Colors.blue[800], foregroundColor: Colors.white, padding: const EdgeInsets.symmetric(vertical: 15))
               )),
               const SizedBox(width: 10),
-              IconButton.filled(onPressed: _analyze, icon: const Icon(Icons.send))
+              IconButton.filled(onPressed: _analyze, icon: const Icon(Icons.send), tooltip: "Enviar para IA")
             ])
           : SizedBox(width: double.infinity, child: ElevatedButton(onPressed: widget.onRequestKey, child: const Text("CONFIGURAR GOOGLE API KEY")))
         )
@@ -398,20 +455,22 @@ class LiveTab extends StatelessWidget {
 class SpecialtiesTab extends StatelessWidget {
   final String apiKey;
   final bool hasKey;
-  const SpecialtiesTab({super.key, required this.apiKey, required this.hasKey});
+  final Function(String) onSpecialtySelected;
+
+  const SpecialtiesTab({super.key, required this.apiKey, required this.hasKey, required this.onSpecialtySelected});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Especialidades")),
       body: hasKey ? GridView.count(crossAxisCount: 2, padding: const EdgeInsets.all(16), crossAxisSpacing: 10, mainAxisSpacing: 10, children: [
-        _tile(Icons.child_care, "Pediatria", Colors.orange),
-        _tile(Icons.pregnant_woman, "Pré-Natal", Colors.pink),
-        _tile(Icons.spa, "Dermatologia", Colors.brown),
-        _tile(Icons.psychology, "Saúde Mental", Colors.purple),
+        _tile(Icons.child_care, "Pediatria", Colors.orange, context),
+        _tile(Icons.pregnant_woman, "Pré-Natal", Colors.pink, context),
+        _tile(Icons.spa, "Dermatologia", Colors.brown, context),
+        _tile(Icons.psychology, "Saúde Mental", Colors.purple, context),
       ]) : const Center(child: Text("Requer API Key")),
     );
   }
-  Widget _tile(IconData i, String t, Color c) => Card(color: c.withOpacity(0.1), child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [Icon(i, size: 40, color: c), Text(t, style: TextStyle(color: c, fontWeight: FontWeight.bold))]));
+  Widget _tile(IconData i, String t, Color c, BuildContext context) => Card(color: c.withOpacity(0.1), child: InkWell(onTap: () => onSpecialtySelected(t), child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [Icon(i, size: 40, color: c), Text(t, style: TextStyle(color: c, fontWeight: FontWeight.bold))])));
 }
 
 // ---------------- SCREENING (Auto) ----------------
@@ -442,12 +501,18 @@ class _ScreeningTabState extends State<ScreeningTab> {
 
   Future<void> _check() async {
     if (!widget.hasKey) { widget.onRequestKey(); return; }
+    if (_loading) return;
+    
     setState(() => _loading = true);
     try {
        final model = GenerativeModel(model: 'gemini-2.5-flash', apiKey: widget.apiKey);
        final res = await model.generateContent([Content.text("Paciente Sexo $_sex, Idade ${_ageCtrl.text} anos. Listar rastreamentos (screening) indicados pelo Min. Saúde Brasil.")]);
        setState(() => _result = res.text ?? "-");
-    } catch(e) { setState(() => _result = "Erro: $e"); } 
+    } catch(e) { 
+       String msg = "Erro: $e";
+       if (e.toString().contains("429") || e.toString().contains("quota")) msg = "⚠️ Cota excedida. Aguarde 1 min.";
+       setState(() => _result = msg); 
+    } 
     finally { setState(() => _loading = false); }
   }
 
@@ -458,7 +523,7 @@ class _ScreeningTabState extends State<ScreeningTab> {
       body: Padding(padding: const EdgeInsets.all(16), child: Column(children: [
          Row(children: [Expanded(child: TextField(controller: _ageCtrl, decoration: const InputDecoration(labelText: "Idade", border: OutlineInputBorder()))), const SizedBox(width: 10), Expanded(child: DropdownButtonFormField(value: _sex, items: ["Feminino","Masculino"].map((e)=>DropdownMenuItem(value:e,child:Text(e))).toList(), onChanged:(v)=>setState(()=>_sex=v!), decoration: const InputDecoration(labelText:"Sexo",border:OutlineInputBorder())))]),
          const SizedBox(height: 10),
-         SizedBox(width: double.infinity, child: ElevatedButton(onPressed: _loading?null:_check, child: Text(widget.hasKey ? "Verificar" : "Configurar Key"))),
+         SizedBox(width: double.infinity, child: ElevatedButton(onPressed: _loading?null:_check, child: Text(_loading ? "Consultando..." : (widget.hasKey ? "Verificar" : "Configurar Key")))),
          const Divider(),
          Expanded(child: SingleChildScrollView(child: Text(_result)))
       ])),
@@ -469,27 +534,44 @@ class _ScreeningTabState extends State<ScreeningTab> {
 // ---------------- OFFLINE (Free) ----------------
 class OfflineTab extends StatefulWidget {
   final String apiKey;
-  const OfflineTab({super.key, required this.apiKey});
+  final GlobalKey? key;
+  const OfflineTab({super.key, required this.apiKey}) : key = key;
   @override
   State<OfflineTab> createState() => _OfflineTabState();
 }
 
 class _OfflineTabState extends State<OfflineTab> {
   List<FileSystemEntity> _files = [];
+  String? _storagePath;
+
   Future<void> loadFiles() async {
      try {
        final d = await getApplicationDocumentsDirectory();
        final s = Directory('${d.path}/medubs_logs');
+       setState(() => _storagePath = s.path);
        if(await s.exists()) setState(() => _files = s.listSync()..sort((a,b)=>b.statSync().modified.compareTo(a.statSync().modified)));
      } catch (_) {}
   }
   @override void initState() { super.initState(); loadFiles(); }
 
+  Future<void> _openFile(String path) async {
+    final result = await OpenFile.open(path);
+    if (result.type != ResultType.done) {
+      if(mounted) ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Erro ao abrir: ${result.message}")));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Offline / Logs"), actions: [IconButton(icon: const Icon(Icons.refresh), onPressed: loadFiles)]),
-      body: _files.isEmpty ? const Center(child: Text("Nenhum arquivo.")) : ListView.builder(itemCount: _files.length, itemBuilder: (c,i) => Card(child: ListTile(leading: const Icon(Icons.audio_file), title: Text(_files[i].path.split('/').last), subtitle: Text("${_files[i].statSync().size} bytes")))),
+      body: Column(children: [
+        if (_storagePath != null) Container(width: double.infinity, color: Colors.grey[200], padding: const EdgeInsets.all(8), child: Text("Local: $_storagePath", style: const TextStyle(fontSize: 10, color: Colors.grey))),
+        Expanded(child: _files.isEmpty ? const Center(child: Text("Nenhum arquivo.")) : ListView.builder(itemCount: _files.length, itemBuilder: (c,i) {
+           final f = _files[i];
+           return Card(child: ListTile(leading: const Icon(Icons.play_circle_fill, color: Colors.blue, size: 32), title: Text(f.path.split('/').last), subtitle: Text("${(f.statSync().size/1024).toStringAsFixed(1)} KB • Toque para Ouvir"), onTap: () => _openFile(f.path)));
+        }))
+      ]),
     );
   }
 }
