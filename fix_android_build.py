@@ -121,7 +121,7 @@ else:
 
 # 4. Patch AndroidManifest.xml (Inject Permissions)
 def patch_manifest():
-    \"\"\"Injects permissions into AndroidManifest.xml\"\"\"
+    """Injects permissions into AndroidManifest.xml"""
     manifest_paths = [
         "android/app/src/main/AndroidManifest.xml",
         "medubs_native/android/app/src/main/AndroidManifest.xml", 
