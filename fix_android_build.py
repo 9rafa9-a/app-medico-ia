@@ -5,38 +5,52 @@ root_gradle = "android/build.gradle"
 app_gradle = "android/app/build.gradle"
 app_gradle_kts = "android/app/build.gradle.kts"
 
+# 3. Create/Overwrite gradle.properties (Critical for Plugins)
+print("Creating gradle.properties...")
+with open("android/gradle.properties", "w") as f:
+    f.write("org.gradle.jvmargs=-Xmx2048m -Dfile.encoding=UTF-8\n")
+    f.write("android.useAndroidX=true\n")
+    f.write("android.enableJetifier=true\n")
+    f.write("flutter.minSdkVersion=23\n")
+    f.write("flutter.targetSdkVersion=34\n")
+    f.write("flutter.compileSdkVersion=34\n")
+
 # 1. Patch Root build.gradle
 if os.path.exists(root_gradle):
     print(f"Patching {root_gradle}...")
-    with open(root_gradle, "a") as f:
-        f.write("""
-
-// INCISION BY MEDUBS BUILD FIXER
-// We define global variables that standard Flutter plugins look for.
-// This avoids the 'afterEvaluate' crash.
-buildscript {
+    with open(root_gradle, "r") as f:
+        content = f.read()
+    
+    # We want to inject our variables at the very top or inside ext if it exists.
+    # Easiest way: Prepend to the file a buildscript block with ext? 
+    # Or just replace "buildscript {" with "buildscript { ext { ... } "
+    
+    variables = """
     ext {
+        buildToolsVersion = "34.0.0"
         minSdkVersion = 23
         compileSdkVersion = 34
         targetSdkVersion = 34
         flutterMinSdkVersion = 23
     }
-}
+    """
+    
+    if "ext {" in content:
+        # If ext exists, simplistic injection might be messy.
+        # Let's just prepend to the file. Gradle allows multiple buildscript blocks usually or just root vars.
+        # BUT: vars defined in root are visible to subprojects.
+        new_content = variables + "\n" + content
+    else:
+        # Prepend
+        new_content = variables + "\n" + content
 
-subprojects {
-    project.configurations.all {
-        resolutionStrategy.eachDependency { details ->
-            if (details.requested.group == 'com.android.support'
-                    && !details.requested.name.contains('multidex') ) {
-                details.useVersion "1.0.0"
-            }
-        }
-    }
-}
-""")
-    print("Injected global configuration into root build.gradle")
-elif os.path.exists(root_gradle + ".kts"):
-   print("Found root build.gradle.kts - (Script not optimized for Root Kotlin yet, skipping root injection)")
+    with open(root_gradle, "w") as f:
+        f.write(new_content)
+    print("Injected global configuration variables into root build.gradle")
+    
+    print("--- ROOT BUILD.GRADLE CONTENT ---")
+    print(new_content)
+    print("---------------------------------")
 else:
     print(f"ERROR: {root_gradle} not found!")
 
