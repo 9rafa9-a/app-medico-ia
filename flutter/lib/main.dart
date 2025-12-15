@@ -512,7 +512,7 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   const Row(children: [Icon(Icons.warning_amber, color: Colors.red), SizedBox(width: 8), Text("CRÍTICA DA IA", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red))]),
                   const SizedBox(height: 8),
-                  ...critica.map((e) => Padding(padding: const EdgeInsets.only(bottom: 4), child: Text("• $e", style: const TextStyle(color: Colors.red900))))
+                  ...critica.map((e) => Padding(padding: const EdgeInsets.only(bottom: 4), child: Text("• $e", style: TextStyle(color: Colors.red[900]))))
                 ],
               ),
             ),
