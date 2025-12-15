@@ -546,8 +546,7 @@ class _ScreeningTabState extends State<ScreeningTab> {
 // ---------------- OFFLINE (Free) ----------------
 class OfflineTab extends StatefulWidget {
   final String apiKey;
-  final GlobalKey? key;
-  const OfflineTab({super.key, required this.apiKey}) : key = key;
+  const OfflineTab({super.key, required this.apiKey});
   @override
   State<OfflineTab> createState() => _OfflineTabState();
 }
