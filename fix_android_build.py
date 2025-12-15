@@ -14,6 +14,9 @@ with open("android/gradle.properties", "w") as f:
     f.write("flutter.minSdkVersion=23\n")
     f.write("flutter.targetSdkVersion=34\n")
     f.write("flutter.compileSdkVersion=34\n")
+    f.write("flutter.sdk=/usr/local/flutter\n") # Fake path to satisfy null checks
+    f.write("flutter.versionName=1.0.0\n")
+    f.write("flutter.versionCode=1\n")
 
 # 1. Patch Root build.gradle
 if os.path.exists(root_gradle):
@@ -21,28 +24,62 @@ if os.path.exists(root_gradle):
     with open(root_gradle, "r") as f:
         content = f.read()
     
-    # We want to inject our variables at the very top or inside ext if it exists.
-    # Easiest way: Prepend to the file a buildscript block with ext? 
-    # Or just replace "buildscript {" with "buildscript { ext { ... } "
-    
+    # We define global variables that standard Flutter plugins look for.
     variables = """
     ext {
+        // Standard Android variables
         buildToolsVersion = "34.0.0"
         minSdkVersion = 23
         compileSdkVersion = 34
         targetSdkVersion = 34
+        
+        // Flutter variables (Mocking the flutter.groovy behavior)
         flutterMinSdkVersion = 23
+        flutterTargetSdkVersion = 34
+        flutterCompileSdkVersion = 34
+        
+        // Object style (some plugins use rootProject.ext.flutter.minSdkVersion)
+        flutter = [
+            minSdkVersion: 23,
+            targetSdkVersion: 34,
+            compileSdkVersion: 34,
+            versionName: '1.0.0',
+            versionCode: 1
+        ]
     }
     """
     
-    if "ext {" in content:
-        # If ext exists, simplistic injection might be messy.
-        # Let's just prepend to the file. Gradle allows multiple buildscript blocks usually or just root vars.
-        # BUT: vars defined in root are visible to subprojects.
-        new_content = variables + "\n" + content
+    # Smart Insertion: Try to put it inside buildscript if possible, or just at top
+    if "buildscript {" in content:
+        # Insert inside buildscript, at the top of it
+        new_content = content.replace("buildscript {", "buildscript {\n" + variables)
     else:
         # Prepend
         new_content = variables + "\n" + content
+        
+    # Also Force Subprojects configuration (Safe Mode)
+    # We use a safer injection that checks for 'android' convention
+    subprojects_fix = """
+    subprojects {
+        afterEvaluate { project ->
+            if (project.extensions.findByName("android") != null) {
+                try {
+                project.android {
+                    compileSdkVersion 34
+                    defaultConfig {
+                        minSdkVersion 23
+                        targetSdkVersion 34
+                    }
+                }
+                } catch (Exception e) {
+                   println "Failed to force android config: " + e
+                }
+            }
+        }
+    }
+    """
+    
+    new_content = new_content + "\n" + subprojects_fix
 
     with open(root_gradle, "w") as f:
         f.write(new_content)
