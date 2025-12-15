@@ -236,6 +236,7 @@ class _HomeTabState extends State<HomeTab> {
   final _audioRecorder = Record();
   bool _isRecording = false;
   bool _isProcessing = false;
+  String _processingStep = ""; // New: Progress Step
   String? _currentAudioPath;
   Map<String, dynamic>? _analysisResult;
   String _statusText = "Pronto";
@@ -248,6 +249,8 @@ class _HomeTabState extends State<HomeTab> {
     super.initState();
     _loadDatabases();
   }
+
+  // ... (Keep _loadDatabases and _saveToSafeStorage as is)
 
   Future<void> _loadDatabases() async {
     try {
@@ -303,7 +306,7 @@ class _HomeTabState extends State<HomeTab> {
         setState(() { 
           _isRecording = false; 
           _currentAudioPath = safePath; 
-          _statusText = "Salvo (Backup). Toque em Enviar ->"; 
+          _statusText = "Salvo. Toque em Enviar ->"; 
         });
       }
     } else {
@@ -315,15 +318,34 @@ class _HomeTabState extends State<HomeTab> {
       }
     }
   }
+  
+  // Robust Helpers
+  List<String> _safeStringList(dynamic list) {
+    if (list is! List) return [];
+    return list.map((e) {
+      if (e is String) return e;
+      if (e is Map) return e['nome']?.toString() ?? e.values.first.toString();
+      return e.toString();
+    }).toList();
+  }
+
+  String _safeString(dynamic v) {
+     if (v is String) return v;
+     if (v is Map) return v.values.join("\n");
+     return v?.toString() ?? "";
+  }
 
   Future<void> _analyze() async {
     if (!widget.hasKey) { widget.onRequestKey(); return; }
     if (_currentAudioPath == null) return;
-    setState(() => _isProcessing = true);
+    
+    setState(() { _isProcessing = true; _processingStep = "1/4 Preparando Áudio..."; });
     
     try {
       final model = GenerativeModel(model: 'gemini-2.5-flash', apiKey: widget.apiKey);
       final bytes = await File(_currentAudioPath!).readAsBytes();
+      
+      setState(() => _processingStep = "2/4 Consultando API IA...");
       
       String specialtyContext = "";
       if (widget.activeSpecialty != null) {
@@ -334,27 +356,40 @@ class _HomeTabState extends State<HomeTab> {
         TextPart('''
           ATUE COMO MÉDICO DE FAMÍLIA. $specialtyContext
           Gere JSON SOAP. Metadados 'paciente': {'idade': int, 'sexo': 'Masculino'/'Feminino'}.
-          Critica TÉCNICA apenas (Dr. House Mode).
+          Critica TÉCNICA apenas.
           { "soap": {"s":"", "o":"", "a":"", "p":""}, "criticas": {"s":"", "o":"", "a":"", "p":""}, "medicamentos": [], "paciente": {} }
         '''),
         DataPart('audio/mp4', bytes)
       ])];
       
       var response = await model.generateContent(content);
+      
+      setState(() => _processingStep = "3/4 Processando Dados...");
+      
       final clean = response.text!.replaceAll('```json','').replaceAll('```','').trim();
       final data = json.decode(clean);
       if (data.containsKey('paciente')) {
         widget.onMetaDataFound(data['paciente']['idade'], data['paciente']['sexo']);
       }
       
-      data['audit'] = _auditMedicines(List<String>.from(data['medicamentos']??[]));
+      setState(() => _processingStep = "4/4 Concluindo...");
+      
+      // Safe parsing
+      data['medicamentos'] = _safeStringList(data['medicamentos']);
+      var soap = data['soap'] ?? {};
+      soap['s'] = _safeString(soap['s']);
+      soap['o'] = _safeString(soap['o']);
+      soap['a'] = _safeString(soap['a']);
+      soap['p'] = _safeString(soap['p']);
+      
+      data['audit'] = _auditMedicines(List<String>.from(data['medicamentos']));
       setState(() { _analysisResult = data; _isProcessing = false; _statusText = "Análise Pronta."; });
 
     } catch (e) {
       setState(() { _isProcessing = false; _statusText = "Falha no Envio."; });
       if(mounted) showDialog(context: context, builder: (ctx) => AlertDialog(
         title: const Text("Erro na Análise IA", style: TextStyle(color: Colors.red)),
-        content: SingleChildScrollView(child: Text("Ocorreu um erro ao conectar com o Gemini.\n\nDetalhe técnico:\n$e\n\nVerifique:\n1. Sua Internet\n2. Se a API Key é válida\n3. Se o modelo gemini-2.5-flash está disponível.")),
+        content: SingleChildScrollView(child: Text("Ocorreu um erro ao conectar com o Gemini.\n\nDetalhe técnico:\n$e\n\nVerifique:\n1. Sua Internet\n2. Se a API Key é válida")),
         actions: [TextButton(onPressed: () => Navigator.pop(ctx), child: const Text("OK"))],
       ));
     }
@@ -367,7 +402,8 @@ class _HomeTabState extends State<HomeTab> {
     }
     return {"items": meds.map((m) => {"term": m, "remume": chk(_dbRemumeNames,m), "rename": chk(_dbRenameNames,m), "alto": chk(_dbAltoCustoNames,m)}).toList()};
   }
-
+  
+  // ... (Banner helper same) 
   Widget _buildSpecialtyBanner() {
     if (widget.activeSpecialty == null) return const SizedBox.shrink();
     return Container(
@@ -391,10 +427,15 @@ class _HomeTabState extends State<HomeTab> {
         _buildSpecialtyBanner(),
         Expanded(child: _analysisResult == null ? 
            Center(child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-              Icon(Icons.mic, size: 64, color: widget.hasKey ? Colors.blue[100] : Colors.grey[300]),
+              _isProcessing 
+                ? const CircularProgressIndicator()
+                : Icon(Icons.mic, size: 64, color: widget.hasKey ? Colors.blue[100] : Colors.grey[300]),
               const SizedBox(height: 10),
-              Text(widget.hasKey ? _statusText : "Configure a Key para usar a IA", style: const TextStyle(color: Colors.grey)),
-              if (_currentAudioPath != null) ...[
+              Text(
+                _isProcessing ? _processingStep : (widget.hasKey ? _statusText : "Configure a Key para usar a IA"), 
+                style: TextStyle(color: _isProcessing ? Colors.blue : Colors.grey, fontWeight: _isProcessing ? FontWeight.bold : FontWeight.normal)
+              ),
+              if (_currentAudioPath != null && !_isProcessing) ...[
                  const SizedBox(height: 20),
                  const Text("✅ Áudio salvo! Toque no avião para enviar.", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.green))
               ]
@@ -404,16 +445,16 @@ class _HomeTabState extends State<HomeTab> {
         Padding(padding: const EdgeInsets.all(16), child: 
           widget.hasKey 
           ? Row(children: [
-              IconButton.outlined(onPressed: _isRecording ? null : () {}, icon: const Icon(Icons.upload)), // Upload omitted
+              IconButton.outlined(onPressed: _isRecording ? null : () {}, icon: const Icon(Icons.upload)), 
               const SizedBox(width: 10),
               Expanded(child: ElevatedButton.icon(
-                onPressed: _toggleRecording, 
+                onPressed: _isProcessing ? null : _toggleRecording, 
                 icon: Icon(_isRecording?Icons.stop:Icons.mic), 
                 label: Text(_isRecording?"PARAR":"GRAVAR"),
                 style: ElevatedButton.styleFrom(backgroundColor: _isRecording?Colors.red:Colors.blue[800], foregroundColor: Colors.white, padding: const EdgeInsets.symmetric(vertical: 15))
               )),
               const SizedBox(width: 10),
-              IconButton.filled(onPressed: _analyze, icon: const Icon(Icons.send), tooltip: "Enviar para IA")
+              IconButton.filled(onPressed: _isProcessing ? null : _analyze, icon: const Icon(Icons.send), tooltip: "Enviar para IA")
             ])
           : SizedBox(width: double.infinity, child: ElevatedButton(onPressed: widget.onRequestKey, child: const Text("CONFIGURAR GOOGLE API KEY")))
         )
