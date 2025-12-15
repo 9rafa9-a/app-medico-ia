@@ -404,18 +404,73 @@ class _HomeTabState extends State<HomeTab> {
   }
   
   // ... (Banner helper same) 
-  Widget _buildSpecialtyBanner() {
-    if (widget.activeSpecialty == null) return const SizedBox.shrink();
-    return Container(
-      color: Colors.indigo,
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(children: [const Icon(Icons.star, color: Colors.white, size: 16), const SizedBox(width: 8), Text("Modo: ${widget.activeSpecialty}", style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold))]),
-          InkWell(onTap: widget.onClearSpecialty, child: const Icon(Icons.close, color: Colors.white, size: 20))
+  Future<void> _pickAudioFile() async {
+    final result = await FilePicker.platform.pickFiles(type: FileType.audio);
+    if (result != null && result.files.single.path != null) {
+      setState(() {
+        _currentAudioPath = result.files.single.path;
+        _statusText = "Arquivo Carregado. Pronto para Enviar.";
+        _analysisResult = null;
+        _isRecording = false;
+      });
+    }
+  }
+
+  Future<void> _generatePdf() async {
+    if (_analysisResult == null) return;
+    final doc = pw.Document();
+    final soap = _analysisResult!['soap'] ?? {};
+    final crit = _analysisResult!['criticas'] ?? {};
+    final meds = _analysisResult!['audit']?['items'] as List? ?? [];
+    
+    doc.addPage(pw.MultiPage(
+      pageFormat: PdfPageFormat.a4,
+      build: (pw.Context context) => [
+        pw.Header(level: 0, child: pw.Text("Relatório da Consulta - MedUBS", style: pw.TextStyle(fontSize: 24, fontWeight: pw.FontWeight.bold, color: PdfColors.blue800))),
+        pw.SizedBox(height: 20),
+        
+        _pdfSection("Subjetivo", soap['s'], crit['s']),
+        _pdfSection("Objetivo", soap['o'], crit['o']),
+        _pdfSection("Avaliação", soap['a'], crit['a']),
+        _pdfSection("Plano", soap['p'], crit['p']),
+        
+        if (meds.isNotEmpty) ...[
+          pw.SizedBox(height: 20),
+          pw.Text("Auditoria de Medicamentos", style: pw.TextStyle(fontSize: 18, fontWeight: pw.FontWeight.bold, color: PdfColors.black)),
+          pw.SizedBox(height: 10),
+          ...meds.map((m) => pw.Container(
+            margin: const pw.EdgeInsets.only(bottom: 5),
+            padding: const pw.EdgeInsets.all(5),
+            decoration: pw.BoxDecoration(border: pw.Border.all(color: PdfColors.grey300)),
+            child: pw.Row(children: [
+               pw.Expanded(child: pw.Text(m['term']?? "", style: const pw.TextStyle(fontSize: 12))),
+               if(m['remume']==true) pw.Text(" [REMUME] ", style: const pw.TextStyle(color: PdfColors.green)),
+               if(m['rename']==true) pw.Text(" [RENAME] ", style: const pw.TextStyle(color: PdfColors.blue)),
+               if(m['alto']==true) pw.Text(" [ALTO CUSTO] ", style: const pw.TextStyle(color: PdfColors.red)),
+            ])
+          ))
         ],
-      )
+        pw.Footer(title: pw.Text("Gerado por IA - MedUBS", style: const pw.TextStyle(fontSize: 10, color: PdfColors.grey)))
+      ]
+    ));
+    
+    await Printing.layoutPdf(onLayout: (format) async => doc.save());
+  }
+
+  pw.Widget _pdfSection(String title, String? content, String? critique) {
+    return pw.Container(
+      margin: const pw.EdgeInsets.only(bottom: 15),
+      child: pw.Column(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
+         pw.Text(title, style: pw.TextStyle(fontSize: 14, fontWeight: pw.FontWeight.bold, color: PdfColors.blue700)),
+         pw.Container(
+           width: double.infinity,
+           padding: const pw.EdgeInsets.all(8),
+           decoration: pw.BoxDecoration(color: PdfColors.grey100, borderRadius: pw.BorderRadius.circular(4)),
+           child: pw.Text(content?.toString() ?? "", style: const pw.TextStyle(fontSize: 11))
+         ),
+         if (critique != null && critique.isNotEmpty)
+           pw.Padding(padding: const pw.EdgeInsets.only(top: 5, left: 10), child: pw.Text("Nota Técnica: $critique", style: pw.TextStyle(fontSize: 10, color: PdfColors.red700, fontStyle: pw.FontStyle.italic)))
+      ])
     );
   }
 
@@ -446,7 +501,7 @@ class _HomeTabState extends State<HomeTab> {
               ),
               if (_currentAudioPath != null && !_isProcessing) ...[
                  const SizedBox(height: 20),
-                 const Text("✅ Áudio salvo! Toque no avião para enviar.", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.green))
+                 const Text("✅ Áudio pronto! Toque no avião para enviar.", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.green))
               ]
            ])) 
            : _buildResultList()),
@@ -454,8 +509,12 @@ class _HomeTabState extends State<HomeTab> {
         Padding(padding: const EdgeInsets.all(16), child: 
           widget.hasKey 
           ? Row(children: [
-              IconButton.outlined(onPressed: _isRecording ? null : () {}, icon: const Icon(Icons.upload)), 
-              const SizedBox(width: 10),
+              IconButton.outlined(onPressed: _isProcessing ? null : _pickAudioFile, icon: const Icon(Icons.upload), tooltip: "Upload Arquivo"), 
+              const SizedBox(width: 8),
+              if (_analysisResult != null) ...[
+                  IconButton.outlined(onPressed: _generatePdf, icon: const Icon(Icons.picture_as_pdf, color: Colors.red), tooltip: "Gerar PDF"),
+                  const SizedBox(width: 8),
+              ],
               Expanded(child: ElevatedButton.icon(
                 onPressed: _isProcessing ? null : _toggleRecording, 
                 icon: Icon(_isRecording?Icons.stop:Icons.mic), 
@@ -536,9 +595,9 @@ class _HomeTabState extends State<HomeTab> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                 const Icon(Icons.warning_amber, color: Colors.red, size: 20),
+                 const Icon(Icons.info_outline, color: Colors.red, size: 20),
                  const SizedBox(width: 8),
-                 Expanded(child: Text("Crítica Dr. House: $critique", style: TextStyle(color: Colors.red[900], fontSize: 13, fontStyle: FontStyle.italic)))
+                 Expanded(child: Text("Observação Técnica: $critique", style: TextStyle(color: Colors.red[900], fontSize: 13, fontStyle: FontStyle.italic)))
               ],
             )
           )
