@@ -12,15 +12,23 @@ if os.path.exists(root_gradle):
         f.write("""
 
 // INCISION BY MEDUBS BUILD FIXER
+// We define global variables that standard Flutter plugins look for.
+// This avoids the 'afterEvaluate' crash.
+buildscript {
+    ext {
+        minSdkVersion = 23
+        compileSdkVersion = 34
+        targetSdkVersion = 34
+        flutterMinSdkVersion = 23
+    }
+}
+
 subprojects {
-    afterEvaluate { project ->
-        if (project.hasProperty("android")) {
-            android {
-                compileSdkVersion 34
-                defaultConfig {
-                    minSdkVersion 23
-                    targetSdkVersion 34
-                }
+    project.configurations.all {
+        resolutionStrategy.eachDependency { details ->
+            if (details.requested.group == 'com.android.support'
+                    && !details.requested.name.contains('multidex') ) {
+                details.useVersion "1.0.0"
             }
         }
     }
