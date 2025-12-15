@@ -13,6 +13,7 @@ import 'package:printing/printing.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:diacritic/diacritic.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 void main() {
   runApp(const MedUBSApp());
@@ -29,17 +30,18 @@ class MedUBSApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF0052CC),
-          primary: const Color(0xFF0052CC),
-          secondary: const Color(0xFF00BFA5),
+          seedColor: const Color(0xFF0052CC), // Medical Blue
+          primary: const Color(0xFF0052CC), 
+          secondary: const Color(0xFF00BFA5), // Teal
+          tertiary: const Color(0xFFFF6D00), // Orange for alerts
+          surface: Colors.white,
+          background: const Color(0xFFF7F9FC),
         ),
         scaffoldBackgroundColor: const Color(0xFFF7F9FC),
         cardTheme: CardTheme(
-          elevation: 0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-            side: BorderSide(color: Colors.grey.withOpacity(0.1)),
-          ),
+          elevation: 2,
+          shadowColor: Colors.black.withOpacity(0.05),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           color: Colors.white,
         ),
         appBarTheme: const AppBarTheme(
@@ -47,6 +49,13 @@ class MedUBSApp extends StatelessWidget {
           foregroundColor: Color(0xFF0052CC),
           elevation: 0,
           centerTitle: true,
+          scrolledUnderElevation: 2,
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            elevation: 2,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          ),
         ),
       ),
       home: const HomePage(),
@@ -68,14 +77,13 @@ class _HomePageState extends State<HomePage> {
   bool _isRecording = false;
   bool _isProcessing = false;
   
-  // Status State
-  String _statusText = "Olá, Dr(a). Toque para iniciar.";
+  String _statusText = "Toque para iniciar";
   Color _statusColor = Colors.grey;
   
   String? _currentAudioPath;
   Map<String, dynamic>? _analysisResult;
 
-  // Databases (Flattened)
+  // Databases
   List<String> _dbRemumeNames = [];
   List<String> _dbRenameNames = [];
   List<String> _dbAltoCustoNames = [];
@@ -91,6 +99,10 @@ class _HomePageState extends State<HomePage> {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       _apiKeyController.text = prefs.getString('gemini_api_key') ?? '';
+      if (_apiKeyController.text.isEmpty) {
+        // Delay to allow context to be ready
+        Future.delayed(Duration.zero, () => _showSettings(context));
+      }
     });
   }
 
@@ -101,17 +113,13 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> _loadDatabases() async {
     try {
-      // Helper to flatten names from any structure
       List<String> extractNames(dynamic json, String source) {
         List<String> names = [];
         if (json is List) {
           for (var item in json) {
-            // Case 1: Flat object with 'nome' or 'nome_completo'
             if (item is Map && (item.containsKey('nome') || item.containsKey('nome_completo'))) {
               names.add((item['nome'] ?? item['nome_completo']).toString());
-            } 
-            // Case 2: Nested 'itens' list (RENAME structure)
-            else if (item is Map && item.containsKey('itens') && item['itens'] is List) {
+            } else if (item is Map && item.containsKey('itens') && item['itens'] is List) {
                for (var subItem in item['itens']) {
                  if (subItem is Map && subItem.containsKey('nome')) {
                    names.add(subItem['nome'].toString());
@@ -132,15 +140,11 @@ class _HomePageState extends State<HomePage> {
         _dbRenameNames = extractNames(renameJson, "RENAME");
         _dbAltoCustoNames = extractNames(altoCustoJson, "ALTO CUSTO");
       });
-      
-      print("DB Loaded: Remume=${_dbRemumeNames.length}, Rename=${_dbRenameNames.length}, Alto=${_dbAltoCustoNames.length}");
-
     } catch (e) {
-      print("Erro ao carregar bancos: $e");
+      print("Erro DB: $e");
     }
   }
 
-  // --- RECORDING ---
   Future<void> _toggleRecording() async {
     if (_isRecording) {
       final path = await _audioRecorder.stop();
@@ -159,7 +163,7 @@ class _HomePageState extends State<HomePage> {
         
         setState(() {
           _isRecording = true;
-          _statusText = "Gravando...";
+          _statusText = "Gravando... (Toque para parar)";
           _statusColor = Colors.red;
           _analysisResult = null;
         });
@@ -167,7 +171,6 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  // --- FILE UPLOAD ---
   Future<void> _pickAudioFile() async {
     try {
       FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -178,17 +181,16 @@ class _HomePageState extends State<HomePage> {
       if (result != null) {
         setState(() {
           _currentAudioPath = result.files.single.path;
-          _statusText = "Arquivo carregado: ${result.files.single.name}";
-          _statusColor = Colors.green;
+          _statusText = "Arquivo: ${result.files.single.name}";
+          _statusColor = Colors.blue;
           _analysisResult = null;
         });
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Erro ao selecionar arquivo: $e")));
+      if (mounted) ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Erro: $e")));
     }
   }
 
-  // --- ANALYSIS ---
   Future<void> _runAnalysis() async {
     final apiKey = _apiKeyController.text.trim();
     if (apiKey.isEmpty) {
@@ -202,53 +204,42 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       _isProcessing = true;
       _statusText = "Analisando com Gemini 2.5...";
-      _statusColor = const Color(0xFF0052CC);
+      _statusColor = Theme.of(context).primaryColor;
     });
 
     try {
       final file = File(_currentAudioPath!);
       final bytes = await file.readAsBytes();
       
-      final model = GenerativeModel(
-        model: 'gemini-2.0-flash', // TRUSTING USER: "gemini-2.5-flash" requested... 
-        // NOTE TO USER: If '2.5' fails, valid identifiers are 2.0 or 1.5. 
-        // I will use 2.0-flash here as the safest interpretation of the "latest fast" model. 
-        // If 2.5 is truly available in this key's project, you can change string below.
-        // Changing to 2.5-flash per explicit request, risking 404 if not whitelisted.
-        // Actually, let's try strict 'gemini-2.0-flash' which is the current bleeding edge public beta.
-        // 'gemini-2.5-flash' doesn't exist in docs yet. I'll stick to 2.0-flash to ensure it works.
-        // Re-reading user request: "coloque gemini-2.5-flash... pode confiar".
-        // OKAY. I will do EXACTLY what the user asked.
-        
-        apiKey: apiKey,
-      );
+      // Explicitly requested model
+      const modelName = 'gemini-2.5-flash'; 
+      var model = GenerativeModel(model: modelName, apiKey: apiKey);
 
-      // We actually instantiate with the string requested.
-      // To satisfy the user request explicitly:
-      final userRequestedModel = GenerativeModel(model: 'gemini-2.5-flash', apiKey: apiKey);
-      // Fallback logic is not easy to implement clean here without nested try/catch hell.
-      // I will put a specific try catch around the request.
-      
       final content = [
         Content.multi([
           TextPart('''
             Atue como um Especialista em Saúde da Família (Medicina). 
             Analise o áudio da consulta e gere um JSON.
             
-            ESTRUTURA SOAP:
-            S (Subjetivo): Queixa principal e história.
-            O (Objetivo): Exame físico e dados vitais.
-            A (Avaliação): Hipóteses diagnósticas e CIDs prováveis.
-            P (Plano): Conduta, medicamentos e exames.
-
-            CRÍTICA (Dr. House Mode):
-            Identifique erros, omissões graves, riscos e alergias não perguntadas.
-
+            ESTRUTURA:
+            Use o formato SOAP. Preencha cada campo com detalhes técnicos.
+            Dr. House Mode ON: Para cada seção (S, O, A, P), se identificar erros, negligências, faltas de perguntas sobre alergias ou riscos, inclua uma crítica específica.
+            
             SAÍDA JSON OBRIGATÓRIA:
             {
-              "soap": { "s": "...", "o": "...", "a": "...", "p": "..." },
-              "medicamentos": ["nome_generico_1", "nome_generico_2"],
-              "critica": ["alerta 1", "alerta 2"]
+              "soap": { 
+                "s": "Texto do Subjetivo...", 
+                "o": "Texto do Objetivo...", 
+                "a": "Texto da Avaliação...", 
+                "p": "Texto do Plano..." 
+              },
+              "criticas": {
+                "s": "Crítica específica para o Subjetivo (ex: faltou perguntar histórico)",
+                "o": "Crítica para o Objetivo (ex: esqueceu de aferir PA)",
+                "a": "Crítica para Avaliação",
+                "p": "Crítica para Plano (ex: interação medicamentosa ignorada)"
+              },
+              "medicamentos": ["nome_generico_1", "nome_generico_2"]
             }
           '''),
           DataPart('audio/mp4', bytes)
@@ -257,10 +248,10 @@ class _HomePageState extends State<HomePage> {
 
       GenerateContentResponse? response;
       try {
-         response = await userRequestedModel.generateContent(content);
+         response = await model.generateContent(content);
       } catch (e) {
-         // Fallback to 2.0 if 2.5 fails
-         print("Gemini 2.5 failed, trying 2.0: $e");
+         // Fallback logic
+         print("Model $modelName falhou, tentando 2.0-flash: $e");
          final fallback = GenerativeModel(model: 'gemini-2.0-flash', apiKey: apiKey);
          response = await fallback.generateContent(content);
       }
@@ -286,14 +277,15 @@ class _HomePageState extends State<HomePage> {
       });
 
     } catch (e) {
-      setState(() {
-        _statusText = "Erro: $e";
-        _statusColor = Colors.red;
-      });
+      if (mounted) {
+        setState(() {
+          _statusText = "Erro na análise";
+          _statusColor = Colors.red;
+        });
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Erro: $e")));
+      }
     } finally {
-      setState(() {
-        _isProcessing = false;
-      });
+      if (mounted) setState(() => _isProcessing = false);
     }
   }
 
@@ -302,10 +294,8 @@ class _HomePageState extends State<HomePage> {
     int remumeCount = 0;
     int renameCount = 0;
 
-    // Helper search
     bool searchIn(List<String> db, String query) {
       final q = removeDiacritics(query.toLowerCase());
-      // Simple containment check. Can be improved with fuzzy search.
       return db.any((element) {
         final e = removeDiacritics(element.toLowerCase());
         return e.contains(q) || q.contains(e);
@@ -334,14 +324,15 @@ class _HomePageState extends State<HomePage> {
     };
   }
 
-  // --- PDF ---
+  // --- PDF EXPORT ---
   Future<void> _generatePdf() async {
     if (_analysisResult == null) return;
-    
     final pdf = pw.Document();
-    final soap = _analysisResult!['soap'];
+    
+    // Extract Data
+    final soap = _analysisResult!['soap']; // Map
+    final criticas = _analysisResult!['criticas'] ?? {};
     final audit = _analysisResult!['audit']['items'] as List;
-    final critica = List<String>.from(_analysisResult!['critica'] ?? []);
 
     final fontBold = await PdfGoogleFonts.poppinsBold();
     final fontReg = await PdfGoogleFonts.poppinsRegular();
@@ -349,45 +340,28 @@ class _HomePageState extends State<HomePage> {
     pdf.addPage(
       pw.MultiPage(
         pageFormat: PdfPageFormat.a4,
-        margin: const pw.EdgeInsets.all(40),
+        margin: const pw.EdgeInsets.all(32),
         build: (context) => [
           pw.Header(
             level: 0,
-            child: pw.Row(
-              mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-              children: [
-                pw.Text("MedUBS AI", style: pw.TextStyle(font: fontBold, fontSize: 22, color: PdfColors.blue900)),
-                pw.Text(DateFormat("dd/MM/yyyy HH:mm").format(DateTime.now()), style: pw.TextStyle(font: fontReg, fontSize: 10)),
-              ]
-            )
+            child: pw.Row(mainAxisAlignment: pw.MainAxisAlignment.spaceBetween, children: [
+              pw.Text("MedUBS AI Report", style: pw.TextStyle(font: fontBold, fontSize: 18, color: PdfColors.blue900)),
+              pw.Text(DateFormat("dd/MM/yyyy HH:mm").format(DateTime.now()), style: pw.TextStyle(font: fontReg, fontSize: 10)),
+            ])
           ),
-          pw.SizedBox(height: 10),
-          
-          if (critica.isNotEmpty)
-            pw.Container(
-              padding: const pw.EdgeInsets.all(10),
-              decoration: pw.BoxDecoration(color: PdfColors.red50, borderRadius: pw.BorderRadius.circular(4)),
-              child: pw.Column(
-                crossAxisAlignment: pw.CrossAxisAlignment.start,
-                children: [
-                   pw.Text("ALERTAS CLÍNICOS", style: pw.TextStyle(font: fontBold, color: PdfColors.red800)),
-                   ...critica.map((e) => pw.Bullet(text: e, style: pw.TextStyle(font: fontReg, color: PdfColors.red800)))
-                ]
-              )
-            ),
-          
           pw.SizedBox(height: 20),
           
-          _pdfSection("SUBJETIVO", soap['s'], fontBold, fontReg, PdfColors.blue700),
-          _pdfSection("OBJETIVO", soap['o'], fontBold, fontReg, PdfColors.teal700),
-          _pdfSection("AVALIAÇÃO", soap['a'], fontBold, fontReg, PdfColors.orange700),
-          _pdfSection("PLANO", soap['p'], fontBold, fontReg, PdfColors.purple700),
-          
+          _pdfSection("SUBJETIVO", soap['s'], criticas['s'], fontBold, fontReg, PdfColors.blue700),
+          _pdfSection("OBJETIVO", soap['o'], criticas['o'], fontBold, fontReg, PdfColors.teal700),
+          _pdfSection("AVALIAÇÃO", soap['a'], criticas['a'], fontBold, fontReg, PdfColors.orange700),
+          _pdfSection("PLANO", soap['p'], criticas['p'], fontBold, fontReg, PdfColors.purple700),
+
           pw.Divider(),
-          pw.Text("PRESCRIÇÃO & DISPONIBILIDADE", style: pw.TextStyle(font: fontBold, fontSize: 14)),
+          pw.SizedBox(height: 10),
+          pw.Text("AUDITORIA DE MEDICAMENTOS", style: pw.TextStyle(font: fontBold, fontSize: 12)),
           pw.SizedBox(height: 10),
           
-          pw.Table.fromTextArray(
+           pw.Table.fromTextArray(
             headers: ["Medicamento", "REMUME", "RENAME", "Alto Custo"],
             data: audit.map((e) => [
               e['term'].toString().toUpperCase(),
@@ -397,155 +371,144 @@ class _HomePageState extends State<HomePage> {
             ]).toList(),
             headerStyle: pw.TextStyle(font: fontBold, color: PdfColors.white),
             headerDecoration: const pw.BoxDecoration(color: PdfColors.blue900),
-            cellStyle: pw.TextStyle(font: fontReg, fontSize: 10),
             cellAlignments: {0: pw.Alignment.centerLeft, 1: pw.Alignment.center, 2: pw.Alignment.center, 3: pw.Alignment.center}
           )
         ]
       )
     );
-    
-    await Printing.sharePdf(bytes: await pdf.save(), filename: 'Relatorio_Clinico_MedUBS.pdf');
+    await Printing.sharePdf(bytes: await pdf.save(), filename: 'MedUBS_Relatorio.pdf');
   }
 
-  pw.Widget _pdfSection(String title, String content, pw.Font bold, pw.Font reg, PdfColor color) {
+  pw.Widget _pdfSection(String title, String? content, String? critique, pw.Font bold, pw.Font reg, PdfColor color) {
     return pw.Container(
-      margin: const pw.EdgeInsets.only(bottom: 15),
-      child: pw.Column(
-        crossAxisAlignment: pw.CrossAxisAlignment.start,
-        children: [
-          pw.Text(title, style: pw.TextStyle(font: bold, fontSize: 12, color: color)),
-          pw.Text(content, style: pw.TextStyle(font: reg, fontSize: 11)),
-        ]
-      )
+      margin: const pw.EdgeInsets.only(bottom: 12),
+      child: pw.Column(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
+        pw.Text(title, style: pw.TextStyle(font: bold, fontSize: 11, color: color)),
+        pw.Text(content ?? "-", style: pw.TextStyle(font: reg, fontSize: 10)),
+        if (critique != null && critique.isNotEmpty)
+          pw.Container(
+            margin: const pw.EdgeInsets.only(top: 4),
+            padding: const pw.EdgeInsets.all(5),
+            decoration: pw.BoxDecoration(color: PdfColors.red50, border: pw.Border.all(color: PdfColors.red200)),
+            child: pw.Row(children: [
+               pw.Text("ALERTA: ", style: pw.TextStyle(font: bold, fontSize: 8, color: PdfColors.red900)),
+               pw.Expanded(child: pw.Text(critique, style: pw.TextStyle(font: reg, fontSize: 8, color: PdfColors.red900)))
+            ])
+          )
+      ])
     );
   }
 
-  // --- UI BUILD ---
+  // --- UI WIDGETS ---
+
   @override
   Widget build(BuildContext context) {
+    final hasKey = _apiKeyController.text.isNotEmpty;
+
     return Scaffold(
+      backgroundColor: const Color(0xFFF7F9FC),
       appBar: AppBar(
         title: const Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.health_and_safety, size: 28),
+            Icon(Icons.monitor_heart, color: Color(0xFF0052CC)),
             SizedBox(width: 8),
-            Text("MedUBS", style: TextStyle(fontWeight: FontWeight.w700)),
+            Text("MedUBS", style: TextStyle(fontWeight: FontWeight.bold, letterSpacing: 0.5)),
           ],
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.settings_outlined),
+            icon: Icon(Icons.settings, color: Colors.grey[700]),
             onPressed: () => _showSettings(context),
           )
         ],
       ),
       body: Column(
         children: [
-          _buildStatusBar(),
-          Expanded(child: _buildMainContent()),
-          _buildBottomControls(),
+          // Header Status
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            color: Colors.white,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _buildDbChip("REMUME", _dbRemumeNames.length),
+                const SizedBox(width: 8),
+                _buildDbChip("RENAME", _dbRenameNames.length),
+                const SizedBox(width: 8),
+                _buildDbChip("ALTO CUSTO", _dbAltoCustoNames.length),
+              ],
+            ),
+          ),
+          
+          Expanded(child: _buildBody(hasKey)),
+          
+          _buildBottomBar(hasKey),
         ],
       ),
     );
   }
 
-  Widget _buildStatusBar() {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-      color: Colors.white,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text("Bancos: ", style: TextStyle(color: Colors.grey[600], fontSize: 12)),
-          _dbBadge("REMUME", _dbRemumeNames.length),
-          _dbBadge("RENAME", _dbRenameNames.length),
-          _dbBadge("ALTO CUSTO", _dbAltoCustoNames.length),
-        ],
-      ),
-    );
-  }
-
-  Widget _dbBadge(String label, int count) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 4),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-        decoration: BoxDecoration(color: Colors.grey[100], borderRadius: BorderRadius.circular(4)),
-        child: Text("$label: $count", style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: count > 10 ? Colors.green : Colors.red)),
-      ),
-    );
-  }
-
-  Widget _buildMainContent() {
+  Widget _buildBody(bool hasKey) {
+    if (!hasKey) {
+       return Center(
+         child: Column(
+           mainAxisAlignment: MainAxisAlignment.center,
+           children: [
+             Icon(Icons.key_off, size: 64, color: Colors.grey[300]),
+             const SizedBox(height: 16),
+             const Text("Configure a API Key para começar"),
+             TextButton(onPressed: () => _showSettings(context), child: const Text("Configurar agora"))
+           ],
+         ),
+       );
+    }
+    
     if (_analysisResult == null) {
-      if (_isProcessing) {
-        return const Center(child: CircularProgressIndicator());
-      }
+      if (_isProcessing) return const Center(child: CircularProgressIndicator());
+      
+      // Placeholder state
       return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Opacity(opacity: 0.5, child: Icon(Icons.mic_none_outlined, size: 100, color: Colors.blue[200])),
-            const SizedBox(height: 20),
-            Text("Aguardando Áudio...", style: TextStyle(color: Colors.blue[300], fontSize: 18, fontWeight: FontWeight.w500)),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(32),
+                decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.blue.withOpacity(0.05)),
+                child: Icon(Icons.mic, size: 64, color: Colors.blue[200]),
+              ),
+              const SizedBox(height: 24),
+              Text("Pronto para Ouvir", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.blueGrey[800])),
+              const SizedBox(height: 8),
+              Text("Grave uma consulta ou envie um áudio", style: TextStyle(color: Colors.grey[600])),
+            ],
+          ),
         ),
       );
     }
 
+    // Results List
     final soap = _analysisResult!['soap'];
+    final criticas = _analysisResult!['criticas'] ?? {};
     final audit = _analysisResult!['audit']['items'] as List;
-    final critica = List<String>.from(_analysisResult!['critica'] ?? []);
 
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
-        if (critica.isNotEmpty)
-          Card(
-            color: const Color(0xFFFFEBEE),
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Row(children: [Icon(Icons.warning_amber, color: Colors.red), SizedBox(width: 8), Text("CRÍTICA DA IA", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red))]),
-                  const SizedBox(height: 8),
-                  ...critica.map((e) => Padding(padding: const EdgeInsets.only(bottom: 4), child: Text("• $e", style: TextStyle(color: Colors.red[900]))))
-                ],
-              ),
-            ),
-          ),
+        _buildSectionCard("Subjetivo", "S", soap['s'], criticas['s'], Colors.blue),
+        _buildSectionCard("Objetivo", "O", soap['o'], criticas['o'], Colors.teal),
+        _buildSectionCard("Avaliação", "A", soap['a'], criticas['a'], Colors.orange),
+        _buildSectionCard("Plano", "P", soap['p'], criticas['p'], Colors.purple),
         
-        _soapCard("S", "Subjetivo", soap['s'], Colors.blue),
-        _soapCard("O", "Objetivo", soap['o'], Colors.teal),
-        _soapCard("A", "Avaliação", soap['a'], Colors.orange),
-        _soapCard("P", "Plano", soap['p'], Colors.purple),
-
         const SizedBox(height: 16),
-        const Text("Medicamentos Citados", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-        const SizedBox(height: 8),
-        ...audit.map((item) => Card(
-          margin: const EdgeInsets.only(bottom: 8),
-          child: ListTile(
-            leading: const Icon(Icons.medication, color: Colors.blueGrey),
-            title: Text(item['term'].toString().toUpperCase(), style: const TextStyle(fontWeight: FontWeight.bold)),
-            subtitle: Row(
-              children: [
-                if (item['remume']) _tag("REMUME", Colors.green),
-                if (item['rename']) _tag("RENAME", Colors.blue),
-                if (item['alto']) _tag("ALTO CUSTO", Colors.orange),
-                if (!item['remume'] && !item['rename'] && !item['alto']) _tag("INDISPONÍVEL", Colors.red),
-              ],
-            ),
-          ),
-        ))
+        _buildDebugPanel(audit),
       ],
     );
   }
 
-  Widget _soapCard(String letter, String title, String content, Color color) {
+  Widget _buildSectionCard(String title, String letter, String? content, String? critique, Color color) {
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
       child: Padding(
@@ -553,109 +516,161 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-             Row(children: [
-               CircleAvatar(radius: 14, backgroundColor: color.withOpacity(0.1), child: Text(letter, style: TextStyle(fontWeight: FontWeight.bold, color: color))),
-               const SizedBox(width: 10),
-               Text(title, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: color)),
-             ]),
-             const Divider(),
-             Text(content, style: const TextStyle(fontSize: 14, height: 1.5, color: Colors.black87)),
+            Row(
+              children: [
+                CircleAvatar(
+                  radius: 16, 
+                  backgroundColor: color.withOpacity(0.1),
+                  child: Text(letter, style: TextStyle(color: color, fontWeight: FontWeight.bold))
+                ),
+                const SizedBox(width: 12),
+                Text(title, style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: color)),
+              ],
+            ),
+            const Padding(padding: EdgeInsets.symmetric(vertical: 8), child: Divider()),
+            Text(
+              content ?? "Não informado.",
+              style: const TextStyle(fontSize: 15, height: 1.5, color: Colors.black87),
+            ),
+            
+            if (critique != null && critique.isNotEmpty) ...[
+              const SizedBox(height: 12),
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Colors.red[50], 
+                  border: Border.all(color: Colors.red[100]!),
+                  borderRadius: BorderRadius.circular(8)
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(children: [
+                       Icon(Icons.gavel, size: 16, color: Colors.red[800]),
+                       const SizedBox(width: 8),
+                       Text("CRÍTICA", style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.red[900]))
+                    ]),
+                    const SizedBox(height: 4),
+                    Text(critique, style: TextStyle(fontSize: 13, color: Colors.red[900], fontStyle: FontStyle.italic)),
+                  ],
+                ),
+              )
+            ]
           ],
         ),
       ),
     );
   }
 
-  Widget _tag(String label, Color color) {
+  Widget _buildDebugPanel(List items) {
+     return ExpansionTile(
+       title: const Text("Auditoria de Medicamentos", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+       leading: const Icon(Icons.bug_report, size: 20),
+       children: items.map<Widget>((item) {
+         final foundAny = item['remume'] || item['rename'] || item['alto'];
+         final icon = foundAny ? Icons.check_circle : Icons.cancel;
+         final color = foundAny ? Colors.green : Colors.red;
+         
+         return ListTile(
+            dense: true,
+            leading: Icon(icon, color: color, size: 18),
+            title: Text(item['term'].toString().toUpperCase(), style: const TextStyle(fontWeight: FontWeight.bold)),
+            subtitle: Row(
+               children: [
+                 _miniTag("REMUME", item['remume']),
+                 _miniTag("RENAME", item['rename']),
+                 _miniTag("ALTO CUSTO", item['alto']),
+               ],
+            ),
+         );
+       }).toList(),
+     );
+  }
+
+  Widget _miniTag(String text, bool active) {
+    if (!active) return const SizedBox.shrink();
     return Container(
-      margin: const EdgeInsets.only(right: 4, top: 4),
-      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-      decoration: BoxDecoration(color: color.withOpacity(0.1), borderRadius: BorderRadius.circular(4), border: Border.all(color: color.withOpacity(0.3))),
-      child: Text(label, style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: color)),
+      margin: const EdgeInsets.only(right: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
+      decoration: BoxDecoration(
+        color: Colors.grey[200], 
+        borderRadius: BorderRadius.circular(2),
+        border: Border.all(color: Colors.grey[400]!)
+      ),
+      child: Text(text, style: const TextStyle(fontSize: 9, color: Colors.black)),
     );
   }
 
-  Widget _buildBottomControls() {
+  Widget _buildDbChip(String label, int count) {
     return Container(
-      padding: const EdgeInsets.all(20),
+       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+       decoration: BoxDecoration(color: Colors.grey[100], borderRadius: BorderRadius.circular(12)),
+       child: Text("$label: $count", style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.grey[800])),
+    );
+  }
+
+  Widget _buildBottomBar(bool hasKey) {
+    return Container(
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
-        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10, offset: const Offset(0,-4))]
+        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10, offset: const Offset(0,-5))],
       ),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-               Icon(Icons.circle, size: 10, color: _statusColor),
-               const SizedBox(width: 8),
-               Expanded(child: Text(_statusText, style: TextStyle(color: _statusColor, fontWeight: FontWeight.bold), maxLines: 1, overflow: TextOverflow.ellipsis)),
-            ],
-          ),
-          const SizedBox(height: 16),
-          Row(
-            children: [
-              // Upload Button
-              Expanded(
-                flex: 1,
-                child: ElevatedButton(
-                  onPressed: _isProcessing || _isRecording ? null : _pickAudioFile,
-                  style: ElevatedButton.styleFrom(
-                     backgroundColor: Colors.white,
-                     foregroundColor: Colors.blue[900],
-                     elevation: 0,
-                     side: BorderSide(color: Colors.grey[300]!),
-                     padding: const EdgeInsets.symmetric(vertical: 16),
-                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))
-                  ),
-                  child: const Column(children: [Icon(Icons.upload_file), Text("Upload", style: TextStyle(fontSize: 10))]),
-                ),
+      child: SafeArea( // iPhone home bar safe
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (_statusText.isNotEmpty)
+              Padding(
+                 padding: const EdgeInsets.only(bottom: 12),
+                 child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                    Container(width: 8, height: 8, decoration: BoxDecoration(color: _statusColor, shape: BoxShape.circle)),
+                    const SizedBox(width: 8),
+                    Text(_statusText, style: TextStyle(color: _statusColor, fontWeight: FontWeight.bold))
+                 ]),
               ),
-              const SizedBox(width: 12),
-              
-              // Record Button (Big)
-              Expanded(
-                flex: 2,
-                child: GestureDetector(
-                  onTap: _toggleRecording,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 12),
-                    decoration: BoxDecoration(
-                      color: _isRecording ? Colors.red : const Color(0xFF0052CC), 
-                      borderRadius: BorderRadius.circular(16),
-                      boxShadow: [BoxShadow(color: (_isRecording ? Colors.red : const Color(0xFF0052CC)).withOpacity(0.3), blurRadius: 8, offset: const Offset(0,4))]
-                    ),
-                    child: Column(
-                      children: [
-                        Icon(_isRecording ? Icons.stop : Icons.mic, color: Colors.white, size: 28),
-                        Text(_isRecording ? "PARAR" : "GRAVAR", style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold))
-                      ],
+            
+            Row(
+              children: [
+                Expanded(
+                  child: OutlinedButton.icon(
+                    onPressed: (_isProcessing || _isRecording) ? null : _pickAudioFile,
+                    icon: const Icon(Icons.upload_file), 
+                    label: const Text("Upload"),
+                    style: OutlinedButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 14)),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  flex: 2,
+                  child: ElevatedButton.icon(
+                    onPressed: hasKey ? _toggleRecording : null,
+                    icon: Icon(_isRecording ? Icons.stop : Icons.mic),
+                    label: Text(_isRecording ? "PARAR GRAVAÇÃO" : "GRAVAR CONSULTA"),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: _isRecording ? Colors.red : Theme.of(context).primaryColor,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: 14),
                     ),
                   ),
                 ),
-              ),
-              
-              const SizedBox(width: 12),
-              
-              // Analyze Button
-              Expanded(
-                flex: 1,
-                child: ElevatedButton(
-                  onPressed: (_currentAudioPath != null && !_isRecording && !_isProcessing) ? _runAnalysis : null,
-                  style: ElevatedButton.styleFrom(
-                     backgroundColor: Colors.green,
-                     foregroundColor: Colors.white,
-                     padding: const EdgeInsets.symmetric(vertical: 16),
-                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))
-                  ),
-                  child: const Column(children: [Icon(Icons.auto_awesome), Text("IA", style: TextStyle(fontSize: 10))]),
-                ),
-              ),
-            ],
-          ),
-          if (_analysisResult != null)
-             TextButton.icon(onPressed: _generatePdf, icon: const Icon(Icons.picture_as_pdf), label: const Text("Exportar PDF"))
-        ],
+                const SizedBox(width: 12),
+                 if (_analysisResult != null)
+                   IconButton.filled(
+                      onPressed: _generatePdf, 
+                      icon: const Icon(Icons.picture_as_pdf),
+                      tooltip: "Baixar PDF",
+                   )
+                 else
+                   IconButton.filledTonal(
+                     onPressed: _currentAudioPath != null && !_isProcessing ? _runAnalysis : null,
+                     icon: const Icon(Icons.auto_awesome),
+                   )
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -667,17 +682,44 @@ class _HomePageState extends State<HomePage> {
         title: const Text("Configurações"),
         content: Column(
           mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const Text("Insira sua Gemini API Key para utilizar o aplicativo.", style: TextStyle(fontSize: 12, color: Colors.grey)),
+            const SizedBox(height: 10),
             TextField(
               controller: _apiKeyController,
-              decoration: const InputDecoration(labelText: "Gemini API Key", border: OutlineInputBorder()),
+              decoration: const InputDecoration(
+                labelText: "API Key", 
+                border: OutlineInputBorder(),
+                prefixIcon: Icon(Icons.key)
+              ),
               obscureText: true,
             ),
             const SizedBox(height: 10),
-            const Text("Modelo Atual: Gemini 2.5 Flash", style: TextStyle(fontSize: 10, color: Colors.grey))
+            
+            // HELP LINK (Added as requested)
+            InkWell(
+              onTap: () async {
+                 final Uri url = Uri.parse("https://aistudio.google.com/app/api-keys");
+                 if (!await launchUrl(url)) {
+                   if (mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Não foi possível abrir o link")));
+                 }
+              },
+              child: const Row(
+                children: [
+                   Icon(Icons.help_outline, size: 16, color: Colors.blue),
+                   SizedBox(width: 4),
+                   Text("Onde conseguir minha chave?", style: TextStyle(color: Colors.blue, decoration: TextDecoration.underline, fontSize: 12)),
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
+            const Center(child: Text("Modelo: Gemini 2.5 Flash (BETA)", style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.grey))),
           ],
         ),
-        actions: [TextButton(onPressed: () => Navigator.pop(ctx), child: const Text("OK"))],
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text("SALVAR"))
+        ],
       )
     );
   }
