@@ -422,7 +422,16 @@ class _HomeTabState extends State<HomeTab> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Consultório")),
+      appBar: AppBar(
+        title: const Text("Consultório"),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.settings), 
+            onPressed: widget.onRequestKey,
+            tooltip: "Configurar API Key",
+          )
+        ],
+      ),
       body: Column(children: [
         _buildSpecialtyBanner(),
         Expanded(child: _analysisResult == null ? 
@@ -463,16 +472,80 @@ class _HomeTabState extends State<HomeTab> {
   }
 
   Widget _buildResultList() {
-    final soap = _analysisResult!['soap'];
+    final soap = _analysisResult!['soap'] ?? {};
+    final crit = _analysisResult!['criticas'] ?? {};
+    final meds = _analysisResult!['audit']?['items'] as List? ?? [];
+
     return ListView(padding: const EdgeInsets.all(16), children: [ 
-       _card("S", "Subjetivo", soap['s'], Colors.blue),
-       _card("O", "Objetivo", soap['o'], Colors.teal),
-       _card("A", "Avaliação", soap['a'], Colors.orange),
-       _card("P", "Plano", soap['p'], Colors.purple),
+       _card("S", "Subjetivo", soap['s']?.toString() ?? "", crit['s']?.toString(), Colors.blue),
+       _card("O", "Objetivo", soap['o']?.toString() ?? "", crit['o']?.toString(), Colors.teal),
+       _card("A", "Avaliação", soap['a']?.toString() ?? "", crit['a']?.toString(), Colors.orange),
+       _card("P", "Plano", soap['p']?.toString() ?? "", crit['p']?.toString(), Colors.purple),
+       
+       if (meds.isNotEmpty) ...[
+         const SizedBox(height: 20),
+         const Text("💊 Auditoria de Medicamentos", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+         const SizedBox(height: 10),
+         ...meds.map((m) => Card(
+           margin: const EdgeInsets.only(bottom: 8),
+           child: ListTile(
+             contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+             title: Text(m['term'] ?? "", style: const TextStyle(fontWeight: FontWeight.w500)),
+             subtitle: Wrap(spacing: 8, runSpacing: 4, children: [
+               if(m['remume']==true) _badge("REMUME", Colors.green),
+               if(m['rename']==true) _badge("RENAME", Colors.blue),
+               if(m['alto']==true) _badge("ALTO CUSTO", Colors.red),
+               if(m['remume']!=true && m['rename']!=true && m['alto']!=true) _badge("NÃO ENCONTRADO", Colors.grey),
+             ]),
+           ),
+         ))
+       ]
     ]);
   }
 
-  Widget _card(String l, String t, String c, Color col) => Card(child: ListTile(leading: CircleAvatar(backgroundColor: col.withOpacity(0.1), child: Text(l, style: TextStyle(color: col))), title: Text(t, style: TextStyle(color: col, fontWeight: FontWeight.bold)), subtitle: Text(c)));
+  Widget _badge(String text, Color col) => Container(
+    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+    decoration: BoxDecoration(color: col.withOpacity(0.1), borderRadius: BorderRadius.circular(4), border: Border.all(color: col)),
+    child: Text(text, style: TextStyle(fontSize: 10, color: col, fontWeight: FontWeight.bold)),
+  );
+
+  Widget _card(String l, String t, String c, String? critique, Color col) => Card(
+    margin: const EdgeInsets.only(bottom: 16),
+    child: Padding(
+      padding: const EdgeInsets.all(12),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Row(children: [
+          CircleAvatar(backgroundColor: col.withOpacity(0.1), child: Text(l, style: TextStyle(color: col, fontWeight: FontWeight.bold))),
+          const SizedBox(width: 10),
+          Expanded(child: Text(t, style: TextStyle(color: col, fontWeight: FontWeight.bold, fontSize: 16))),
+          IconButton(
+            icon: const Icon(Icons.copy, size: 20, color: Colors.grey), 
+            onPressed: () {
+               Clipboard.setData(ClipboardData(text: c));
+               if(mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Copiado!"), duration: Duration(milliseconds: 500)));
+            }
+          )
+        ]),
+        const Divider(),
+        Text(c, style: const TextStyle(fontSize: 15, height: 1.4)),
+        if (critique != null && critique.isNotEmpty) ...[
+          const SizedBox(height: 10),
+          Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(color: Colors.red[50], borderRadius: BorderRadius.circular(8), border: Border.all(color: Colors.red[100]!)),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                 const Icon(Icons.warning_amber, color: Colors.red, size: 20),
+                 const SizedBox(width: 8),
+                 Expanded(child: Text("Crítica Dr. House: $critique", style: TextStyle(color: Colors.red[900], fontSize: 13, fontStyle: FontStyle.italic)))
+              ],
+            )
+          )
+        ]
+      ]),
+    )
+  );
 }
 
 // ---------------- LIVE TAB ----------------
