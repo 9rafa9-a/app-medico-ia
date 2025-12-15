@@ -27,7 +27,7 @@ class MedUBSApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'MedUBS v2.4',
+      title: 'MedUBS v2.5',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
@@ -473,7 +473,7 @@ class SpecialtiesTab extends StatelessWidget {
   Widget _tile(IconData i, String t, Color c, BuildContext context) => Card(color: c.withOpacity(0.1), child: InkWell(onTap: () => onSpecialtySelected(t), child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [Icon(i, size: 40, color: c), Text(t, style: TextStyle(color: c, fontWeight: FontWeight.bold))])));
 }
 
-// ---------------- SCREENING (Auto) ----------------
+// ---------------- SCREENING (Auto) ---------------- (Optimized)
 class ScreeningTab extends StatefulWidget {
   final String apiKey;
   final bool hasKey;
@@ -494,8 +494,17 @@ class _ScreeningTabState extends State<ScreeningTab> {
 
   @override 
   void initState() { super.initState(); _upd(); }
+  
   @override
-  void didUpdateWidget(ScreeningTab old) { super.didUpdateWidget(old); if(widget.initialAge!=old.initialAge || widget.initialSex!=old.initialSex) { _upd(); if(widget.initialAge!=null && widget.hasKey) _check(); } }
+  void didUpdateWidget(ScreeningTab old) { 
+    super.didUpdateWidget(old); 
+    // Logic: Only update if demographics actually CHANGED and we have a key.
+    if(widget.initialAge!=old.initialAge || widget.initialSex!=old.initialSex) { 
+      _upd(); 
+      // Prevention: Don't auto-run if we already have a result or are loading.
+      if(widget.initialAge!=null && widget.hasKey && _result.isEmpty && !_loading) _check(); 
+    } 
+  }
 
   void _upd() { if(widget.initialAge!=null) _ageCtrl.text=widget.initialAge.toString(); if(widget.initialSex!=null) _sex=widget.initialSex!; }
 
@@ -505,12 +514,15 @@ class _ScreeningTabState extends State<ScreeningTab> {
     
     setState(() => _loading = true);
     try {
+       // Using gemini-2.5-flash as standard
        final model = GenerativeModel(model: 'gemini-2.5-flash', apiKey: widget.apiKey);
-       final res = await model.generateContent([Content.text("Paciente Sexo $_sex, Idade ${_ageCtrl.text} anos. Listar rastreamentos (screening) indicados pelo Min. Saúde Brasil.")]);
+       final res = await model.generateContent([Content.text("Atue como médico. Paciente $_sex, ${_ageCtrl.text} anos. Liste APENAS os rastreamentos (screening) indicados pelo Ministério da Saúde do Brasil em tópicos curtos.")]);
        setState(() => _result = res.text ?? "-");
     } catch(e) { 
        String msg = "Erro: $e";
-       if (e.toString().contains("429") || e.toString().contains("quota")) msg = "⚠️ Cota excedida. Aguarde 1 min.";
+       if (e.toString().contains("429") || e.toString().contains("quota")) {
+         msg = "⚠️ Cota do Gemini excedida. Tente em 1 min.";
+       }
        setState(() => _result = msg); 
     } 
     finally { setState(() => _loading = false); }
@@ -523,7 +535,7 @@ class _ScreeningTabState extends State<ScreeningTab> {
       body: Padding(padding: const EdgeInsets.all(16), child: Column(children: [
          Row(children: [Expanded(child: TextField(controller: _ageCtrl, decoration: const InputDecoration(labelText: "Idade", border: OutlineInputBorder()))), const SizedBox(width: 10), Expanded(child: DropdownButtonFormField(value: _sex, items: ["Feminino","Masculino"].map((e)=>DropdownMenuItem(value:e,child:Text(e))).toList(), onChanged:(v)=>setState(()=>_sex=v!), decoration: const InputDecoration(labelText:"Sexo",border:OutlineInputBorder())))]),
          const SizedBox(height: 10),
-         SizedBox(width: double.infinity, child: ElevatedButton(onPressed: _loading?null:_check, child: Text(_loading ? "Consultando..." : (widget.hasKey ? "Verificar" : "Configurar Key")))),
+         SizedBox(width: double.infinity, child: ElevatedButton(onPressed: _loading?null:_check, child: Text(_loading ? "Consultando Gemini 1.5..." : (widget.hasKey ? "Verificar Protocolos" : "Configurar Key")))),
          const Divider(),
          Expanded(child: SingleChildScrollView(child: Text(_result)))
       ])),
