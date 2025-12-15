@@ -25,14 +25,14 @@ with open("android/local.properties", "w") as f:
     f.write("flutter.versionName=1.0.0\n")
     f.write("flutter.versionCode=1\n")
 
-with open("android/gradle.properties", "w") as f:
+    with open("android/gradle.properties", "w") as f:
     f.write("org.gradle.jvmargs=-Xmx2048m -Dfile.encoding=UTF-8\n")
     f.write("org.gradle.daemon=false\n") # Disable daemon for CI stability
     f.write("android.useAndroidX=true\n")
     f.write("android.enableJetifier=true\n")
     f.write("flutter.minSdkVersion=23\n")
-    f.write("flutter.targetSdkVersion=34\n")
-    f.write("flutter.compileSdkVersion=34\n")
+    f.write("flutter.targetSdkVersion=35\n")
+    f.write("flutter.compileSdkVersion=35\n")
 
 # 1. Patch Root build.gradle
 if os.path.exists(root_gradle):
@@ -44,21 +44,21 @@ if os.path.exists(root_gradle):
     variables = """
     ext {
         // Standard Android variables
-        buildToolsVersion = "34.0.0"
+        buildToolsVersion = "35.0.0"
         minSdkVersion = 23
-        compileSdkVersion = 34
-        targetSdkVersion = 34
+        compileSdkVersion = 35
+        targetSdkVersion = 35
         
         // Flutter variables (Mocking the flutter.groovy behavior)
         flutterMinSdkVersion = 23
-        flutterTargetSdkVersion = 34
-        flutterCompileSdkVersion = 34
+        flutterTargetSdkVersion = 35
+        flutterCompileSdkVersion = 35
         
         // Object style (some plugins use rootProject.ext.flutter.minSdkVersion)
         flutter = [
             minSdkVersion: 23,
-            targetSdkVersion: 34,
-            compileSdkVersion: 34,
+            targetSdkVersion: 35,
+            compileSdkVersion: 35,
             versionName: '1.0.0',
             versionCode: 1
         ]

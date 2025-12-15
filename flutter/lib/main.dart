@@ -54,49 +54,13 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   // State
   final _apiKeyController = TextEditingController();
-  final _audioRecorder = AudioRecorder();
+  final _audioRecorder = Record(); // v4 Class Name
   
   bool _isRecording = false;
   bool _isProcessing = false;
-  String _statusText = "Aguardando ação...";
-  Color _statusColor = Colors.grey;
-  
-  String? _currentAudioPath;
-  Map<String, dynamic>? _analysisResult;
+  // ... (keep state variables)
 
-  // Databases
-  List<dynamic> _dbRemume = [];
-  List<dynamic> _dbRename = [];
-  List<dynamic> _dbAltoCusto = [];
-
-  @override
-  void initState() {
-    super.initState();
-    _loadSettings();
-    _loadDatabases();
-  }
-
-  Future<void> _loadSettings() async {
-    final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _apiKeyController.text = prefs.getString('gemini_api_key') ?? '';
-    });
-  }
-
-  Future<void> _saveSettings() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('gemini_api_key', _apiKeyController.text);
-  }
-
-  Future<void> _loadDatabases() async {
-    try {
-      _dbRemume = json.decode(await rootBundle.loadString('assets/db_remume.json'));
-      _dbRename = json.decode(await rootBundle.loadString('assets/db_rename.json'));
-      _dbAltoCusto = json.decode(await rootBundle.loadString('assets/db_alto_custo.json'));
-    } catch (e) {
-      print("Erro DB: $e");
-    }
-  }
+// ...
 
   // --- LOGIC: RECORDING ---
   Future<void> _toggleRecording() async {
@@ -115,7 +79,12 @@ class _HomePageState extends State<HomePage> {
         final dir = await getTemporaryDirectory();
         final path = '${dir.path}/audio_${DateTime.now().millisecondsSinceEpoch}.m4a';
         
-        await _audioRecorder.start(const RecordConfig(), path: path);
+        // v4 Syntax
+        await _audioRecorder.start(
+          path: path,
+          encoder: AudioEncoder.aacLc,
+        );
+        
         setState(() {
           _isRecording = true;
           _statusText = "Gravando... (Toque para parar)";
