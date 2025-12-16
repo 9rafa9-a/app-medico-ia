@@ -32,10 +32,11 @@ class ApiService {
     }
   }
 
-  static Future<bool> uploadDiretriz(File pdfFile) async {
+  static Future<bool> uploadDiretriz(File pdfFile, String apiKey) async {
     var uri = Uri.parse('$baseUrl/upload-diretriz');
     var request = http.MultipartRequest('POST', uri);
     
+    request.fields['api_key'] = apiKey;
     request.files.add(await http.MultipartFile.fromPath('file', pdfFile.path));
 
     try {

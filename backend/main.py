@@ -134,7 +134,10 @@ async def upload_medicamento(
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/upload-diretriz")
-async def upload_diretriz(file: UploadFile = File(...)):
+async def upload_diretriz(
+    file: UploadFile = File(...),
+    api_key: str = Form(...)
+):
     """Salva texto de PCDT para consulta futura (RAG)."""
     try:
         content = await file.read()

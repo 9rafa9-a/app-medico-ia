@@ -154,10 +154,7 @@ class _MainScreenState extends State<MainScreen> {
     final result = await FilePicker.platform.pickFiles(type: FileType.custom, allowedExtensions: ['pdf']);
     if (result != null && result.files.single.path != null) {
       try {
-        if (_apiKeyController.text.isEmpty) {
-           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Configure a API Key primeiro!")));
-           return;
-        }
+        if (!_validateKey(context)) return;
         
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Enviando PDF para o servidor...")));
         
@@ -175,13 +172,35 @@ class _MainScreenState extends State<MainScreen> {
     }
   }
 
+  bool _validateKey(BuildContext context) {
+    if (_apiKeyController.text.isEmpty) {
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text("Chave Necessária"),
+          content: const Text("Para processar documentos com Inteligência Artificial, você precisa configurar sua API Key do Gemini primeiro."),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx), 
+              child: const Text("Entendi")
+            )
+          ],
+        )
+      );
+      return false;
+    }
+    return true;
+  }
+
   Future<void> _uploadDiretriz() async {
     final result = await FilePicker.platform.pickFiles(type: FileType.custom, allowedExtensions: ['pdf']);
     if (result != null && result.files.single.path != null) {
       try {
+        if (!_validateKey(context)) return;
+
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Enviando Diretriz...")));
         File file = File(result.files.single.path!);
-        bool ok = await ApiService.uploadDiretriz(file);
+        bool ok = await ApiService.uploadDiretriz(file, _apiKeyController.text);
         
         if (ok) {
            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Diretriz salva na Base de Conhecimento!")));
