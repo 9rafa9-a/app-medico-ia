@@ -30,6 +30,7 @@ os.makedirs(KNOWLEDGE_BASE_DIR, exist_ok=True)
 class ConsultaRequest(BaseModel):
     transcricao: str
     api_key: str
+    model: Optional[str] = "gemini-1.5-flash"
 
 class ConsultaResponse(BaseModel):
     soap: dict
@@ -162,7 +163,8 @@ async def consultar_ia(req: ConsultaRequest):
         
         # 2. Gemini
         genai.configure(api_key=req.api_key)
-        model = genai.GenerativeModel('gemini-1.5-flash')
+        model_name = req.model if req.model else "gemini-1.5-flash"
+        model = genai.GenerativeModel(model_name)
         
         prompt = f"""
         Atue como Médico Auditor e Preceptor de Residência.

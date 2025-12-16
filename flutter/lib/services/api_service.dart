@@ -49,7 +49,7 @@ class ApiService {
     }
   }
 
-  static Future<Map<String, dynamic>> consultarIA(String transcricao, String apiKey) async {
+  static Future<Map<String, dynamic>> consultarIA(String transcricao, String apiKey, {String model = 'gemini-1.5-flash'}) async {
     var uri = Uri.parse('$baseUrl/consultar-ia');
     
     try {
@@ -59,6 +59,7 @@ class ApiService {
         body: json.encode({
           'transcricao': transcricao,
           'api_key': apiKey,
+          'model': model,
         }),
       );
 

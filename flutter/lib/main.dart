@@ -75,6 +75,7 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
   final _apiKeyController = TextEditingController();
+  String _selectedModel = 'gemini-2.5-flash'; // Default Model
   int? _patientAge;
   String _patientSex = "Feminino";
   String? _activeSpecialty;
@@ -90,6 +91,7 @@ class _MainScreenState extends State<MainScreen> {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       _apiKeyController.text = prefs.getString('gemini_api_key') ?? '';
+      _selectedModel = prefs.getString('gemini_model') ?? 'gemini-2.5-flash';
     });
   }
 
@@ -221,6 +223,20 @@ class _MainScreenState extends State<MainScreen> {
                decoration: const InputDecoration(labelText: "Gemini API Key", border: OutlineInputBorder(), prefixIcon: Icon(Icons.key)),
                obscureText: true,
             ),
+            const SizedBox(height: 10),
+            DropdownButtonFormField<String>(
+              value: _selectedModel,
+              decoration: const InputDecoration(labelText: "Modelo AI", border: OutlineInputBorder(), prefixIcon: Icon(Icons.psychology)),
+              isExpanded: true,
+              items: const [
+                DropdownMenuItem(value: 'gemini-2.5-flash', child: Text('Gemini 2.5 Flash (Padrão/Rápido)')),
+                DropdownMenuItem(value: 'gemini-3-pro-preview', child: Text('Gemini 3.0 Pro (Raciocínio Avançado)')),
+                DropdownMenuItem(value: 'gemini-2.5-pro', child: Text('Gemini 2.5 Pro (Alta Precisão)')),
+                DropdownMenuItem(value: 'gemini-2.5-flash-lite', child: Text('Gemini 2.5 Flash-Lite (Econômico)')),
+                DropdownMenuItem(value: 'gemini-flash-latest', child: Text('Gemini Flash (Latest Experimental)')),
+              ], 
+              onChanged: (v) { if(v!=null) _selectedModel = v; }
+            ),
             const SizedBox(height: 20),
             const Divider(),
             const Text("Administração de Dados", style: TextStyle(fontWeight: FontWeight.bold)),
@@ -242,6 +258,7 @@ class _MainScreenState extends State<MainScreen> {
           TextButton(onPressed: () async {
             final prefs = await SharedPreferences.getInstance();
             await prefs.setString('gemini_api_key', _apiKeyController.text);
+            await prefs.setString('gemini_model', _selectedModel);
             setState(() {}); 
             if (context.mounted) Navigator.pop(ctx);
           }, child: const Text("SALVAR"))
@@ -254,10 +271,11 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     bool hasKey = _apiKeyController.text.isNotEmpty;
 
-    final pages = [
+    final List<Widget> pages = [
       HomeTab(
         apiKey: _apiKeyController.text, 
         hasKey: hasKey,
+        selectedModel: _selectedModel,
         activeSpecialty: _activeSpecialty,
         onClearSpecialty: _clearSpecialty,
         onMetaDataFound: _updateDemographics,
@@ -273,6 +291,7 @@ class _MainScreenState extends State<MainScreen> {
       ScreeningTab(
         apiKey: _apiKeyController.text,
         hasKey: hasKey,
+        selectedModel: _selectedModel,
         initialAge: _patientAge,
         initialSex: _patientSex,
         onRequestKey: () => _showSettings(context),
@@ -305,6 +324,7 @@ class _MainScreenState extends State<MainScreen> {
 class HomeTab extends StatefulWidget {
   final String apiKey;
   final bool hasKey;
+  final String selectedModel;
   final String? activeSpecialty;
   final VoidCallback onClearSpecialty;
   final Function(int?, String?) onMetaDataFound;
@@ -315,6 +335,7 @@ class HomeTab extends StatefulWidget {
     super.key, 
     required this.apiKey, 
     required this.hasKey,
+    required this.selectedModel,
     this.activeSpecialty,
     required this.onClearSpecialty,
     required this.onMetaDataFound,
@@ -418,7 +439,7 @@ class _HomeTabState extends State<HomeTab> {
       // (Isso economiza banda de upload de áudio para o nosso backend Python que pode ser lento)
       
       final model = GenerativeModel(
-        model: 'gemini-1.5-flash', 
+        model: widget.selectedModel, 
         apiKey: widget.apiKey,
       );
       final bytes = await File(_currentAudioPath!).readAsBytes();
@@ -433,8 +454,12 @@ class _HomeTabState extends State<HomeTab> {
       
       setState(() => _processingStep = "2/4 Consultando Servidor RAG...");
       
-      // ETAPA 2: Envia para Backend Python (RAG + Análise Estruturada)
-      Map<String, dynamic> apiData = await ApiService.consultarIA(transcript, widget.apiKey);
+      // ETAPA 2: Envia para Backend Python (RAG + Análise Estruturada) via API
+      Map<String, dynamic> apiData = await ApiService.consultarIA(
+        transcript, 
+        widget.apiKey, 
+        model: widget.selectedModel
+      );
       
       setState(() => _processingStep = "3/4 Realizando Auditoria Local...");
       
@@ -701,15 +726,33 @@ class SpecialtiesTab extends StatelessWidget {
   Widget _tile(IconData i, String t, Color c, BuildContext context) => Card(color: c.withOpacity(0.1), child: InkWell(onTap: () => onSpecialtySelected(t), child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [Icon(i, size: 40, color: c), Text(t, style: TextStyle(color: c, fontWeight: FontWeight.bold))])));
 }
 
+// ---------------- LIVE TAB (Restored) ----------------
+class LiveTab extends StatelessWidget {
+  final String apiKey;
+  final bool hasKey;
+  const LiveTab({super.key, required this.apiKey, required this.hasKey});
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text("Ao Vivo")), 
+      body: Center(child: hasKey 
+        ? const Column(mainAxisAlignment: MainAxisAlignment.center, children: [Icon(Icons.multitrack_audio, size: 80, color: Colors.blue), SizedBox(height: 20), Text("Conecte ao Servidor Python para Streaming")])
+        : const Text("Requer API Key")
+      )
+    );
+  }
+}
+
 // ---------------- SCREENING (Auto) ---------------- (Optimized)
 class ScreeningTab extends StatefulWidget {
   final String apiKey;
   final bool hasKey;
+  final String selectedModel;
   final int? initialAge;
   final String? initialSex;
   final VoidCallback onRequestKey;
 
-  const ScreeningTab({super.key, required this.apiKey, required this.hasKey, this.initialAge, this.initialSex, required this.onRequestKey});
+  const ScreeningTab({super.key, required this.apiKey, required this.hasKey, required this.selectedModel, this.initialAge, this.initialSex, required this.onRequestKey});
   @override
   State<ScreeningTab> createState() => _ScreeningTabState();
 }
@@ -742,8 +785,8 @@ class _ScreeningTabState extends State<ScreeningTab> {
     
     setState(() => _loading = true);
     try {
-       // Using gemini-2.5-flash as standard
-       final model = GenerativeModel(model: 'gemini-1.5-flash', apiKey: widget.apiKey);
+       // Using user selected model
+       final model = GenerativeModel(model: widget.selectedModel, apiKey: widget.apiKey);
        final res = await model.generateContent([Content.text("Atue como médico. Paciente $_sex, ${_ageCtrl.text} anos. Liste APENAS os rastreamentos (screening) indicados pelo Ministério da Saúde do Brasil em tópicos curtos.")]);
        setState(() => _result = res.text ?? "-");
     } catch(e) { 
@@ -774,8 +817,7 @@ class _ScreeningTabState extends State<ScreeningTab> {
 // ---------------- OFFLINE (Free) ----------------
 class OfflineTab extends StatefulWidget {
   final String apiKey;
-  final GlobalKey<_OfflineTabState>? key;
-  const OfflineTab({super.key, required this.apiKey, this.key}); // Ajuste no construtor
+  const OfflineTab({super.key, required this.apiKey}); // Corrigido
   @override
   State<OfflineTab> createState() => _OfflineTabState();
 }
