@@ -196,69 +196,85 @@ class _MainScreenState extends State<MainScreen> {
     showDialog(
       context: context, 
       builder: (ctx) => AlertDialog(
-        title: Column(
-          children: [
-            const Text("Configurações Globais"),
-            const SizedBox(height: 5),
-            Container( // Mock Visual de Status
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              decoration: BoxDecoration(color: Colors.green[100], borderRadius: BorderRadius.circular(4)),
-              child: const Row(
-                mainAxisSize: MainAxisSize.min, 
-                children: [
-                  Icon(Icons.circle, color: Colors.green, size: 10), 
-                  SizedBox(width: 5), 
-                  Text("Servidor: Online", style: TextStyle(fontSize: 12, color: Colors.green))
-                ]
+        title: const Text("Configurações Globais"),
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+               Container( 
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                margin: const EdgeInsets.only(bottom: 10),
+                decoration: BoxDecoration(color: Colors.green[100], borderRadius: BorderRadius.circular(4)),
+                child: const Row(
+                  mainAxisSize: MainAxisSize.min, 
+                  children: [
+                    Icon(Icons.circle, color: Colors.green, size: 10), 
+                    SizedBox(width: 5), 
+                    Text("Servidor: Online", style: TextStyle(fontSize: 12, color: Colors.green))
+                  ]
+                ),
               ),
-            )
-          ],
-        ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            TextField(
-               controller: _apiKeyController,
-               decoration: const InputDecoration(labelText: "Gemini API Key", border: OutlineInputBorder(), prefixIcon: Icon(Icons.key)),
-               obscureText: true,
-            ),
-            const SizedBox(height: 10),
-            DropdownButtonFormField<String>(
-              value: _selectedModel,
-              decoration: const InputDecoration(labelText: "Modelo AI", border: OutlineInputBorder(), prefixIcon: Icon(Icons.psychology)),
-              isExpanded: true,
-              items: const [
-                DropdownMenuItem(value: 'gemini-2.5-flash', child: Text('Gemini 2.5 Flash (Padrão/Rápido)')),
-                DropdownMenuItem(value: 'gemini-3-pro-preview', child: Text('Gemini 3.0 Pro (Raciocínio Avançado)')),
-                DropdownMenuItem(value: 'gemini-2.5-pro', child: Text('Gemini 2.5 Pro (Alta Precisão)')),
-                DropdownMenuItem(value: 'gemini-2.5-flash-lite', child: Text('Gemini 2.5 Flash-Lite (Econômico)')),
-                DropdownMenuItem(value: 'gemini-flash-latest', child: Text('Gemini Flash (Latest Experimental)')),
-              ], 
-              onChanged: (v) { if(v!=null) _selectedModel = v; }
-            ),
-            const SizedBox(height: 20),
-            const Divider(),
-            const Text("Administração de Dados", style: TextStyle(fontWeight: FontWeight.bold)),
-            ListTile(
-              leading: const Icon(Icons.medication, color: Colors.blue),
-              title: const Text("Atualizar Estoque (PDF)"),
-              subtitle: const Text("Importar REMUME/RENAME"),
-              onTap: () { Navigator.pop(ctx); _uploadEstoque(); },
-            ),
-            ListTile(
-              leading: const Icon(Icons.book, color: Colors.orange),
-              title: const Text("Adicionar Diretriz (PDF)"),
-              subtitle: const Text("Protocolos para RAG"),
-              onTap: () { Navigator.pop(ctx); _uploadDiretriz(); },
-            ),
-          ],
+              TextField(
+                 controller: _serverUrlController,
+                 decoration: const InputDecoration(
+                   labelText: "URL do Servidor (Backend)", 
+                   border: OutlineInputBorder(), 
+                   prefixIcon: Icon(Icons.cloud_queue),
+                   hintText: "http://192.168.X.X:8000"
+                 ),
+                 keyboardType: TextInputType.url,
+              ),
+              const SizedBox(height: 10),
+              TextField(
+                 controller: _apiKeyController,
+                 decoration: const InputDecoration(labelText: "Gemini API Key", border: OutlineInputBorder(), prefixIcon: Icon(Icons.key)),
+                 obscureText: true,
+              ),
+              const SizedBox(height: 10),
+              DropdownButtonFormField<String>(
+                value: _selectedModel,
+                decoration: const InputDecoration(labelText: "Modelo AI", border: OutlineInputBorder(), prefixIcon: Icon(Icons.psychology)),
+                isExpanded: true,
+                items: const [
+                  DropdownMenuItem(value: 'gemini-2.5-flash', child: Text('Gemini 2.5 Flash (Padrão/Rápido)')),
+                  DropdownMenuItem(value: 'gemini-3-pro-preview', child: Text('Gemini 3.0 Pro (Raciocínio Avançado)')),
+                  DropdownMenuItem(value: 'gemini-2.5-pro', child: Text('Gemini 2.5 Pro (Alta Precisão)')),
+                  DropdownMenuItem(value: 'gemini-2.5-flash-lite', child: Text('Gemini 2.5 Flash-Lite (Econômico)')),
+                  DropdownMenuItem(value: 'gemini-flash-latest', child: Text('Gemini Flash (Latest Experimental)')),
+                ], 
+                onChanged: (v) { if(v!=null) _selectedModel = v; }
+              ),
+              const SizedBox(height: 20),
+              const Divider(),
+              const Text("Administração de Dados", style: TextStyle(fontWeight: FontWeight.bold)),
+              ListTile(
+                leading: const Icon(Icons.medication, color: Colors.blue),
+                title: const Text("Atualizar Estoque (PDF)"),
+                subtitle: const Text("Importar REMUME/RENAME"),
+                onTap: () { Navigator.pop(ctx); _uploadEstoque(); },
+              ),
+              ListTile(
+                leading: const Icon(Icons.book, color: Colors.orange),
+                title: const Text("Adicionar Diretriz (PDF)"),
+                subtitle: const Text("Protocolos para RAG"),
+                onTap: () { Navigator.pop(ctx); _uploadDiretriz(); },
+              ),
+            ],
+          ),
         ),
         actions: [
           TextButton(onPressed: () async {
             final prefs = await SharedPreferences.getInstance();
             await prefs.setString('gemini_api_key', _apiKeyController.text);
+            await prefs.setString('api_base_url', _serverUrlController.text);
             await prefs.setString('gemini_model', _selectedModel);
+            
+            // Atualiza singleton ou passa pro widget tree (pra simplificar, vamos salvar nas prefs que a ApiService lê ou reconfigurar)
+            // UPDATE: Vamos passar a URL via parâmetro no HomeTab, ou melhor, fazer a ApiService ler da SharedPreferences na próxima chamada?
+            // Melhor: Atualizar uma variável estática na ApiService.
+            ApiService.baseUrl = _serverUrlController.text;
+
             setState(() {}); 
             if (context.mounted) Navigator.pop(ctx);
           }, child: const Text("SALVAR"))
