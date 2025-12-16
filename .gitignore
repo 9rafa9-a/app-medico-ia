@@ -22,3 +22,10 @@ build/
 # OS
 .DS_Store
 Thumbs.db
+
+# MedUBS v3.0 Data
+*.db
+knowledge_base/
+temp_*.pdf
+consultas_logs/
+backend/knowledge_base/

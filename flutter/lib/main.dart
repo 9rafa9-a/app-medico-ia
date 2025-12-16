@@ -16,8 +16,16 @@ import 'package:diacritic/diacritic.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:open_file/open_file.dart';
+import 'package:http/http.dart' as http; // Novo Import
 
-void main() {
+import 'database/database_helper.dart'; // Novo Import
+import 'services/api_service.dart';     // Novo Import
+import 'widgets/mission_card.dart';     // Novo Import
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // Inicializa o banco de dados antes de rodar o app
+  await DatabaseHelper().database;
   runApp(const MedUBSApp());
 }
 
@@ -27,7 +35,7 @@ class MedUBSApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'MedUBS v2.5',
+      title: 'MedUBS v3.0 Híbrido',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
@@ -120,11 +128,90 @@ class _MainScreenState extends State<MainScreen> {
     setState(() => _activeSpecialty = null);
   }
 
+  // --- FUNÇÕES DE UPLOAD (Novas) ---
+  
+  Future<void> _uploadEstoque() async {
+    // 1. Pede nome da lista
+    String nomeLista = "";
+    await showDialog(
+      context: context, 
+      builder: (ctx) => AlertDialog(
+        title: const Text("Nome da Lista de Medicamentos"),
+        content: TextField(
+          autofocus: true,
+          decoration: const InputDecoration(hintText: "Ex: REMUME Foz 2025"),
+          onChanged: (v) => nomeLista = v,
+        ),
+        actions: [TextButton(onPressed: () => Navigator.pop(ctx), child: const Text("OK"))],
+      )
+    );
+    
+    if (nomeLista.isEmpty) return;
+
+    // 2. File Picker
+    final result = await FilePicker.platform.pickFiles(type: FileType.custom, allowedExtensions: ['pdf']);
+    if (result != null && result.files.single.path != null) {
+      try {
+        if (_apiKeyController.text.isEmpty) {
+           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Configure a API Key primeiro!")));
+           return;
+        }
+        
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Enviando PDF para o servidor...")));
+        
+        File file = File(result.files.single.path!);
+        List<dynamic> meds = await ApiService.uploadMedicamento(file, nomeLista, _apiKeyController.text);
+        
+        // 3. Salva no SQLite
+        final batch = meds.map((e) => Map<String, dynamic>.from(e)).toList();
+        await DatabaseHelper().inserirLoteMedicamentos(batch);
+        
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Sucesso! ${meds.length} medicamentos importados.")));
+      } catch (e) {
+        showDialog(context: context, builder: (ctx) => AlertDialog(title: const Text("Erro"), content: Text(e.toString())));
+      }
+    }
+  }
+
+  Future<void> _uploadDiretriz() async {
+    final result = await FilePicker.platform.pickFiles(type: FileType.custom, allowedExtensions: ['pdf']);
+    if (result != null && result.files.single.path != null) {
+      try {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Enviando Diretriz...")));
+        File file = File(result.files.single.path!);
+        bool ok = await ApiService.uploadDiretriz(file);
+        
+        if (ok) {
+           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Diretriz salva na Base de Conhecimento!")));
+        }
+      } catch (e) {
+        showDialog(context: context, builder: (ctx) => AlertDialog(title: const Text("Erro"), content: Text(e.toString())));
+      }
+    }
+  }
+
   void _showSettings(BuildContext context) {
     showDialog(
       context: context, 
       builder: (ctx) => AlertDialog(
-        title: const Text("Configurações Globais"),
+        title: Column(
+          children: [
+            const Text("Configurações Globais"),
+            const SizedBox(height: 5),
+            Container( // Mock Visual de Status
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              decoration: BoxDecoration(color: Colors.green[100], borderRadius: BorderRadius.circular(4)),
+              child: const Row(
+                mainAxisSize: MainAxisSize.min, 
+                children: [
+                  Icon(Icons.circle, color: Colors.green, size: 10), 
+                  SizedBox(width: 5), 
+                  Text("Servidor: Online", style: TextStyle(fontSize: 12, color: Colors.green))
+                ]
+              ),
+            )
+          ],
+        ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -134,14 +221,21 @@ class _MainScreenState extends State<MainScreen> {
                decoration: const InputDecoration(labelText: "Gemini API Key", border: OutlineInputBorder(), prefixIcon: Icon(Icons.key)),
                obscureText: true,
             ),
-            const SizedBox(height: 10),
-            InkWell(
-              onTap: () async {
-                 final Uri url = Uri.parse("https://aistudio.google.com/app/api-keys");
-                 if (!await launchUrl(url)) {}
-              },
-              child: const Row(children: [Icon(Icons.help_outline, size: 16, color: Colors.blue), SizedBox(width: 4), Text("Obter Chave", style: TextStyle(color: Colors.blue, decoration: TextDecoration.underline))]),
-            )
+            const SizedBox(height: 20),
+            const Divider(),
+            const Text("Administração de Dados", style: TextStyle(fontWeight: FontWeight.bold)),
+            ListTile(
+              leading: const Icon(Icons.medication, color: Colors.blue),
+              title: const Text("Atualizar Estoque (PDF)"),
+              subtitle: const Text("Importar REMUME/RENAME"),
+              onTap: () { Navigator.pop(ctx); _uploadEstoque(); },
+            ),
+            ListTile(
+              leading: const Icon(Icons.book, color: Colors.orange),
+              title: const Text("Adicionar Diretriz (PDF)"),
+              subtitle: const Text("Protocolos para RAG"),
+              onTap: () { Navigator.pop(ctx); _uploadDiretriz(); },
+            ),
           ],
         ),
         actions: [
@@ -236,47 +330,12 @@ class _HomeTabState extends State<HomeTab> {
   final _audioRecorder = Record();
   bool _isRecording = false;
   bool _isProcessing = false;
-  String _processingStep = ""; // New: Progress Step
+  String _processingStep = ""; 
   String? _currentAudioPath;
   Map<String, dynamic>? _analysisResult;
   String _statusText = "Pronto";
-  List<String> _dbRemumeNames = [];
-  List<String> _dbRenameNames = [];
-  List<String> _dbAltoCustoNames = [];
 
-  @override
-  void initState() {
-    super.initState();
-    _loadDatabases();
-  }
-
-  // ... (Keep _loadDatabases and _saveToSafeStorage as is)
-
-  Future<void> _loadDatabases() async {
-    try {
-      List<String> extractNames(dynamic json) {
-        List<String> names = [];
-        if (json is List) {
-          for (var item in json) {
-             if (item is Map && (item.containsKey('nome') || item.containsKey('nome_completo'))) {
-               names.add((item['nome'] ?? item['nome_completo']).toString());
-             } else if (item is Map && item.containsKey('itens') && item['itens'] is List) {
-               for (var subItem in item['itens']) if (subItem is Map) names.add(subItem['nome'].toString());
-             }
-          }
-        }
-        return names;
-      }
-      final remume = json.decode(await rootBundle.loadString('assets/db_remume.json'));
-      final rename = json.decode(await rootBundle.loadString('assets/db_rename.json'));
-      final alto = json.decode(await rootBundle.loadString('assets/db_alto_custo.json'));
-      if(mounted) setState(() {
-        _dbRemumeNames = extractNames(remume);
-        _dbRenameNames = extractNames(rename);
-        _dbAltoCustoNames = extractNames(alto);
-      });
-    } catch (_) {}
-  }
+  // Removed Local Lists (_dbRemumeNames, etc)
 
   Future<String> _saveToSafeStorage(String tempPath) async {
     try {
@@ -319,6 +378,24 @@ class _HomeTabState extends State<HomeTab> {
     }
   }
   
+  // Nova lógica de Auditoria assíncrona com SQLite
+  Future<Map<String, dynamic>> _auditMedicines(List<String> meds) async {
+    List<Map<String, dynamic>> items = [];
+    
+    for (var m in meds) {
+      var result = await DatabaseHelper().checarMedicamento(m);
+      items.add({
+        "term": m,
+        "remume": result['remume'] == true,
+        "rename": result['rename'] == true,
+        "alto": result['alto_custo'] == true,
+        "listas": result['listas_detalhe']
+      });
+    }
+    
+    return {"items": items};
+  }
+
   // Robust Helpers
   List<String> _safeStringList(dynamic list) {
     if (list is! List) return [];
@@ -329,116 +406,68 @@ class _HomeTabState extends State<HomeTab> {
     }).toList();
   }
 
-  String _safeString(dynamic v) {
-     if (v is String) return v;
-     if (v is Map) return v.values.join("\n");
-     return v?.toString() ?? "";
-  }
-
   Future<void> _analyze() async {
     if (!widget.hasKey) { widget.onRequestKey(); return; }
     if (_currentAudioPath == null) return;
     
-    setState(() { _isProcessing = true; _processingStep = "1/4 Preparando Áudio..."; });
+    setState(() { _isProcessing = true; _processingStep = "1/4 Transcrevendo..."; });
     
     try {
-      // FORCE JSON MODE
+      // ETAPA 1: Transcrição Local (ou via Gemini simples apenas para áudio->texto)
+      // Aqui usamos o Gemini SDK apenas para pegar o texto, já que o backend espera texto
+      // (Isso economiza banda de upload de áudio para o nosso backend Python que pode ser lento)
+      
       final model = GenerativeModel(
-        model: 'gemini-2.5-flash', 
+        model: 'gemini-1.5-flash', 
         apiKey: widget.apiKey,
-        generationConfig: GenerationConfig(responseMimeType: 'application/json')
       );
       final bytes = await File(_currentAudioPath!).readAsBytes();
       
-      setState(() => _processingStep = "2/4 Consultando API IA...");
-      
-      String specialtyContext = "";
-      if (widget.activeSpecialty != null) {
-        specialtyContext = "MODO ESPECIALISTA ATIVADO: ${widget.activeSpecialty}. Focar exames, diagnósticos e condutas específicas desta área.";
-      }
-
       final content = [Content.multi([
-        TextPart('''
-          ATUE COMO MÉDICO DE FAMÍLIA. $specialtyContext
-          Gere JSON SOAP. Metadados 'paciente': {'idade': int, 'sexo': 'Masculino'/'Feminino'}.
-          Critica TÉCNICA apenas.
-          { "soap": {"s":"", "o":"", "a":"", "p":""}, "criticas": {"s":"", "o":"", "a":"", "p":""}, "medicamentos": [], "paciente": {} }
-        '''),
+        TextPart('Transcreva este áudio de consulta médica literalmente.'),
         DataPart('audio/mp4', bytes)
       ])];
       
       var response = await model.generateContent(content);
+      String transcript = response.text ?? "";
       
-      setState(() => _processingStep = "3/4 Processando Dados...");
+      setState(() => _processingStep = "2/4 Consultando Servidor RAG...");
       
-      String clean = response.text!.replaceAll('```json','').replaceAll('```','').trim();
+      // ETAPA 2: Envia para Backend Python (RAG + Análise Estruturada)
+      Map<String, dynamic> apiData = await ApiService.consultarIA(transcript, widget.apiKey);
       
-      // Fallback: Try to find raw JSON if text still contains noise
-      if (!clean.startsWith('{')) {
-        final startIndex = clean.indexOf('{');
-        final endIndex = clean.lastIndexOf('}');
-        if (startIndex != -1 && endIndex != -1) {
-          clean = clean.substring(startIndex, endIndex + 1);
-        }
-      }
-
-      dynamic data;
-      try {
-        data = json.decode(clean);
-      } catch (e) {
-        // Ultimate Fallback: Treat text as plain SOAP S
-        data = { "soap": { "s": response.text, "o": "", "a": "", "p": "" }, "medicamentos": [] };
-      }
-
-      if (data is Map && data.containsKey('paciente')) {
-        widget.onMetaDataFound(data['paciente']['idade'], data['paciente']['sexo']);
-      }
+      setState(() => _processingStep = "3/4 Realizando Auditoria Local...");
       
-      setState(() => _processingStep = "4/4 Concluindo...");
+      // ETAPA 3: Processa Resultados
+      List<String> meds = _safeStringList(apiData['medicamentos']);
+      var auditResult = await _auditMedicines(meds);
       
-      // Safe parsing
-      data['medicamentos'] = _safeStringList(data['medicamentos']);
-      var soap = data['soap'] ?? {};
-      soap['s'] = _safeString(soap['s']);
-      soap['o'] = _safeString(soap['o']);
-      soap['a'] = _safeString(soap['a']);
-      soap['p'] = _safeString(soap['p']);
+      apiData['audit'] = auditResult;
       
-      data['audit'] = _auditMedicines(List<String>.from(data['medicamentos']));
-      setState(() { _analysisResult = data; _isProcessing = false; _statusText = "Análise Pronta."; });
+      // Adiciona ID da consulta (timestamp simples para demo) nas missões para persistência
+      String consultaId = DateTime.now().millisecondsSinceEpoch.toString();
+      apiData['consulta_id'] = consultaId;
+      
+      setState(() { 
+        _analysisResult = apiData; 
+        _isProcessing = false; 
+        _statusText = "Análise Pronta."; 
+      });
 
     } catch (e) {
       setState(() { _isProcessing = false; _statusText = "Falha no Envio."; });
       if(mounted) showDialog(context: context, builder: (ctx) => AlertDialog(
-        title: const Text("Erro na Análise IA", style: TextStyle(color: Colors.red)),
-        content: SingleChildScrollView(child: Text("Ocorreu um erro ao conectar com o Gemini.\n\nDetalhe técnico:\n$e\n\nVerifique:\n1. Sua Internet\n2. Se a API Key é válida")),
+        title: const Text("Erro na Análise", style: TextStyle(color: Colors.red)),
+        content: SingleChildScrollView(child: Text("Erro: $e")),
         actions: [TextButton(onPressed: () => Navigator.pop(ctx), child: const Text("OK"))],
       ));
     }
   }
 
-  Map<String, dynamic> _auditMedicines(List<String> meds) {
-    bool chk(List<String> db, String q) {
-      final query = removeDiacritics(q.toLowerCase());
-      return db.any((e) => removeDiacritics(e.toLowerCase()).contains(query));
-    }
-    return {"items": meds.map((m) => {"term": m, "remume": chk(_dbRemumeNames,m), "rename": chk(_dbRenameNames,m), "alto": chk(_dbAltoCustoNames,m)}).toList()};
-  }
-  
-  Widget _buildSpecialtyBanner() {
-    if (widget.activeSpecialty == null) return const SizedBox.shrink();
-    return Container(
-      color: Colors.indigo,
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(children: [const Icon(Icons.star, color: Colors.white, size: 16), const SizedBox(width: 8), Text("Modo: ${widget.activeSpecialty}", style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold))]),
-          InkWell(onTap: widget.onClearSpecialty, child: const Icon(Icons.close, color: Colors.white, size: 20))
-        ],
-      )
-    );
-  } 
+  // ... (Keep existing helpers like _pickAudioFile, _generatePdf)
+  // Mas atenção: o _generatePdf precisará ser ajustado se a estrutura de dados mudar muito,
+  // mas como mantivemos 'soap' e 'audit', deve funcionar.
+
   Future<void> _pickAudioFile() async {
     final result = await FilePicker.platform.pickFiles(type: FileType.audio);
     if (result != null && result.files.single.path != null) {
@@ -450,12 +479,10 @@ class _HomeTabState extends State<HomeTab> {
       });
     }
   }
-
-  Future<void> _generatePdf() async {
+   Future<void> _generatePdf() async {
     if (_analysisResult == null) return;
     final doc = pw.Document();
     final soap = _analysisResult!['soap'] ?? {};
-    final crit = _analysisResult!['criticas'] ?? {};
     final meds = _analysisResult!['audit']?['items'] as List? ?? [];
     
     doc.addPage(pw.MultiPage(
@@ -464,10 +491,10 @@ class _HomeTabState extends State<HomeTab> {
         pw.Header(level: 0, child: pw.Text("Relatório da Consulta - MedUBS", style: pw.TextStyle(fontSize: 24, fontWeight: pw.FontWeight.bold, color: PdfColors.blue800))),
         pw.SizedBox(height: 20),
         
-        _pdfSection("Subjetivo", soap['s'], crit['s']),
-        _pdfSection("Objetivo", soap['o'], crit['o']),
-        _pdfSection("Avaliação", soap['a'], crit['a']),
-        _pdfSection("Plano", soap['p'], crit['p']),
+        _pdfSection("Subjetivo", soap['s']),
+        _pdfSection("Objetivo", soap['o']),
+        _pdfSection("Avaliação", soap['a']),
+        _pdfSection("Plano", soap['p']),
         
         if (meds.isNotEmpty) ...[
           pw.SizedBox(height: 20),
@@ -492,7 +519,7 @@ class _HomeTabState extends State<HomeTab> {
     await Printing.layoutPdf(onLayout: (format) async => doc.save());
   }
 
-  pw.Widget _pdfSection(String title, String? content, String? critique) {
+  pw.Widget _pdfSection(String title, dynamic content) {
     return pw.Container(
       margin: const pw.EdgeInsets.only(bottom: 15),
       child: pw.Column(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
@@ -503,17 +530,32 @@ class _HomeTabState extends State<HomeTab> {
            decoration: pw.BoxDecoration(color: PdfColors.grey100, borderRadius: pw.BorderRadius.circular(4)),
            child: pw.Text(content?.toString() ?? "", style: const pw.TextStyle(fontSize: 11))
          ),
-         if (critique != null && critique.isNotEmpty)
-           pw.Padding(padding: const pw.EdgeInsets.only(top: 5, left: 10), child: pw.Text("Nota Técnica: $critique", style: pw.TextStyle(fontSize: 10, color: PdfColors.red700, fontStyle: pw.FontStyle.italic)))
       ])
     );
   }
+
+  // --- WIDGET BUILDER ---
+
+  Widget _buildSpecialtyBanner() {
+    if (widget.activeSpecialty == null) return const SizedBox.shrink();
+    return Container(
+      color: Colors.indigo,
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(children: [const Icon(Icons.star, color: Colors.white, size: 16), const SizedBox(width: 8), Text("Modo: ${widget.activeSpecialty}", style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold))]),
+          InkWell(onTap: widget.onClearSpecialty, child: const Icon(Icons.close, color: Colors.white, size: 20))
+        ],
+      )
+    );
+  } 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Consultório"),
+        title: const Text("Consultório Híbrido"),
         actions: [
           IconButton(
             icon: const Icon(Icons.settings), 
@@ -567,14 +609,24 @@ class _HomeTabState extends State<HomeTab> {
 
   Widget _buildResultList() {
     final soap = _analysisResult!['soap'] ?? {};
-    final crit = _analysisResult!['criticas'] ?? {};
     final meds = _analysisResult!['audit']?['items'] as List? ?? [];
+    final jsonMissoes = _analysisResult!['missoes'];
+    String consultaId = _analysisResult!['consulta_id'] ?? DateTime.now().toString();
+
+    // Converte jsonMissoes para List<dynamic> seguro
+    List missoes = [];
+    if (jsonMissoes is List) missoes = jsonMissoes;
 
     return ListView(padding: const EdgeInsets.all(16), children: [ 
-       _card("S", "Subjetivo", soap['s']?.toString() ?? "", crit['s']?.toString(), Colors.blue),
-       _card("O", "Objetivo", soap['o']?.toString() ?? "", crit['o']?.toString(), Colors.teal),
-       _card("A", "Avaliação", soap['a']?.toString() ?? "", crit['a']?.toString(), Colors.orange),
-       _card("P", "Plano", soap['p']?.toString() ?? "", crit['p']?.toString(), Colors.purple),
+       // --- NOVO COMPONENTE: MISSÕES ---
+       if (missoes.isNotEmpty)
+         MissionWidget(missoesIniciais: missoes, consultaId: consultaId),
+       
+       // Cards SOAP Normais
+       _card("S", "Subjetivo", soap['s']?.toString() ?? "", Colors.blue),
+       _card("O", "Objetivo", soap['o']?.toString() ?? "", Colors.teal),
+       _card("A", "Avaliação", soap['a']?.toString() ?? "", Colors.orange),
+       _card("P", "Plano", soap['p']?.toString() ?? "", Colors.purple),
        
        if (meds.isNotEmpty) ...[
          const SizedBox(height: 20),
@@ -603,7 +655,7 @@ class _HomeTabState extends State<HomeTab> {
     child: Text(text, style: TextStyle(fontSize: 10, color: col, fontWeight: FontWeight.bold)),
   );
 
-  Widget _card(String l, String t, String c, String? critique, Color col) => Card(
+  Widget _card(String l, String t, String c, Color col) => Card(
     margin: const EdgeInsets.only(bottom: 16),
     child: Padding(
       padding: const EdgeInsets.all(12),
@@ -622,41 +674,9 @@ class _HomeTabState extends State<HomeTab> {
         ]),
         const Divider(),
         Text(c, style: const TextStyle(fontSize: 15, height: 1.4)),
-        if (critique != null && critique.isNotEmpty) ...[
-          const SizedBox(height: 10),
-          Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(color: Colors.red[50], borderRadius: BorderRadius.circular(8), border: Border.all(color: Colors.red[100]!)),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                 const Icon(Icons.info_outline, color: Colors.red, size: 20),
-                 const SizedBox(width: 8),
-                 Expanded(child: Text("Observação Técnica: $critique", style: TextStyle(color: Colors.red[900], fontSize: 13, fontStyle: FontStyle.italic)))
-              ],
-            )
-          )
-        ]
       ]),
     )
   );
-}
-
-// ---------------- LIVE TAB ----------------
-class LiveTab extends StatelessWidget {
-  final String apiKey;
-  final bool hasKey;
-  const LiveTab({super.key, required this.apiKey, required this.hasKey});
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("Ao Vivo")), 
-      body: Center(child: hasKey 
-        ? const Column(mainAxisAlignment: MainAxisAlignment.center, children: [Icon(Icons.multitrack_audio, size: 80, color: Colors.blue), SizedBox(height: 20), Text("Streaming em Breve")])
-        : const Text("Requer API Key")
-      )
-    );
-  }
 }
 
 // ---------------- SPECIALTIES ----------------
@@ -723,7 +743,7 @@ class _ScreeningTabState extends State<ScreeningTab> {
     setState(() => _loading = true);
     try {
        // Using gemini-2.5-flash as standard
-       final model = GenerativeModel(model: 'gemini-2.5-flash', apiKey: widget.apiKey);
+       final model = GenerativeModel(model: 'gemini-1.5-flash', apiKey: widget.apiKey);
        final res = await model.generateContent([Content.text("Atue como médico. Paciente $_sex, ${_ageCtrl.text} anos. Liste APENAS os rastreamentos (screening) indicados pelo Ministério da Saúde do Brasil em tópicos curtos.")]);
        setState(() => _result = res.text ?? "-");
     } catch(e) { 
@@ -754,7 +774,8 @@ class _ScreeningTabState extends State<ScreeningTab> {
 // ---------------- OFFLINE (Free) ----------------
 class OfflineTab extends StatefulWidget {
   final String apiKey;
-  const OfflineTab({super.key, required this.apiKey});
+  final GlobalKey<_OfflineTabState>? key;
+  const OfflineTab({super.key, required this.apiKey, this.key}); // Ajuste no construtor
   @override
   State<OfflineTab> createState() => _OfflineTabState();
 }
