@@ -268,7 +268,10 @@ async def upload_medicamento(
                 yield json.dumps({
                     "status": "success", 
                     "data": [],
-                    "debug": {"msg": "AI não encontrou itens."}
+                    "debug": {
+                        "msg": "AI não encontrou itens.",
+                        "extracted_text_preview": opt_text[:2000] if opt_text else "Nenhum texto extraído" 
+                    }
                 }) + "\n"
 
         except Exception as e:
