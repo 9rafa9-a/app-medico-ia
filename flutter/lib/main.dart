@@ -376,10 +376,10 @@ class _MainScreenState extends State<MainScreen> {
                 isExpanded: true,
                 items: const [
                   DropdownMenuItem(value: 'gemini-2.5-flash', child: Text('Gemini 2.5 Flash (Padrão/Rápido)')),
-                  DropdownMenuItem(value: 'gemini-3-pro-preview', child: Text('Gemini 3.0 Pro (Raciocínio Avançado)')),
+                  DropdownMenuItem(value: 'gemini-2.0-flash', child: Text('Gemini 2.0 Flash (Novo)')),
+                  DropdownMenuItem(value: 'gemini-2.0-flash-lite', child: Text('Gemini 2.0 Flash-Lite (Super Rápido)')),
+                  DropdownMenuItem(value: 'gemini-3-pro-preview', child: Text('Gemini 3.0 Pro (Experimental)')),
                   DropdownMenuItem(value: 'gemini-2.5-pro', child: Text('Gemini 2.5 Pro (Alta Precisão)')),
-                  DropdownMenuItem(value: 'gemini-2.5-flash-lite', child: Text('Gemini 2.5 Flash-Lite (Econômico)')),
-                  DropdownMenuItem(value: 'gemini-flash-latest', child: Text('Gemini Flash (Latest Experimental)')),
                 ], 
                 onChanged: (v) { if(v!=null) _selectedModel = v; }
               ),
@@ -463,7 +463,7 @@ class _MainScreenState extends State<MainScreen> {
         },
         indicatorColor: hasKey ? Colors.blue[100] : Colors.grey[300],
         destinations: const [
-          NavigationDestination(icon: Icon(Icons.home_outlined), selectedIcon: Icon(Icons.home), label: "Início"),
+          NavigationDestination(icon: Icon(Icons.home_outlined), selectedIcon: Icon(Icons.home), label: "Consulta"),
           // NavigationDestination(icon: Icon(Icons.mic_external_on_outlined), selectedIcon: Icon(Icons.mic_external_on), label: "Ao Vivo"),
           NavigationDestination(icon: Icon(Icons.medical_services_outlined), selectedIcon: Icon(Icons.medical_services), label: "Espec."),
           NavigationDestination(icon: Icon(Icons.checklist_rtl_outlined), selectedIcon: Icon(Icons.checklist_rtl), label: "Rastreio"),
@@ -999,8 +999,8 @@ class _ScreeningTabState extends State<ScreeningTab> {
                          Text("Protocolo Sugerido", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.teal[800]))
                        ]),
                        const Divider(height: 30),
-                       SelectableText(
-                         _result, 
+                       SelectableText.rich(
+                         TextSpan(children: _parseBoldText(_result)), 
                          style: const TextStyle(fontSize: 15, height: 1.5, color: Colors.black87),
                        ),
                      ],
@@ -1011,6 +1011,23 @@ class _ScreeningTabState extends State<ScreeningTab> {
          )
       ])),
     );
+  }
+
+  // Helper to parse **bold**
+  List<TextSpan> _parseBoldText(String text) {
+    final List<TextSpan> spans = [];
+    final List<String> parts = text.split('**');
+    
+    for (int i = 0; i < parts.length; i++) {
+      if (i % 2 == 1) {
+        // Odd parts are inside ** ** (Bold)
+        spans.add(TextSpan(text: parts[i], style: const TextStyle(fontWeight: FontWeight.bold)));
+      } else {
+        // Even parts are normal text
+        spans.add(TextSpan(text: parts[i]));
+      }
+    }
+    return spans;
   }
 }
 

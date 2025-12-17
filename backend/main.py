@@ -117,38 +117,58 @@ async def upload_medicamento(
         model_name = model if model else "gemini-1.5-flash"
         ai_model = genai.GenerativeModel(model_name)
         
-        # Otimização: Pegar apenas as primeiras 30k chars para não estourar token
-        # Em produção, implementaria chunking loop.
-        text_sample = text[:30000]
+        # LOGICA DE CHUNKING (para evitar Timeout e Context Window overflow)
+        # Corta em pedaços de 15.000 caracteres (seguro para Flash e HTTP timeout)
+        chunk_size = 15000
+        total_chunks = (len(text) // chunk_size) + 1
+        
+        # Limite de segurança para não estourar tempo de resposta HTTP (Render Free Tier: ~60s)
+        max_chunks = 4 
+        if total_chunks > max_chunks:
+            total_chunks = max_chunks
 
-        prompt = f"""
-        Analise o texto extraído do documento "{nome_lista}".
-        Extraia a lista de medicamentos disponíveis.
-        Retorne JSON ARRAY puro: [{{ "nome": "MEDICAMENTO DOSAGEM", "lista_origem": "{nome_lista}", "data_importacao": "hoje" }}]
-        
-        TEXTO:
-        {text_sample}
-        """
-        
-        response = ai_model.generate_content(prompt, generation_config={"response_mime_type": "application/json"})
-        
-        parsed_json = json.loads(response.text)
-        
-        # Garante que seja lista pura ou extrai de chave 'medicamentos' se a IA embrulhar
-        data_list = []
-        if isinstance(parsed_json, list):
-            data_list = parsed_json
-        elif isinstance(parsed_json, dict):
-            data_list = parsed_json.get('medicamentos', [])
-            if not data_list and 'data' in parsed_json: # Tenta outra common key
-                 data_list = parsed_json['data']
+        aggregated_meds = []
+        chunks_processed = 0
+
+        for i in range(total_chunks):
+            chunks_processed += 1
+            start = i * chunk_size
+            end = start + chunk_size
+            text_chunk = text[start:end]
+            
+            prompt = f"""
+            Analise o texto parcial ({i+1}/{total_chunks}) extraído do documento "{nome_lista}".
+            Extraia a lista de medicamentos disponíveis neste trecho.
+            Ignore cabeçalhos repetidos.
+            Retorne JSON ARRAY puro: [{{ "nome": "MEDICAMENTO DOSAGEM", "lista_origem": "{nome_lista}", "data_importacao": "hoje" }}]
+            
+            TRECHO TEXTO:
+            {text_chunk}
+            """
+            
+            try:
+                response = ai_model.generate_content(prompt, generation_config={"response_mime_type": "application/json"})
+                parsed_json = json.loads(response.text)
+                
+                # Normalização de resposta (Lista ou Dict)
+                chunk_data = []
+                if isinstance(parsed_json, list):
+                    chunk_data = parsed_json
+                elif isinstance(parsed_json, dict):
+                    chunk_data = parsed_json.get('medicamentos', []) if 'medicamentos' in parsed_json else parsed_json.get('data', [])
+                
+                aggregated_meds.extend(chunk_data)
+            except Exception as e:
+                print(f"Erro no chunk {i}: {e}")
+                continue
 
         return {
-            "data": data_list,
+            "data": aggregated_meds,
             "debug": {
                 "text_len": len(text),
+                "chunks_processed": chunks_processed,
                 "text_preview": text[:100] + "..." if text else "EMPTY",
-                "ai_raw": response.text[:500] if response.text else "EMPTY"
+                "ai_last_status": "Success"
             }
         }
 
@@ -203,6 +223,7 @@ async def consultar_ia(req: ConsultaRequest):
         Gere JSON estrito:
         {{
             "soap": {{ "s": "Resumo Subjetivo", "o": "Objetivo", "a": "Avaliação/Diagnóstico", "p": "Plano/Conduta" }},
+            "paciente": {{ "sexo": "Masculino/Feminino", "idade": 0 }},
             "medicamentos": ["Nome Genérico 1", "Nome Genérico 2"],
             "missoes": [
                 {{ "tarefa": "Ação clínica obrigatória segundo protocolo", "categoria": "Exame/Prescrição/Orienta", "doenca": "Causa" }}
@@ -215,6 +236,7 @@ async def consultar_ia(req: ConsultaRequest):
         
         return {
             "soap": res_json.get("soap", {}),
+            "paciente": res_json.get("paciente", {}),
             "medicamentos": res_json.get("medicamentos", []),
             "missoes": res_json.get("missoes", []),
             "debug_rag": "Contexto usado: " + ("SIM" if rag_context else "NÃO")
