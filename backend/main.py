@@ -10,8 +10,12 @@ import pdfplumber
 import google.generativeai as genai
 from unidecode import unidecode
 
+# Novos Módulos
+import db_manager
+import parser_core
+
 # --- CONFIGURAÇÃO ---
-app = FastAPI(title="MedUBS Backend API v3.0")
+app = FastAPI(title="MedUBS Backend API v4.0 (Hybrid)")
 
 app.add_middleware(
     CORSMiddleware,
@@ -21,8 +25,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Inicializa Banco
+@app.on_event("startup")
+def on_startup():
+    db_manager.init_db()
+
 # Diretório para salvar os TXTs processados (RAG)
-# Nota: No Render Free, isso apaga a cada deploy. Em produção real, usar S3/Supabase.
 KNOWLEDGE_BASE_DIR = "knowledge_base"
 os.makedirs(KNOWLEDGE_BASE_DIR, exist_ok=True)
 
@@ -36,12 +44,14 @@ class ConsultaResponse(BaseModel):
     soap: dict
     medicamentos: List[str]
     missoes: List[dict]
+    paciente: dict
+    keywords: List[str] # Novo
     debug_rag: Optional[str] = None
 
 # --- FUNÇÕES AUXILIARES ---
 
 def extract_text_from_bytes(file_bytes: bytes) -> str:
-    """Extrai texto de PDF direto da memória RAM, sem salvar no disco."""
+    """Extrai texto de PDF direto da memória RAM."""
     text = ""
     try:
         with pdfplumber.open(io.BytesIO(file_bytes)) as pdf:
@@ -64,7 +74,6 @@ def simple_rag_search(query: str, kb_dir: str) -> str:
     best_file = ""
 
     query_norm = unidecode(query.lower())
-    # Palavras-chave relevantes (filtra preposições curtas)
     keywords = [w for w in query_norm.split() if len(w) > 4]
 
     for filename in os.listdir(kb_dir):
@@ -74,8 +83,6 @@ def simple_rag_search(query: str, kb_dir: str) -> str:
                 with open(path, 'r', encoding='utf-8') as f:
                     content = f.read()
                     content_norm = unidecode(content.lower())
-                    
-                    # Score simples: contagem de palavras-chave
                     score = sum(content_norm.count(k) for k in keywords)
                     
                     if score > max_score:
@@ -86,7 +93,6 @@ def simple_rag_search(query: str, kb_dir: str) -> str:
                 continue
     
     if max_score > 0:
-        # Retorna os primeiros 5000 caracteres do protocolo mais relevante
         return f"--- INÍCIO PROTOCOLO ({best_file}) ---\n{best_match_content[:5000]}\n--- FIM PROTOCOLO ---"
     return ""
 
@@ -94,83 +100,132 @@ def simple_rag_search(query: str, kb_dir: str) -> str:
 
 @app.get("/")
 def read_root():
-    return {"status": "online", "version": "3.0", "rag_files": len(os.listdir(KNOWLEDGE_BASE_DIR))}
+    return {"status": "online", "version": "4.0 Hybrid", "rag_files": len(os.listdir(KNOWLEDGE_BASE_DIR))}
 
 @app.post("/upload-medicamento")
 async def upload_medicamento(
     file: UploadFile = File(...), 
     nome_lista: str = Form(...),
     api_key: str = Form(...),
-    model: str = Form(...) # <--- Novo parametro
+    model: str = Form(...),
+    force_ai: str = Form("false") # Novo flag (string "true"/"false")
 ):
-    """Gera JSON de medicamentos a partir de PDF."""
+    """
+    Gera JSON de medicamentos.
+    ESTRATÉGIA NOVA: Otimização Python -> IA
+    1. Python limpa tabelas e texto.
+    2. Se texto pequeno (< 100), falha e pede IA Forçada.
+    3. Se texto OK, envia para IA.
+       - Se < 30k chars: Envio único (Mais rápido / Melhor contexto).
+       - Se > 30k chars: Fatoração (Segurança contra output limit).
+    """
     try:
         content = await file.read()
-        text = extract_text_from_bytes(content)
         
-        if not text:
-            raise HTTPException(status_code=400, detail="Não foi possível ler texto do PDF.")
+        # 0. Instancia Parser
+        parser = parser_core.HeuristicParser()
+        
+        # 1. Extração Otimizada (Python)
+        opt_text = parser.extract_optimized_context(content)
+        
+        # 2. Validação: É imagem?
+        # Se force_ai for false e não achou nada, rejeita.
+        if len(opt_text) < 100 and force_ai.lower() != "true":
+            return {
+                "status": "heuristic_failed",
+                "debug": {"msg": "Pouco texto encontrado (vazio ou imagem). Requer OCR/Vision."}
+            }
+            
+        # 3. Preparação IA
+        if not opt_text and force_ai.lower() == "true":
+             # Fallback extremo: Se o parser otimizado falhou totalmente mas o user forçou,
+             # tentamos o 'extract_text' puro do pdfplumber (talvez pegue lixo mas pega algo)
+             opt_text = extract_text_from_bytes(content)
+             if not opt_text: raise HTTPException(status_code=400, detail="PDF totalmente ilegível.")
 
         genai.configure(api_key=api_key)
-        
-        # Usa o modelo escolhido pelo usuário (com fallback seguro)
         model_name = model if model else "gemini-1.5-flash"
         ai_model = genai.GenerativeModel(model_name)
         
-        # LOGICA DE CHUNKING (para evitar Timeout e Context Window overflow)
-        # Corta em pedaços de 15.000 caracteres (seguro para Flash e HTTP timeout)
-        chunk_size = 15000
-        total_chunks = (len(text) // chunk_size) + 1
-        
-        # Limite de segurança para não estourar tempo de resposta HTTP (Render Free Tier: ~60s)
-        max_chunks = 4 
-        if total_chunks > max_chunks:
-            total_chunks = max_chunks
-
         aggregated_meds = []
         chunks_processed = 0
-
-        for i in range(total_chunks):
-            chunks_processed += 1
-            start = i * chunk_size
-            end = start + chunk_size
-            text_chunk = text[start:end]
-            
+        
+        # 4. Lógica Dinâmica ("Safety Valve")
+        # Limite seguro para output JSON grande: ~30k caracteres de input costuma gerar outputs seguros
+        SAFE_LIMIT = 30000 
+        
+        if len(opt_text) <= SAFE_LIMIT:
+            # --- SINGLE SHOT (Otimizado) ---
+            chunks_processed = 1
             prompt = f"""
-            Analise o texto parcial ({i+1}/{total_chunks}) extraído do documento "{nome_lista}".
-            Extraia a lista de medicamentos disponíveis neste trecho.
-            Ignore cabeçalhos repetidos.
-            Retorne JSON ARRAY puro: [{{ "nome": "MEDICAMENTO DOSAGEM", "lista_origem": "{nome_lista}", "data_importacao": "hoje" }}]
+            Analise o contexto abaixo (Tabelas e Texto extraídos de "{nome_lista}").
+            Identifique todos os medicamentos.
+            Retorne JSON ARRAY puro: [{{ "nome": "MEDICAMENTO", "concentracao": "500MG", "forma": "CP", "lista_origem": "{nome_lista}", "data_importacao": "hoje" }}]
             
-            TRECHO TEXTO:
-            {text_chunk}
+            CONTEXTO OTIMIZADO:
+            {opt_text}
             """
-            
             try:
                 response = ai_model.generate_content(prompt, generation_config={"response_mime_type": "application/json"})
-                parsed_json = json.loads(response.text)
-                
-                # Normalização de resposta (Lista ou Dict)
-                chunk_data = []
-                if isinstance(parsed_json, list):
-                    chunk_data = parsed_json
-                elif isinstance(parsed_json, dict):
-                    chunk_data = parsed_json.get('medicamentos', []) if 'medicamentos' in parsed_json else parsed_json.get('data', [])
-                
-                aggregated_meds.extend(chunk_data)
+                parsed = json.loads(response.text)
+                if isinstance(parsed, list): aggregated_meds = parsed
+                elif isinstance(parsed, dict): aggregated_meds = parsed.get('medicamentos', [])
             except Exception as e:
-                print(f"Erro no chunk {i}: {e}")
-                continue
+                print(f"Erro Single Shot: {e}")
+                
+        else:
+            # --- CHUNKING (Segurança para Docs Gigantes) ---
+            chunk_size = 25000 # Um pouco menor que o limite para garantir
+            total_chunks = (len(opt_text) // chunk_size) + 1
+            max_chunks = 6 # Aumentei um pouco pois agora o texto é "denso" (só info util)
+            if total_chunks > max_chunks: total_chunks = max_chunks
+            
+            for i in range(total_chunks):
+                chunks_processed += 1
+                start = i * chunk_size
+                end = start + chunk_size
+                chunk = opt_text[start:end]
+                
+                prompt = f"""
+                Analise este trecho ({i+1}/{total_chunks}) de "{nome_lista}".
+                Extraia medicamentos. Retorne JSON ARRAY puro.
+                
+                TRECHO:
+                {chunk}
+                """
+                try:
+                    response = ai_model.generate_content(prompt, generation_config={"response_mime_type": "application/json"})
+                    parsed = json.loads(response.text)
+                    batch = []
+                    if isinstance(parsed, list): batch = parsed
+                    elif isinstance(parsed, dict): batch = parsed.get('medicamentos', [])
+                    aggregated_meds.extend(batch)
+                except: continue
 
-        return {
-            "data": aggregated_meds,
-            "debug": {
-                "text_len": len(text),
-                "chunks_processed": chunks_processed,
-                "text_preview": text[:100] + "..." if text else "EMPTY",
-                "ai_last_status": "Success"
+        # 5. Salva no Banco e Retorna
+        if aggregated_meds:
+            for item in aggregated_meds:
+                nome = item.get('nome', 'DESCONHECIDO')
+                conc = item.get('concentracao', '')
+                forma = item.get('forma', '')
+                db_manager.upsert_medicamento(nome, conc, forma, nome_lista, nome_lista)
+
+            return {
+                "status": "success",
+                "method": "ai_optimized",
+                "data": aggregated_meds,
+                "debug": {
+                    "text_len": len(opt_text),
+                    "chunks_processed": chunks_processed,
+                    "mode": "Single Shot" if len(opt_text) <= SAFE_LIMIT else "Safety Chunking"
+                }
             }
-        }
+        else:
+            return {
+                "status": "success", # Retorna sucesso mas vazio, pra não travar loop
+                "data": [],
+                "debug": {"msg": "AI não encontrou itens"}
+            }
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -201,7 +256,7 @@ async def upload_diretriz(
 
 @app.post("/consultar-ia")
 async def consultar_ia(req: ConsultaRequest):
-    """Cérebro da aplicação: RAG + SOAP + Missões."""
+    """Cérebro da aplicação: RAG + SOAP + Missões + Keywords."""
     try:
         # 1. RAG
         rag_context = simple_rag_search(req.transcricao, KNOWLEDGE_BASE_DIR)
@@ -225,6 +280,7 @@ async def consultar_ia(req: ConsultaRequest):
             "soap": {{ "s": "Resumo Subjetivo", "o": "Objetivo", "a": "Avaliação/Diagnóstico", "p": "Plano/Conduta" }},
             "paciente": {{ "sexo": "Masculino/Feminino", "idade": 0 }},
             "medicamentos": ["Nome Genérico 1", "Nome Genérico 2"],
+            "keywords": ["Termo Clinico 1", "Termo Clinico 2"],
             "missoes": [
                 {{ "tarefa": "Ação clínica obrigatória segundo protocolo", "categoria": "Exame/Prescrição/Orienta", "doenca": "Causa" }}
             ]
@@ -238,21 +294,22 @@ async def consultar_ia(req: ConsultaRequest):
             "soap": res_json.get("soap", {}),
             "paciente": res_json.get("paciente", {}),
             "medicamentos": res_json.get("medicamentos", []),
+            "keywords": res_json.get("keywords", []), # Novo
             "missoes": res_json.get("missoes", []),
             "debug_rag": "Contexto usado: " + ("SIM" if rag_context else "NÃO")
         }
 
     except Exception as e:
-        # Fallback de segurança para não travar o app
         return {
             "soap": {"s": "Erro ao processar", "o": "", "a": str(e), "p": ""}, 
             "medicamentos": [], 
             "missoes": [],
+            "keywords": [],
+            "paciente": {},
             "debug_rag": "ERRO"
         }
 
 if __name__ == "__main__":
     import uvicorn
-    # Configuração para rodar no Render (lê variável PORT) ou local (8000)
     port = int(os.environ.get("PORT", 8000))
     uvicorn.run(app, host="0.0.0.0", port=port)

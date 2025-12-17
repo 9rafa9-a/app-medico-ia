@@ -21,6 +21,7 @@ import 'package:http/http.dart' as http; // Novo Import
 import 'database/database_helper.dart'; // Novo Import
 import 'services/api_service.dart';     // Novo Import
 import 'widgets/mission_card.dart';     // Novo Import
+import 'screens/stock_screen.dart';     // Novo Import
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -74,11 +75,20 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
-  final _apiKeyController = TextEditingController();
-  final _serverUrlController = TextEditingController(text: "https://medubs-backend.onrender.com"); // Default Produção
-  String _selectedModel = 'gemini-2.5-flash'; // Default Model
+  
+  // Multi-Key System
+  final List<TextEditingController> _keyControllers = [
+    TextEditingController(),
+    TextEditingController(),
+    TextEditingController()
+  ];
+  int _activeKeyIndex = 0;
+  
+  final _serverUrlController = TextEditingController(text: "https://medubs-backend.onrender.com");
+  String _selectedModel = 'gemini-2.5-flash';
   int? _patientAge;
   String _patientSex = "Feminino";
+  List<String> _patientKeywords = [];
   String? _activeSpecialty;
   final GlobalKey<_OfflineTabState> _offlineTabKey = GlobalKey();
 
@@ -91,21 +101,30 @@ class _MainScreenState extends State<MainScreen> {
   Future<void> _loadSettings() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      _apiKeyController.text = prefs.getString('gemini_api_key') ?? '';
+      _keyControllers[0].text = prefs.getString('gemini_key_0') ?? '';
+      _keyControllers[1].text = prefs.getString('gemini_key_1') ?? '';
+      _keyControllers[2].text = prefs.getString('gemini_key_2') ?? '';
+      _activeKeyIndex = prefs.getInt('active_key_index') ?? 0;
+      
       _serverUrlController.text = prefs.getString('api_base_url') ?? 'https://medubs-backend.onrender.com';
       _selectedModel = prefs.getString('gemini_model') ?? 'gemini-2.5-flash';
     });
   }
 
-  void _updateDemographics(int? age, String? sex) {
-    if (age != null || sex != null) {
+  String get _activeKey => _keyControllers[_activeKeyIndex].text;
+
+  void _updateDemographics(int? age, String? sex, List<String>? keywords) {
+    if (age != null || sex != null || keywords != null) {
       if (mounted) {
         setState(() {
           if (age != null) _patientAge = age;
           if (sex != null) _patientSex = sex;
+          if (keywords != null) _patientKeywords = keywords;
         });
+        
+        String kwMsg = (keywords != null && keywords.isNotEmpty) ? "+ Contexto Clínico" : "";
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text("Rastreio atualizado: $_patientSex, $_patientAge anos"),
+          content: Text("Rastreio: $_patientSex, $_patientAge anos $kwMsg"),
           backgroundColor: Colors.teal,
           action: SnackBarAction(label: "VER", textColor: Colors.white, onPressed: () => setState(() => _currentIndex = 2)),
         ));
@@ -161,6 +180,12 @@ class _MainScreenState extends State<MainScreen> {
     if (result != null && result.files.single.path != null) {
       if (!_validateKey(context)) return;
 
+      // START PROCESS
+      await _executeUpload(File(result.files.single.path!), nomeLista, context, false);
+    }
+  }
+
+  Future<void> _executeUpload(File file, String nomeLista, BuildContext context, bool forceAi) async {
       // UX: Granular Log System
       final ValueNotifier<List<String>> logs = ValueNotifier(["📄 Arquivo selecionado."]);
       void addLog(String text) => logs.value = [...logs.value, text];
@@ -169,14 +194,14 @@ class _MainScreenState extends State<MainScreen> {
         context: context, 
         barrierDismissible: false,
         builder: (ctx) => AlertDialog(
-          title: const Text("Processando Documento"),
+          title: Text(forceAi ? "Processando com IA" : "Lendo Documento"),
           content: SizedBox(
             width: double.maxFinite,
             child: ValueListenableBuilder<List<String>>(
               valueListenable: logs,
               builder: (context, value, child) => ListView.builder(
                 shrinkWrap: true,
-                itemCount: value.length + 1, // +1 for spinner
+                itemCount: value.length + 1, 
                 itemBuilder: (context, index) {
                   if (index == value.length) {
                     return const Padding(padding: EdgeInsets.all(8.0), child: Center(child: LinearProgressIndicator()));
@@ -193,44 +218,60 @@ class _MainScreenState extends State<MainScreen> {
               ),
             ),
           ),
-          actions: [
-             TextButton(onPressed: () => Navigator.pop(ctx), child: const Text("CANCELAR")) // Emergency exit
-          ],
         )
       );
 
       try {
-        File file = File(result.files.single.path!);
         addLog("Tamanho: ${(file.lengthSync() / 1024).toStringAsFixed(1)} KB");
         
-        // Fase 1: Enviado / Processando
-        addLog("🚀 Enviando para Backend (${_selectedModel})...");
+        // Fase 1: Envio
+        if (forceAi) {
+           addLog("🤖 Modo AI Forçado: Enviando para Gemini...");
+        } else {
+           addLog("⚡ Modo Rápido: Tentando leitura estruturada...");
+        }
         
-        // Call Service (Updated to return Map {items, debug})
-        Map<String, dynamic> response = await ApiService.uploadMedicamento(file, nomeLista, _apiKeyController.text, _selectedModel);
+        // Call Service
+        Map<String, dynamic> response = await ApiService.uploadMedicamento(
+            file, nomeLista, _activeKey, _selectedModel, forceAi: forceAi
+        );
         
+        Navigator.pop(context); // Close Spinner Dialog
+
+        String status = response['status'] ?? 'error';
         List<dynamic> meds = response['items'] ?? [];
         Map<String, dynamic>? debug = response['debug'];
 
-        if (debug != null) {
-           addLog("🔍 Backend Debug: Texto extraído: ${debug['text_len']} chars");
-           if ((debug['text_len'] as int) < 100) {
-              addLog("⚠️ ALERTA: Pouco texto encontrado. O PDF pode ser uma imagem digitalizada. A IA pode falhar.");
-           }
+        if (status == 'heuristic_failed' && !forceAi) {
+           // FALLBACK DIALOG
+           showDialog(
+             context: context,
+             builder: (ctx) => AlertDialog(
+               title: const Text("Leitura Automática Falhou"),
+               content: const Text("O sistema não conseguiu ler o PDF diretamente. Provavelmente é uma imagem escaneada.\n\nDeseja usar a Inteligência Artificial para ler? (Consome cota da API)."),
+               actions: [
+                 TextButton(onPressed: () => Navigator.pop(ctx), child: const Text("Cancelar")),
+                 FilledButton(onPressed: () {
+                   Navigator.pop(ctx);
+                   _executeUpload(file, nomeLista, context, true); // RETRY WITH FORCE AI
+                 }, child: const Text("Sim, usar IA"))
+               ],
+             )
+           );
+           return;
         }
 
         if (meds.isEmpty) {
-           Navigator.pop(context); // Close progress
            // Show Report
            showDialog(context: context, builder: (ctx) => AlertDialog(
              title: const Text("Nenhum medicamento encontrado"),
              content: SingleChildScrollView(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                const Text("A Inteligência Artificial não retornou nenhum item. Isso geralmente acontece quando:\n1. O PDF é uma imagem (escanneada) sem OCR.\n2. O PDF está protegido.\n\nDados Técnicos:", style: TextStyle(color: Colors.red)),
+                const Text("Tente novamente ou verifique o PDF.", style: TextStyle(color: Colors.red)),
                 Container(
                   margin: const EdgeInsets.only(top: 10),
                   padding: const EdgeInsets.all(8),
                   color: Colors.grey[200],
-                  child: Text("Preview Texto: ${debug?['text_preview']}\n\nResposta IA: ${debug?['ai_raw']}", style: const TextStyle(fontFamily: 'monospace', fontSize: 10))
+                  child: Text("Status: $status\nDebug: $debug", style: const TextStyle(fontFamily: 'monospace', fontSize: 10))
                 )
              ])),
              actions: [TextButton(onPressed: () => Navigator.pop(ctx), child: const Text("OK"))],
@@ -238,25 +279,20 @@ class _MainScreenState extends State<MainScreen> {
            return;
         }
         
-        // Fase 2: Salvando Local
-        addLog("✅ ${meds.length} itens identificados.");
-        addLog("💾 Salvando no banco de dados...");
-        
+        // Success
         final batch = meds.map((e) => Map<String, dynamic>.from(e)).toList();
         await DatabaseHelper().inserirLoteMedicamentos(batch);
         
-        Navigator.pop(context); // Fecha Dialog
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Sucesso! ${meds.length} medicamentos importados."), backgroundColor: Colors.green));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Sucesso! ${meds.length} itens importados via ${forceAi?'IA':'Leitura Rápida'}."), backgroundColor: Colors.green));
         
       } catch (e) {
-        Navigator.pop(context); // Fecha Dialog
+        Navigator.pop(context); // Close
         showDialog(context: context, builder: (ctx) => AlertDialog(title: const Text("Erro Fatal"), content: Text(e.toString())));
       }
-    }
   }
 
   bool _validateKey(BuildContext context) {
-    if (_apiKeyController.text.isEmpty) {
+    if (_activeKey.isEmpty) {
       showDialog(
         context: context,
         builder: (ctx) => AlertDialog(
@@ -312,7 +348,7 @@ class _MainScreenState extends State<MainScreen> {
         addLog("Tamanho: ${(file.lengthSync() / 1024).toStringAsFixed(1)} KB");
         addLog("🛫 Enviando para Base de Conhecimento...");
         
-        bool ok = await ApiService.uploadDiretriz(file, _apiKeyController.text);
+        bool ok = await ApiService.uploadDiretriz(file, _activeKey);
         
         if (ok) {
            addLog("✅ Sucesso! Protocolo indexado.");
@@ -344,90 +380,152 @@ class _MainScreenState extends State<MainScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 margin: const EdgeInsets.only(bottom: 10),
                 decoration: BoxDecoration(color: Colors.green[100], borderRadius: BorderRadius.circular(4)),
-                child: const Row(
-                  mainAxisSize: MainAxisSize.min, 
-                  children: [
-                    Icon(Icons.circle, color: Colors.green, size: 10), 
-                    SizedBox(width: 5), 
-                    Text("Servidor: Online", style: TextStyle(fontSize: 12, color: Colors.green))
-                  ]
-                ),
-              ),
-              TextField(
-                 controller: _serverUrlController,
-                 decoration: const InputDecoration(
-                   labelText: "URL do Servidor (Backend)", 
-                   border: OutlineInputBorder(), 
-                   prefixIcon: Icon(Icons.cloud_queue),
-                   hintText: "http://192.168.X.X:8000"
-                 ),
-                 keyboardType: TextInputType.url,
-              ),
-              const SizedBox(height: 10),
-              TextField(
-                 controller: _apiKeyController,
-                 decoration: const InputDecoration(labelText: "Gemini API Key", border: OutlineInputBorder(), prefixIcon: Icon(Icons.key)),
-                 obscureText: true,
-              ),
-              const SizedBox(height: 10),
-              DropdownButtonFormField<String>(
-                value: _selectedModel,
-                decoration: const InputDecoration(labelText: "Modelo AI", border: OutlineInputBorder(), prefixIcon: Icon(Icons.psychology)),
-                isExpanded: true,
-                items: const [
-                  DropdownMenuItem(value: 'gemini-2.5-flash', child: Text('Gemini 2.5 Flash (Padrão/Rápido)')),
-                  DropdownMenuItem(value: 'gemini-2.0-flash', child: Text('Gemini 2.0 Flash (Novo)')),
-                  DropdownMenuItem(value: 'gemini-2.0-flash-lite', child: Text('Gemini 2.0 Flash-Lite (Super Rápido)')),
-                  DropdownMenuItem(value: 'gemini-3-pro-preview', child: Text('Gemini 3.0 Pro (Experimental)')),
-                  DropdownMenuItem(value: 'gemini-2.5-pro', child: Text('Gemini 2.5 Pro (Alta Precisão)')),
-                ], 
-                onChanged: (v) { if(v!=null) _selectedModel = v; }
-              ),
-              const SizedBox(height: 20),
-              const Divider(),
-              const Text("Administração de Dados", style: TextStyle(fontWeight: FontWeight.bold)),
-              ListTile(
-                leading: const Icon(Icons.medication, color: Colors.blue),
-                title: const Text("Atualizar Estoque (PDF)"),
-                subtitle: const Text("Importar REMUME/RENAME"),
-                onTap: () { Navigator.pop(ctx); _uploadEstoque(); },
-              ),
-              ListTile(
-                leading: const Icon(Icons.book, color: Colors.orange),
-                title: const Text("Adicionar Diretriz (PDF)"),
-                subtitle: const Text("Protocolos para RAG"),
-                onTap: () { Navigator.pop(ctx); _uploadDiretriz(); },
-              ),
-            ],
-          ),
-        ),
-        actions: [
-          TextButton(onPressed: () async {
-            final prefs = await SharedPreferences.getInstance();
-            await prefs.setString('gemini_api_key', _apiKeyController.text);
-            await prefs.setString('api_base_url', _serverUrlController.text);
-            await prefs.setString('gemini_model', _selectedModel);
-            
-            // Atualiza singleton ou passa pro widget tree (pra simplificar, vamos salvar nas prefs que a ApiService lê ou reconfigurar)
-            // UPDATE: Vamos passar a URL via parâmetro no HomeTab, ou melhor, fazer a ApiService ler da SharedPreferences na próxima chamada?
-            // Melhor: Atualizar uma variável estática na ApiService.
-            ApiService.baseUrl = _serverUrlController.text;
+  void _showSettings(BuildContext context) {
+    // Local state for radio selection inside dialog
+    int dialogKeyIndex = _activeKeyIndex; 
 
-            setState(() {}); 
-            if (context.mounted) Navigator.pop(ctx);
-          }, child: const Text("SALVAR"))
-        ],
+    showDialog(
+      context: context, 
+      builder: (ctx) => StatefulBuilder(
+        builder: (context, setStateDialog) => AlertDialog(
+          title: const Text("Configurações Globais"),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                 Container( 
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  margin: const EdgeInsets.only(bottom: 10),
+                  decoration: BoxDecoration(color: Colors.green[100], borderRadius: BorderRadius.circular(4)),
+                  child: const Row(
+                    mainAxisSize: MainAxisSize.min, 
+                    children: [
+                      Icon(Icons.circle, color: Colors.green, size: 10), 
+                      SizedBox(width: 5), 
+                      Text("Servidor: Online", style: TextStyle(fontSize: 12, color: Colors.green))
+                    ]
+                  ),
+                ),
+                TextField(
+                   controller: _serverUrlController,
+                   decoration: const InputDecoration(
+                     labelText: "URL do Servidor (Backend)", 
+                     border: OutlineInputBorder(), 
+                     prefixIcon: Icon(Icons.cloud_queue),
+                     hintText: "http://192.168.X.X:8000"
+                   ),
+                   keyboardType: TextInputType.url,
+                ),
+                const SizedBox(height: 15),
+                const Text("Chaves de Acesso (Gemini API)", style: TextStyle(fontWeight: FontWeight.bold)),
+                const SizedBox(height: 5),
+                
+                // Key 1
+                _buildKeyField(0, "Chave Principal", dialogKeyIndex, (v) => setStateDialog(() => dialogKeyIndex = v)),
+                // Key 2
+                _buildKeyField(1, "Chave Reserva 1", dialogKeyIndex, (v) => setStateDialog(() => dialogKeyIndex = v)),
+                // Key 3
+                _buildKeyField(2, "Chave Reserva 2", dialogKeyIndex, (v) => setStateDialog(() => dialogKeyIndex = v)),
+                
+                const SizedBox(height: 15),
+                DropdownButtonFormField<String>(
+                  value: _selectedModel,
+                  decoration: const InputDecoration(labelText: "Modelo AI", border: OutlineInputBorder(), prefixIcon: Icon(Icons.psychology)),
+                  isExpanded: true,
+                  items: const [
+                    DropdownMenuItem(value: 'gemini-2.5-flash', child: Text('Gemini 2.5 Flash (Padrão/Rápido)')),
+                    DropdownMenuItem(value: 'gemini-2.0-flash', child: Text('Gemini 2.0 Flash (Novo)')),
+                    DropdownMenuItem(value: 'gemini-2.0-flash-lite', child: Text('Gemini 2.0 Flash-Lite (Super Rápido)')),
+                    DropdownMenuItem(value: 'gemini-3-pro-preview', child: Text('Gemini 3.0 Pro (Experimental)')),
+                    DropdownMenuItem(value: 'gemini-2.5-pro', child: Text('Gemini 2.5 Pro (Alta Precisão)')),
+                  ], 
+                  onChanged: (v) { if(v!=null) _selectedModel = v; }
+                ),
+                const SizedBox(height: 20),
+                const Divider(),
+                const Text("Administração de Dados", style: TextStyle(fontWeight: FontWeight.bold)),
+                ListTile(
+                  leading: const Icon(Icons.medication, color: Colors.blue),
+                  title: const Text("Atualizar Estoque (PDF)"),
+                  subtitle: const Text("Importar REMUME/RENAME"),
+                  onTap: () { Navigator.pop(ctx); _uploadEstoque(); },
+                ),
+                ListTile(
+                  leading: const Icon(Icons.book, color: Colors.orange),
+                  title: const Text("Adicionar Diretriz (PDF)"),
+                  subtitle: const Text("Protocolos para RAG"),
+                  onTap: () { Navigator.pop(ctx); _uploadDiretriz(); },
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(onPressed: () async {
+              final prefs = await SharedPreferences.getInstance();
+              
+              // Salva todas as chaves
+              await prefs.setString('gemini_key_0', _keyControllers[0].text);
+              await prefs.setString('gemini_key_1', _keyControllers[1].text);
+              await prefs.setString('gemini_key_2', _keyControllers[2].text);
+              await prefs.setInt('active_key_index', dialogKeyIndex);
+              
+              await prefs.setString('api_base_url', _serverUrlController.text);
+              await prefs.setString('gemini_model', _selectedModel);
+              
+              ApiService.baseUrl = _serverUrlController.text;
+
+              setState(() { _activeKeyIndex = dialogKeyIndex; }); 
+              if (context.mounted) Navigator.pop(ctx);
+            }, child: const Text("SALVAR"))
+          ],
+        )
       )
+    );
+  }
+
+  Widget _buildKeyField(int index, String label, int groupValue, Function(int) onChanged) {
+    bool isSelected = groupValue == index;
+    return Container(
+      margin: const EdgeInsets.only(bottom: 8),
+      decoration: BoxDecoration(
+        border: Border.all(color: isSelected ? Colors.green : Colors.grey[300]!),
+        color: isSelected ? Colors.green[50] : null,
+        borderRadius: BorderRadius.circular(8)
+      ),
+      child: Row(
+        children: [
+          Radio<int>(
+            value: index, 
+            groupValue: groupValue, 
+            onChanged: (v) => onChanged(v!),
+            activeColor: Colors.green,
+          ),
+          Expanded(
+            child: TextField(
+              controller: _keyControllers[index],
+              decoration: InputDecoration(
+                labelText: label, 
+                border: InputBorder.none,
+                hintText: "Coloque a API Key aqui",
+                isDense: true
+              ),
+              obscureText: true,
+              style: TextStyle(color: isSelected ? Colors.green[900] : Colors.black),
+            )
+          )
+        ],
+      ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    bool hasKey = _apiKeyController.text.isNotEmpty;
+    bool hasKey = _activeKey.isNotEmpty;
 
     final List<Widget> pages = [
       HomeTab(
-        apiKey: _apiKeyController.text, 
+        apiKey: _activeKey, 
         hasKey: hasKey,
         selectedModel: _selectedModel,
         activeSpecialty: _activeSpecialty,
@@ -438,19 +536,20 @@ class _MainScreenState extends State<MainScreen> {
       ),
       // LiveTab removida temporariamente
       SpecialtiesTab(
-        apiKey: _apiKeyController.text, 
+        apiKey: _activeKey, 
         hasKey: hasKey,
         onSpecialtySelected: _activateSpecialty,
       ),
       ScreeningTab(
-        apiKey: _apiKeyController.text,
+        apiKey: _activeKey,
         hasKey: hasKey,
         selectedModel: _selectedModel,
         initialAge: _patientAge,
         initialSex: _patientSex,
         onRequestKey: () => _showSettings(context),
       ),
-      OfflineTab(key: _offlineTabKey, apiKey: _apiKeyController.text),
+      // OfflineTab(key: _offlineTabKey, apiKey: _activeKey),
+      const StockScreen(),
     ];
 
     return Scaffold(
@@ -459,15 +558,15 @@ class _MainScreenState extends State<MainScreen> {
         selectedIndex: _currentIndex,
         onDestinationSelected: (idx) {
           setState(() => _currentIndex = idx);
-          if (idx == 3) _offlineTabKey.currentState?.loadFiles(); // Offline agora é index 3
+          // if (idx == 3) _offlineTabKey.currentState?.loadFiles(); 
         },
         indicatorColor: hasKey ? Colors.blue[100] : Colors.grey[300],
         destinations: const [
           NavigationDestination(icon: Icon(Icons.home_outlined), selectedIcon: Icon(Icons.home), label: "Consulta"),
-          // NavigationDestination(icon: Icon(Icons.mic_external_on_outlined), selectedIcon: Icon(Icons.mic_external_on), label: "Ao Vivo"),
           NavigationDestination(icon: Icon(Icons.medical_services_outlined), selectedIcon: Icon(Icons.medical_services), label: "Espec."),
           NavigationDestination(icon: Icon(Icons.checklist_rtl_outlined), selectedIcon: Icon(Icons.checklist_rtl), label: "Rastreio"),
-          NavigationDestination(icon: Icon(Icons.wifi_off_outlined), selectedIcon: Icon(Icons.wifi_off), label: "Offline"),
+          // NavigationDestination(icon: Icon(Icons.wifi_off_outlined), selectedIcon: Icon(Icons.wifi_off), label: "Offline"),
+          NavigationDestination(icon: Icon(Icons.inventory_2_outlined), selectedIcon: Icon(Icons.inventory_2), label: "Estoque"),
         ],
       ),
     );
@@ -481,7 +580,7 @@ class HomeTab extends StatefulWidget {
   final String selectedModel;
   final String? activeSpecialty;
   final VoidCallback onClearSpecialty;
-  final Function(int?, String?) onMetaDataFound;
+  final Function(int?, String?, List<String>?) onMetaDataFound;
   final VoidCallback onFileSaved;
   final VoidCallback onRequestKey;
 
@@ -622,6 +721,27 @@ class _HomeTabState extends State<HomeTab> {
       var auditResult = await _auditMedicines(meds);
       
       apiData['audit'] = auditResult;
+      
+      // Auto-Screening Logic (Keywords + Patient)
+      if (apiData.containsKey('paciente') || apiData.containsKey('keywords')) {
+         var p = apiData['paciente'];
+         int? age;
+         String? sex;
+         
+         if (p is Map) {
+           if (p['idade'] is int && p['idade'] > 0) age = p['idade'];
+           if (p['sexo'] is String) sex = p['sexo'];
+         }
+         
+         List<String> kws = [];
+         if (apiData['keywords'] is List) {
+            kws = (apiData['keywords'] as List).map((e) => e.toString()).toList();
+         }
+         
+         if (age != null || sex != null || kws.isNotEmpty) {
+            widget.onMetaDataFound(age, sex, kws);
+         }
+      }
       
       // Adiciona ID da consulta (timestamp simples para demo) nas missões para persistência
       String consultaId = DateTime.now().millisecondsSinceEpoch.toString();
@@ -904,9 +1024,10 @@ class ScreeningTab extends StatefulWidget {
   final String selectedModel;
   final int? initialAge;
   final String? initialSex;
+  final List<String> keywords;
   final VoidCallback onRequestKey;
 
-  const ScreeningTab({super.key, required this.apiKey, required this.hasKey, required this.selectedModel, this.initialAge, this.initialSex, required this.onRequestKey});
+  const ScreeningTab({super.key, required this.apiKey, required this.hasKey, required this.selectedModel, this.initialAge, this.initialSex, this.keywords = const [], required this.onRequestKey});
   @override
   State<ScreeningTab> createState() => _ScreeningTabState();
 }
@@ -923,11 +1044,13 @@ class _ScreeningTabState extends State<ScreeningTab> {
   @override
   void didUpdateWidget(ScreeningTab old) { 
     super.didUpdateWidget(old); 
-    // Logic: Only update if demographics actually CHANGED and we have a key.
-    if(widget.initialAge!=old.initialAge || widget.initialSex!=old.initialSex) { 
+    // Logic: Only update if demographics OR keywords actually CHANGED and we have a key.
+    if(widget.initialAge!=old.initialAge || widget.initialSex!=old.initialSex || widget.keywords != old.keywords) { 
       _upd(); 
-      // Prevention: Don't auto-run if we already have a result or are loading.
-      if(widget.initialAge!=null && widget.hasKey && _result.isEmpty && !_loading) _check(); 
+      // Prevention: Don't auto-run if we already have a result or are loading, unless forced by new keywords?
+      // Better: Auto-run if keywords changed, even if we have result.
+      bool kwChanged = widget.keywords.toString() != old.keywords.toString();
+      if(widget.initialAge!=null && widget.hasKey && (_result.isEmpty || kwChanged) && !_loading) _check(); 
     } 
   }
 
@@ -941,7 +1064,8 @@ class _ScreeningTabState extends State<ScreeningTab> {
     try {
        // Using user selected model
        final model = GenerativeModel(model: widget.selectedModel, apiKey: widget.apiKey);
-       final res = await model.generateContent([Content.text("Atue como médico. Paciente $_sex, ${_ageCtrl.text} anos. Liste APENAS os rastreamentos (screening) indicados pelo Ministério da Saúde do Brasil em tópicos curtos.")]);
+       String contextPrompt = widget.keywords.isNotEmpty ? "Contexto clínico: ${widget.keywords.join(', ')}." : "";
+       final res = await model.generateContent([Content.text("Atue como médico. Paciente $_sex, ${_ageCtrl.text} anos. $contextPrompt Liste APENAS os rastreamentos (screening) indicados pelo Ministério da Saúde do Brasil em tópicos curtos.")]);
        setState(() => _result = res.text ?? "-");
     } catch(e) { 
        String msg = "Erro: $e";
