@@ -366,20 +366,7 @@ class _MainScreenState extends State<MainScreen> {
     }
   }
 
-  void _showSettings(BuildContext context) {
-    showDialog(
-      context: context, 
-      builder: (ctx) => AlertDialog(
-        title: const Text("Configurações Globais"),
-        content: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-               Container( 
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                margin: const EdgeInsets.only(bottom: 10),
-                decoration: BoxDecoration(color: Colors.green[100], borderRadius: BorderRadius.circular(4)),
+
   void _showSettings(BuildContext context) {
     // Local state for radio selection inside dialog
     int dialogKeyIndex = _activeKeyIndex; 
