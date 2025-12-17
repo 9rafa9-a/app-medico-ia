@@ -19,17 +19,20 @@ class DatabaseHelper {
     String path = join(await getDatabasesPath(), 'medubs_v3.db');
     return await openDatabase(
       path,
-      version: 1,
+      version: 2, // Bump Version
       onCreate: _createDB,
+      onUpgrade: _onUpgrade, // Handle Migration
     );
   }
 
   Future<void> _createDB(Database db, int version) async {
-    // Tabela de Medicamentos Auditáveis
+    // Tabela de Medicamentos Auditáveis (Updated Schema)
     await db.execute('''
       CREATE TABLE medicamentos(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         nome TEXT NOT NULL,
+        concentracao TEXT,
+        forma TEXT,
         lista_origem TEXT NOT NULL,
         data_importacao TEXT NOT NULL
       )
@@ -46,6 +49,23 @@ class DatabaseHelper {
         concluido INTEGER DEFAULT 0
       )
     ''');
+  }
+
+  // Safe Migration: Drop & Recreate for dev/cache handling
+  Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
+    if (oldVersion < 2) {
+      await db.execute('DROP TABLE IF EXISTS medicamentos');
+      await db.execute('''
+        CREATE TABLE medicamentos(
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          nome TEXT NOT NULL,
+          concentracao TEXT,
+          forma TEXT,
+          lista_origem TEXT NOT NULL,
+          data_importacao TEXT NOT NULL
+        )
+      ''');
+    }
   }
 
   // --- MÉTODOS DE MEDICAMENTOS ---

@@ -87,15 +87,10 @@ class _StockScreenState extends State<StockScreen> {
                              Row(children: [
                                const Icon(Icons.description, size: 16, color: Colors.grey),
                                const SizedBox(width: 8),
-                               Expanded(child: Text("Origem: ${m['origem_arquivo'] ?? 'Manual'}", style: const TextStyle(fontSize: 12)))
+                               Expanded(child: Text("Origem: ${m['lista_origem'] ?? 'Manual'}", style: const TextStyle(fontSize: 12)))
                              ]),
                              const SizedBox(height: 10),
-                             Wrap(spacing: 8, children: [
-                                if(m['disp_remume']==1) _Badge("REMUME", Colors.green),
-                                if(m['disp_rename']==1) _Badge("RENAME", Colors.blue),
-                                if(m['disp_estadual']==1) _Badge("ESTADUAL", Colors.orange),
-                                if(m['alto_custo']==1) _Badge("ALTO CUSTO", Colors.red),
-                             ])
+                             Wrap(spacing: 8, children: _buildBadges(m))
                            ]),
                          )
                        ],
@@ -110,9 +105,30 @@ class _StockScreenState extends State<StockScreen> {
     );
   }
 
+  List<Widget> _buildBadges(Map m) {
+    List<Widget> badges = [];
+    String origem = (m['lista_origem'] ?? "").toString().toLowerCase();
+    
+    // Check flags or infer from origin
+    bool isRemume = (m['disp_remume'] == 1) || origem.contains('remume');
+    bool isRename = (m['disp_rename'] == 1) || origem.contains('rename');
+    bool isEstadual = (m['disp_estadual'] == 1) || origem.contains('estadual');
+    bool isAltoCusto = (m['alto_custo'] == 1) || origem.contains('alto') || origem.contains('custo');
+
+    if (isRemume) badges.add(const _Badge("REMUME", Colors.green));
+    if (isRename) badges.add(const _Badge("RENAME", Colors.blue));
+    if (isEstadual) badges.add(const _Badge("ESTADUAL", Colors.orange));
+    if (isAltoCusto) badges.add(const _Badge("ALTO CUSTO", Colors.red));
+    
+    return badges;
+  }
+
   Color _getColor(Map m) {
-    if(m['disp_remume']==1) return Colors.green;
-    if(m['disp_rename']==1) return Colors.blue;
+    String origem = (m['lista_origem'] ?? "").toString().toLowerCase();
+    if((m['disp_remume'] == 1) || origem.contains('remume')) return Colors.green;
+    if((m['disp_rename'] == 1) || origem.contains('rename')) return Colors.blue;
+    if(origem.contains('estadual')) return Colors.orange;
+    if(origem.contains('alto') || origem.contains('custo')) return Colors.red;
     return Colors.grey;
   }
 }
