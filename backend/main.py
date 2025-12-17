@@ -130,145 +130,151 @@ async def upload_medicamento(
     nome_lista: str = Form(...),
     api_key: str = Form(...),
     model: str = Form(...),
-    force_ai: str = Form("false") # Novo flag (string "true"/"false")
+    force_ai: str = Form("false")
 ):
-    """
-    Gera JSON de medicamentos.
-    ESTRATÉGIA NOVA: Otimização Python -> IA
-    1. Python limpa tabelas e texto.
-    2. Se texto pequeno (< 100), falha e pede IA Forçada.
-    3. Se texto OK, envia para IA.
-       - Se < 30k chars: Envio único (Mais rápido / Melhor contexto).
-       - Se > 30k chars: Fatoração (Segurança contra output limit).
-    """
-    try:
-        content = await file.read()
-        
-        # 0. Instancia Parser
-        parser = parser_core.HeuristicParser()
-        
-        # 1. Extração Otimizada (Python)
-        opt_text = parser.extract_optimized_context(content)
-        
-        # 2. Validação: É imagem?
-        # Se force_ai for false e não achou nada, rejeita.
-        if len(opt_text) < 100 and force_ai.lower() != "true":
-            return {
-                "status": "heuristic_failed",
-                "debug": {"msg": "Pouco texto encontrado (vazio ou imagem). Requer OCR/Vision."}
-            }
-            
-        # 3. Preparação IA
-        if not opt_text and force_ai.lower() == "true":
-             # Fallback extremo: Se o parser otimizado falhou totalmente mas o user forçou,
-             # tentamos o 'extract_text' puro do pdfplumber (talvez pegue lixo mas pega algo)
-             opt_text = extract_text_from_bytes(content)
-             if not opt_text: raise HTTPException(status_code=400, detail="PDF totalmente ilegível.")
+    from fastapi.responses import StreamingResponse
+    import json
+    import time
 
-        genai.configure(api_key=api_key)
-        model_name = model if model else "gemini-1.5-flash"
-        ai_model = genai.GenerativeModel(model_name)
-        
-        aggregated_meds = []
-        chunks_processed = 0
-        error_log = []
-        
-        # 4. Lógica Dinâmica ("Safety Valve")
-        # Limite seguro para output JSON grande: ~30k caracteres de input costuma gerar outputs seguros
-        SAFE_LIMIT = 30000 
-        
-        if len(opt_text) <= SAFE_LIMIT:
-            # --- SINGLE SHOT (Otimizado) ---
-            chunks_processed = 1
-            prompt = f"""
-            Analise o contexto abaixo (Tabelas e Texto extraídos de "{nome_lista}").
-            Identifique todos os medicamentos.
-            Retorne JSON ARRAY puro: [{{ "nome": "MEDICAMENTO", "concentracao": "500MG", "forma": "CP", "lista_origem": "{nome_lista}", "data_importacao": "hoje" }}]
+    async def process_stream():
+        try:
+            content = await file.read()
+            yield json.dumps({"status": "progress", "msg": "Arquivo recebido. Analisando estrutura..."}) + "\n"
             
-            CONTEXTO OTIMIZADO:
-            {opt_text}
-            """
-            try:
-                # USA RETRY AQUI
-                response = generate_with_retry(ai_model, prompt)
-                parsed = json.loads(response.text)
-                if isinstance(parsed, list): aggregated_meds = parsed
-                elif isinstance(parsed, dict): aggregated_meds = parsed.get('medicamentos', [])
-            except Exception as e:
-                error_msg = str(e)
-                print(f"Erro Single Shot: {error_msg}")
-                error_log.append(f"SingleShot Error: {error_msg}")
-                # SE falhar aqui, não vamos silenciar se for erro de quota.
-                # Mas para manter comportamento do frontend, retornamos vazio MAS com debug msg.
-                
-        else:
-            # --- CHUNKING (Segurança para Docs Gigantes) ---
-            chunk_size = 25000 
-            total_chunks = (len(opt_text) // chunk_size) + 1
-            max_chunks = 6 
-            if total_chunks > max_chunks: total_chunks = max_chunks
+            # 0. Instancia Parser
+            parser = parser_core.HeuristicParser()
             
-            for i in range(total_chunks):
-                chunks_processed += 1
-                start = i * chunk_size
-                end = start + chunk_size
-                chunk = opt_text[start:end]
+            # 1. Extração Otimizada (Python)
+            opt_text = parser.extract_optimized_context(content)
+            
+            # 2. Validação: É imagem?
+            if len(opt_text) < 100 and force_ai.lower() != "true":
+                yield json.dumps({
+                    "status": "heuristic_failed",
+                    "debug": {"msg": "Pouco texto encontrado (vazio ou imagem). Requer OCR/Vision."}
+                }) + "\n"
+                return
+
+            # 3. Preparação IA
+            if not opt_text and force_ai.lower() == "true":
+                 try:
+                    opt_text = extract_text_from_bytes(content)
+                 except: 
+                    pass
+                 if not opt_text: 
+                     yield json.dumps({"status": "error", "msg": "PDF totalmente ilegível."}) + "\n"
+                     return
+
+            genai.configure(api_key=api_key)
+            model_name = model if model else "gemini-1.5-flash"
+            ai_model = genai.GenerativeModel(model_name)
+            
+            aggregated_meds = []
+            
+            # 4. Lógica Dinâmica
+            SAFE_LIMIT = 30000 
+            
+            if len(opt_text) <= SAFE_LIMIT:
+                # --- SINGLE SHOT ---
+                yield json.dumps({"status": "progress", "msg": "Envio único (Texto curto). Processando com IA..."}) + "\n"
                 
                 prompt = f"""
-                Analise este trecho ({i+1}/{total_chunks}) de "{nome_lista}".
-                Extraia medicamentos. Retorne JSON ARRAY puro.
+                Analise o contexto abaixo (Tabelas e Texto extraídos de "{nome_lista}").
+                Identifique todos os medicamentos.
+                Retorne JSON ARRAY puro: [{{ "nome": "MEDICAMENTO", "concentracao": "500MG", "forma": "CP", "lista_origem": "{nome_lista}", "data_importacao": "hoje" }}]
                 
-                TRECHO:
-                {chunk}
+                CONTEXTO OTIMIZADO:
+                {opt_text}
                 """
                 try:
-                    # USA RETRY AQUI
                     response = generate_with_retry(ai_model, prompt)
                     parsed = json.loads(response.text)
-                    batch = []
-                    if isinstance(parsed, list): batch = parsed
-                    elif isinstance(parsed, dict): batch = parsed.get('medicamentos', [])
-                    aggregated_meds.extend(batch)
-                    
-                    # Pausa de 12s para respeitar limite de 5 RPM (60s/5 = 12s)
-                    # O usuário relatou limite estrito de 5 req/min.
-                    time.sleep(12) 
-                    
+                    if isinstance(parsed, list): aggregated_meds = parsed
+                    elif isinstance(parsed, dict): aggregated_meds = parsed.get('medicamentos', [])
+                    yield json.dumps({"status": "progress", "msg": "IA processou e enviou dados."}) + "\n"
                 except Exception as e:
-                    error_log.append(f"Chunk {i} error: {str(e)}")
-                    continue
+                    yield json.dumps({"status": "log", "msg": f"Erro Single Shot: {e}"}) + "\n"
+                    
+            else:
+                # --- CHUNKING ---
+                chunk_size = 25000 
+                total_chunks = (len(opt_text) // chunk_size) + 1
+                max_chunks = 6 
+                if total_chunks > max_chunks: total_chunks = max_chunks
+                
+                yield json.dumps({"status": "start_chunks", "total": total_chunks, "msg": f"Iniciando processamento em {total_chunks} partes."}) + "\n"
+                
+                for i in range(total_chunks):
+                    # Progress Update
+                    yield json.dumps({
+                        "status": "progress", 
+                        "current": i + 1, 
+                        "total": total_chunks,
+                        "msg": f"Dando upload no render, render mandou pra IA {i+1}/{total_chunks}"
+                    }) + "\n"
 
-        # 5. Salva no Banco e Retorna
-        if aggregated_meds:
-            for item in aggregated_meds:
-                nome = item.get('nome', 'DESCONHECIDO')
-                conc = item.get('concentracao', '')
-                forma = item.get('forma', '')
-                db_manager.upsert_medicamento(nome, conc, forma, nome_lista, nome_lista)
+                    start = i * chunk_size
+                    end = start + chunk_size
+                    chunk = opt_text[start:end]
+                    
+                    prompt = f"""
+                    Analise este trecho ({i+1}/{total_chunks}) de "{nome_lista}".
+                    Extraia medicamentos. Retorne JSON ARRAY puro.
+                    
+                    TRECHO:
+                    {chunk}
+                    """
+                    try:
+                        response = generate_with_retry(ai_model, prompt)
+                        parsed = json.loads(response.text)
+                        batch = []
+                        if isinstance(parsed, list): batch = parsed
+                        elif isinstance(parsed, dict): batch = parsed.get('medicamentos', [])
+                        aggregated_meds.extend(batch)
+                        
+                        yield json.dumps({
+                            "status": "progress", 
+                            "msg": f"IA processou {i+1} e enviou {i+1}."
+                        }) + "\n"
+                        
+                        # DELAY DE 25 SEGUNDOS
+                        if i < total_chunks - 1:
+                            yield json.dumps({"status": "waiting", "seconds": 25, "msg": "Aguardando 25s para rate limit..."}) + "\n"
+                            time.sleep(25) 
+                        
+                    except Exception as e:
+                       yield json.dumps({"status": "log", "msg": f"Erro no chunk {i}: {str(e)}"}) + "\n"
+                       continue
 
-            return {
-                "status": "success",
-                "method": "ai_optimized_retry",
-                "data": aggregated_meds,
-                "debug": {
-                    "text_len": len(opt_text),
-                    "chunks_processed": chunks_processed,
-                    "mode": "Single Shot" if len(opt_text) <= SAFE_LIMIT else "Safety Chunking"
+            # 5. Salva no Banco e Retorna
+            if aggregated_meds:
+                for item in aggregated_meds:
+                    nome = item.get('nome', 'DESCONHECIDO')
+                    conc = item.get('concentracao', '')
+                    forma = item.get('forma', '')
+                    db_manager.upsert_medicamento(nome, conc, forma, nome_lista, nome_lista)
+
+                final_response = {
+                    "status": "success",
+                    "method": "ai_optimized_retry_stream",
+                    "data": aggregated_meds,
+                    "debug": {
+                        "text_len": len(opt_text),
+                        "mode": "Stream"
+                    }
                 }
-            }
-        else:
-            # Se vazio, verificamos se teve erro crítico para avisar o usuário
-            return {
-                "status": "success", 
-                "data": [],
-                "debug": {
-                    "msg": "AI não encontrou itens. Verifique erros.",
-                    "errors": error_log
-                }
-            }
+                yield json.dumps(final_response) + "\n"
+            else:
+                yield json.dumps({
+                    "status": "success", 
+                    "data": [],
+                    "debug": {"msg": "AI não encontrou itens."}
+                }) + "\n"
 
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        except Exception as e:
+            yield json.dumps({"status": "error", "detail": str(e)}) + "\n"
+
+    return StreamingResponse(process_stream(), media_type="application/x-ndjson")
 
 @app.post("/upload-diretriz")
 async def upload_diretriz(

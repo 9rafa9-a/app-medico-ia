@@ -189,6 +189,27 @@ class _MainScreenState extends State<MainScreen> {
       // UX: Granular Log System
       final ValueNotifier<List<String>> logs = ValueNotifier(["📄 Arquivo selecionado."]);
       void addLog(String text) => logs.value = [...logs.value, text];
+      
+      // Timer System
+      final ValueNotifier<String> timerText = ValueNotifier("");
+      Timer? timer;
+      int timeLeft = 0;
+
+      void startTimer(int seconds) {
+        timeLeft = seconds;
+        timer?.cancel();
+        timer = Timer.periodic(const Duration(seconds: 1), (t) {
+           if (timeLeft <= 0) {
+             t.cancel();
+             timerText.value = "Finalizando...";
+           } else {
+             timeLeft--;
+             int m = timeLeft ~/ 60;
+             int s = timeLeft % 60;
+             timerText.value = "Previsão: ${m}m ${s}s";
+           }
+        });
+      }
 
       showDialog(
         context: context, 
@@ -197,25 +218,52 @@ class _MainScreenState extends State<MainScreen> {
           title: Text(forceAi ? "Processando com IA" : "Lendo Documento"),
           content: SizedBox(
             width: double.maxFinite,
-            child: ValueListenableBuilder<List<String>>(
-              valueListenable: logs,
-              builder: (context, value, child) => ListView.builder(
-                shrinkWrap: true,
-                itemCount: value.length + 1, 
-                itemBuilder: (context, index) {
-                  if (index == value.length) {
-                    return const Padding(padding: EdgeInsets.all(8.0), child: Center(child: LinearProgressIndicator()));
-                  }
-                  return Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Icon(Icons.check_circle_outline, size: 16, color: Colors.green),
-                      const SizedBox(width: 8),
-                      Expanded(child: Text(value[index], style: const TextStyle(fontSize: 13))),
-                    ]
-                  );
-                },
-              ),
+            height: 300, // Fixed height for scrolling
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                 // Timer Widget
+                 ValueListenableBuilder<String>(
+                   valueListenable: timerText,
+                   builder: (c, val, _) => val.isNotEmpty 
+                      ? Container(
+                          padding: const EdgeInsets.all(8),
+                          margin: const EdgeInsets.only(bottom: 10),
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: Colors.blue[50],
+                            borderRadius: BorderRadius.circular(8)
+                          ), 
+                          child: Text(val, textAlign: TextAlign.center, style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.blue))
+                        )
+                      : const SizedBox.shrink()
+                 ),
+                 // Log List
+                 Expanded(
+                   child: ValueListenableBuilder<List<String>>(
+                     valueListenable: logs,
+                     builder: (context, value, child) => ListView.builder(
+                       itemCount: value.length + 1, 
+                       itemBuilder: (context, index) {
+                         if (index == value.length) {
+                           return const Padding(padding: EdgeInsets.all(8.0), child: Center(child: LinearProgressIndicator()));
+                         }
+                         return Padding(
+                           padding: const EdgeInsets.symmetric(vertical: 2),
+                           child: Row(
+                             crossAxisAlignment: CrossAxisAlignment.start,
+                             children: [
+                               const Icon(Icons.check_circle_outline, size: 14, color: Colors.green),
+                               const SizedBox(width: 8),
+                               Expanded(child: Text(value[index], style: const TextStyle(fontSize: 12))),
+                             ]
+                           ),
+                         );
+                       },
+                     ),
+                   ),
+                 ),
+              ],
             ),
           ),
         )
@@ -224,23 +272,52 @@ class _MainScreenState extends State<MainScreen> {
       try {
         addLog("Tamanho: ${(file.lengthSync() / 1024).toStringAsFixed(1)} KB");
         
-        // Fase 1: Envio
-        if (forceAi) {
-           addLog("🤖 Modo AI Forçado: Enviando para Gemini...");
-        } else {
-           addLog("⚡ Modo Rápido: Tentando leitura estruturada...");
+        if (forceAi) addLog("🤖 Modo AI Forçado: Iniciando Stream...");
+        else addLog("⚡ Modo Rápido: Tentando leitura estruturada...");
+        
+        Map<String, dynamic> finalResponse = {};
+        
+        // Listen to Stream
+        await for (var event in ApiService.uploadMedicamentoStream(file, nomeLista, _activeKey, _selectedModel, forceAi: forceAi)) {
+            String status = event['status'] ?? '';
+            
+            if (status == 'start_chunks') {
+               int total = event['total'];
+               // 25s wait + ~5s processing = 30s per chunk
+               startTimer(total * 30); 
+               addLog(event['msg'] ?? "Iniciando Fatoração...");
+            }
+            else if (status == 'progress') {
+               addLog(event['msg'] ?? "Processando...");
+            }
+            else if (status == 'waiting') {
+               addLog("⏳ ${event['msg']}");
+            }
+            else if (status == 'heuristic_failed') {
+               finalResponse = event;
+            }
+            else if (status == 'success') {
+               finalResponse = event;
+               timer?.cancel();
+               timerText.value = "Concluído!";
+               addLog("✅ ${event['debug']?['mode'] ?? 'Processamento'} Finalizado.");
+            }
+            else if (status == 'error') {
+               addLog("❌ Erro: ${event['detail']}");
+               // Don't throw immediately, let user see log?
+            }
+            else if (status == 'log') {
+               addLog("📝 ${event['msg']}");
+            }
         }
         
-        // Call Service
-        Map<String, dynamic> response = await ApiService.uploadMedicamento(
-            file, nomeLista, _activeKey, _selectedModel, forceAi: forceAi
-        );
-        
-        Navigator.pop(context); // Close Spinner Dialog
+        timer?.cancel();
+        if (context.mounted) Navigator.pop(context); // Close Spinner Dialog
 
-        String status = response['status'] ?? 'error';
-        List<dynamic> meds = response['items'] ?? [];
-        Map<String, dynamic>? debug = response['debug'];
+        String status = finalResponse['status'] ?? 'error';
+        
+        List<dynamic> meds = finalResponse['data'] ?? finalResponse['items'] ?? []; 
+        Map<String, dynamic>? debug = finalResponse['debug'];
 
         if (status == 'heuristic_failed' && !forceAi) {
            // FALLBACK DIALOG
@@ -248,7 +325,7 @@ class _MainScreenState extends State<MainScreen> {
              context: context,
              builder: (ctx) => AlertDialog(
                title: const Text("Leitura Automática Falhou"),
-               content: const Text("O sistema não conseguiu ler o PDF diretamente. Provavelmente é uma imagem escaneada.\n\nDeseja usar a Inteligência Artificial para ler? (Consome cota da API)."),
+               content: const Text("O sistema não conseguiu ler o PDF diretamente.\n\nDeseja usar a Inteligência Artificial? (Pode demorar devido a nova regra de 25s/chunk)."),
                actions: [
                  TextButton(onPressed: () => Navigator.pop(ctx), child: const Text("Cancelar")),
                  FilledButton(onPressed: () {
@@ -283,10 +360,11 @@ class _MainScreenState extends State<MainScreen> {
         final batch = meds.map((e) => Map<String, dynamic>.from(e)).toList();
         await DatabaseHelper().inserirLoteMedicamentos(batch);
         
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Sucesso! ${meds.length} itens importados via ${forceAi?'IA':'Leitura Rápida'}."), backgroundColor: Colors.green));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Sucesso! ${meds.length} itens importados."), backgroundColor: Colors.green));
         
       } catch (e) {
-        Navigator.pop(context); // Close
+        timer?.cancel();
+        if (context.mounted && Navigator.canPop(context)) Navigator.pop(context);
         showDialog(context: context, builder: (ctx) => AlertDialog(title: const Text("Erro Fatal"), content: Text(e.toString())));
       }
   }

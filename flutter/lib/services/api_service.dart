@@ -8,37 +8,50 @@ class ApiService {
   static String baseUrl = 'https://medubs-backend.onrender.com'; // Produção Render
 
   static Future<Map<String, dynamic>> uploadMedicamento(File pdfFile, String nomeLista, String apiKey, String model, {bool forceAi = false}) async {
+    // Legacy support: collects stream into one result
+    Map<String, dynamic> lastResult = {};
+    await for (var item in uploadMedicamentoStream(pdfFile, nomeLista, apiKey, model, forceAi: forceAi)) {
+      if (item.containsKey('status') && item['status'] == 'success') {
+        lastResult = item;
+      }
+      // Check for error
+      if (item['status'] == 'error') {
+         throw Exception(item['detail'] ?? 'Erro desconhecido');
+      }
+       if (item['status'] == 'heuristic_failed') {
+         lastResult = item;
+      }
+    }
+    return lastResult.isNotEmpty ? lastResult : {'items': [], 'debug': null};
+  }
+
+  static Stream<Map<String, dynamic>> uploadMedicamentoStream(File pdfFile, String nomeLista, String apiKey, String model, {bool forceAi = false}) async* {
     var uri = Uri.parse('$baseUrl/upload-medicamento');
     var request = http.MultipartRequest('POST', uri);
     
     request.fields['nome_lista'] = nomeLista;
     request.fields['api_key'] = apiKey;
     request.fields['model'] = model; 
-    request.fields['force_ai'] = forceAi.toString(); // "true" or "false"
+    request.fields['force_ai'] = forceAi.toString();
     request.files.add(await http.MultipartFile.fromPath('file', pdfFile.path));
 
     try {
-      var streamedResponse = await request.send().timeout(const Duration(minutes: 5));
-      var response = await http.Response.fromStream(streamedResponse);
+      var streamedResponse = await request.send();
       
-      if (response.statusCode == 200) {
-        var decoded = json.decode(utf8.decode(response.bodyBytes));
-        
-        // Novo Formato Backend: { "data": [...], "debug": {...} }
-        if (decoded is Map && decoded.containsKey('data')) {
-           // Retornamos tudo para a UI poder usar o debug
-           return {
-             'items': decoded['data'],
-             'debug': decoded['debug']
-           };
+      if (streamedResponse.statusCode == 200) {
+        // Read line by line
+        await for (var line in streamedResponse.stream.transform(utf8.decoder).transform(const LineSplitter())) {
+          if (line.trim().isNotEmpty) {
+            try {
+              yield json.decode(line);
+            } catch (e) {
+              print("Erro JSON Stream: $e");
+            }
+          }
         }
-        
-        // Fallback antigo
-        if (decoded is List) return {'items': decoded, 'debug': null};
-        
-        return {'items': [], 'debug': null};
       } else {
-        throw Exception('Falha no upload: ${response.statusCode} ${response.body}');
+        var body = await streamedResponse.stream.transform(utf8.decoder).join();
+        throw Exception('Falha no upload: ${streamedResponse.statusCode} $body');
       }
     } catch (e) {
       throw Exception('Erro de conexão: $e');
