@@ -151,24 +151,56 @@ class _MainScreenState extends State<MainScreen> {
     );
     
     if (nomeLista.isEmpty) return;
+    await _uploadMedicamento(nomeLista, context);
+  }
 
-    // 2. File Picker
+  Future<void> _uploadMedicamento(String nomeLista, BuildContext context) async {
+    if (nomeLista.isEmpty) return;
+
     final result = await FilePicker.platform.pickFiles(type: FileType.custom, allowedExtensions: ['pdf']);
     if (result != null && result.files.single.path != null) {
+      if (!_validateKey(context)) return;
+
+      // UX: Phased Upload Status
+      ValueNotifier<String> statusNotifier = ValueNotifier("📡 Enviando PDF para o Cérebro...");
+      
+      showDialog(
+        context: context, 
+        barrierDismissible: false,
+        builder: (ctx) => AlertDialog(
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const CircularProgressIndicator(),
+              const SizedBox(height: 20),
+              ValueListenableBuilder<String>(
+                valueListenable: statusNotifier,
+                builder: (context, value, child) => Text(value, textAlign: TextAlign.center, style: const TextStyle(fontWeight: FontWeight.bold)),
+              )
+            ],
+          )
+        )
+      );
+
       try {
-        if (!_validateKey(context)) return;
-        
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Enviando PDF para o servidor...")));
-        
         File file = File(result.files.single.path!);
-        List<dynamic> meds = await ApiService.uploadMedicamento(file, nomeLista, _apiKeyController.text);
         
-        // 3. Salva no SQLite
+        // Fase 1: Enviado / Processando
+        statusNotifier.value = "🧠 Processando com ${_selectedModel.toUpperCase()}...\n(Isso pode levar alguns segundos)";
+        
+        List<dynamic> meds = await ApiService.uploadMedicamento(file, nomeLista, _apiKeyController.text, _selectedModel);
+        
+        // Fase 2: Salvando Local
+        statusNotifier.value = "💾 Salvando ${meds.length} itens no dispositivo...";
+        
         final batch = meds.map((e) => Map<String, dynamic>.from(e)).toList();
         await DatabaseHelper().inserirLoteMedicamentos(batch);
         
+        Navigator.pop(context); // Fecha Dialog
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Sucesso! ${meds.length} medicamentos importados.")));
+        
       } catch (e) {
+        Navigator.pop(context); // Fecha Dialog
         showDialog(context: context, builder: (ctx) => AlertDialog(title: const Text("Erro"), content: Text(e.toString())));
       }
     }

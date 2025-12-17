@@ -100,7 +100,8 @@ def read_root():
 async def upload_medicamento(
     file: UploadFile = File(...), 
     nome_lista: str = Form(...),
-    api_key: str = Form(...)
+    api_key: str = Form(...),
+    model: str = Form(...) # <--- Novo parametro
 ):
     """Gera JSON de medicamentos a partir de PDF."""
     try:
@@ -111,7 +112,10 @@ async def upload_medicamento(
             raise HTTPException(status_code=400, detail="Não foi possível ler texto do PDF.")
 
         genai.configure(api_key=api_key)
-        model = genai.GenerativeModel('gemini-1.5-flash') # 1.5 é mais rápido/barato que 2.0 para essa tarefa
+        
+        # Usa o modelo escolhido pelo usuário (com fallback seguro)
+        model_name = model if model else "gemini-1.5-flash"
+        ai_model = genai.GenerativeModel(model_name)
         
         # Otimização: Pegar apenas as primeiras 30k chars para não estourar token
         # Em produção, implementaria chunking loop.
@@ -126,7 +130,7 @@ async def upload_medicamento(
         {text_sample}
         """
         
-        response = model.generate_content(prompt, generation_config={"response_mime_type": "application/json"})
+        response = ai_model.generate_content(prompt, generation_config={"response_mime_type": "application/json"})
         
         return json.loads(response.text)
 

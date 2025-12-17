@@ -7,12 +7,13 @@ class ApiService {
   // Use 'http://127.0.0.1:8000' para web ou windows
   static String baseUrl = 'https://medubs-backend.onrender.com'; // Produção Render
 
-  static Future<List<dynamic>> uploadMedicamento(File pdfFile, String nomeLista, String apiKey) async {
+  static Future<List<dynamic>> uploadMedicamento(File pdfFile, String nomeLista, String apiKey, String model) async {
     var uri = Uri.parse('$baseUrl/upload-medicamento');
     var request = http.MultipartRequest('POST', uri);
     
     request.fields['nome_lista'] = nomeLista;
     request.fields['api_key'] = apiKey;
+    request.fields['model'] = model; // <--- Envia o modelo
     request.files.add(await http.MultipartFile.fromPath('file', pdfFile.path));
 
     try {
