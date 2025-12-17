@@ -75,7 +75,7 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
   final _apiKeyController = TextEditingController();
-  final _serverUrlController = TextEditingController(text: "http://10.0.2.2:8000"); // Default para Emulador
+  final _serverUrlController = TextEditingController(text: "https://medubs-backend.onrender.com"); // Default Produção
   String _selectedModel = 'gemini-2.5-flash'; // Default Model
   int? _patientAge;
   String _patientSex = "Feminino";
@@ -92,7 +92,7 @@ class _MainScreenState extends State<MainScreen> {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       _apiKeyController.text = prefs.getString('gemini_api_key') ?? '';
-      _serverUrlController.text = prefs.getString('api_base_url') ?? 'http://10.0.2.2:8000';
+      _serverUrlController.text = prefs.getString('api_base_url') ?? 'https://medubs-backend.onrender.com';
       _selectedModel = prefs.getString('gemini_model') ?? 'gemini-2.5-flash';
     });
   }
