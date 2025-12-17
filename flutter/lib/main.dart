@@ -1031,13 +1031,11 @@ class _ScreeningTabState extends State<ScreeningTab> {
   @override
   void didUpdateWidget(ScreeningTab old) { 
     super.didUpdateWidget(old); 
-    // Logic: Only update if demographics OR keywords actually CHANGED and we have a key.
+    // Logic: Only update local fields if inputs changed.
+    // REMOVED AUTO-CHECK to prevent infinite loops / Quota 429 errors.
     if(widget.initialAge!=old.initialAge || widget.initialSex!=old.initialSex || widget.keywords != old.keywords) { 
       _upd(); 
-      // Prevention: Don't auto-run if we already have a result or are loading, unless forced by new keywords?
-      // Better: Auto-run if keywords changed, even if we have result.
-      bool kwChanged = widget.keywords.toString() != old.keywords.toString();
-      if(widget.initialAge!=null && widget.hasKey && (_result.isEmpty || kwChanged) && !_loading) _check(); 
+      // User must click button to generate new protocol. Safer.
     } 
   }
 
