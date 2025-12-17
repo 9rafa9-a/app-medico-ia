@@ -135,6 +135,7 @@ async def upload_medicamento(
     from fastapi.responses import StreamingResponse
     import json
     import time
+    import asyncio
 
     async def process_stream():
         try:
@@ -240,7 +241,7 @@ async def upload_medicamento(
                         # DELAY DE 25 SEGUNDOS
                         if i < total_chunks - 1:
                             yield json.dumps({"status": "waiting", "seconds": 25, "msg": "Aguardando 25s para rate limit..."}) + "\n"
-                            time.sleep(25) 
+                            await asyncio.sleep(25) 
                         
                     except Exception as e:
                        yield json.dumps({"status": "log", "msg": f"Erro no chunk {i}: {str(e)}"}) + "\n"
