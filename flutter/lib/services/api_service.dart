@@ -7,7 +7,7 @@ class ApiService {
   // Use 'http://127.0.0.1:8000' para web ou windows
   static String baseUrl = 'https://medubs-backend.onrender.com'; // Produção Render
 
-  static Future<List<dynamic>> uploadMedicamento(File pdfFile, String nomeLista, String apiKey, String model) async {
+  static Future<Map<String, dynamic>> uploadMedicamento(File pdfFile, String nomeLista, String apiKey, String model) async {
     var uri = Uri.parse('$baseUrl/upload-medicamento');
     var request = http.MultipartRequest('POST', uri);
     
@@ -22,9 +22,20 @@ class ApiService {
       
       if (response.statusCode == 200) {
         var decoded = json.decode(utf8.decode(response.bodyBytes));
-        if (decoded is List) return decoded;
-        if (decoded is Map && decoded.containsKey('data')) return decoded['data'];
-        return [];
+        
+        // Novo Formato Backend: { "data": [...], "debug": {...} }
+        if (decoded is Map && decoded.containsKey('data')) {
+           // Retornamos tudo para a UI poder usar o debug
+           return {
+             'items': decoded['data'],
+             'debug': decoded['debug']
+           };
+        }
+        
+        // Fallback antigo
+        if (decoded is List) return {'items': decoded, 'debug': null};
+        
+        return {'items': [], 'debug': null};
       } else {
         throw Exception('Falha no upload: ${response.statusCode} ${response.body}');
       }

@@ -132,7 +132,25 @@ async def upload_medicamento(
         
         response = ai_model.generate_content(prompt, generation_config={"response_mime_type": "application/json"})
         
-        return json.loads(response.text)
+        parsed_json = json.loads(response.text)
+        
+        # Garante que seja lista pura ou extrai de chave 'medicamentos' se a IA embrulhar
+        data_list = []
+        if isinstance(parsed_json, list):
+            data_list = parsed_json
+        elif isinstance(parsed_json, dict):
+            data_list = parsed_json.get('medicamentos', [])
+            if not data_list and 'data' in parsed_json: # Tenta outra common key
+                 data_list = parsed_json['data']
+
+        return {
+            "data": data_list,
+            "debug": {
+                "text_len": len(text),
+                "text_preview": text[:100] + "..." if text else "EMPTY",
+                "ai_raw": response.text[:500] if response.text else "EMPTY"
+            }
+        }
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

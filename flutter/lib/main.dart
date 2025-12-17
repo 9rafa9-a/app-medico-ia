@@ -107,7 +107,7 @@ class _MainScreenState extends State<MainScreen> {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text("Rastreio atualizado: $_patientSex, $_patientAge anos"),
           backgroundColor: Colors.teal,
-          action: SnackBarAction(label: "VER", textColor: Colors.white, onPressed: () => setState(() => _currentIndex = 3)),
+          action: SnackBarAction(label: "VER", textColor: Colors.white, onPressed: () => setState(() => _currentIndex = 2)),
         ));
       }
     }
@@ -161,47 +161,96 @@ class _MainScreenState extends State<MainScreen> {
     if (result != null && result.files.single.path != null) {
       if (!_validateKey(context)) return;
 
-      // UX: Phased Upload Status
-      ValueNotifier<String> statusNotifier = ValueNotifier("📡 Enviando PDF para o Cérebro...");
-      
+      // UX: Granular Log System
+      final ValueNotifier<List<String>> logs = ValueNotifier(["📄 Arquivo selecionado."]);
+      void addLog(String text) => logs.value = [...logs.value, text];
+
       showDialog(
         context: context, 
         barrierDismissible: false,
         builder: (ctx) => AlertDialog(
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const CircularProgressIndicator(),
-              const SizedBox(height: 20),
-              ValueListenableBuilder<String>(
-                valueListenable: statusNotifier,
-                builder: (context, value, child) => Text(value, textAlign: TextAlign.center, style: const TextStyle(fontWeight: FontWeight.bold)),
-              )
-            ],
-          )
+          title: const Text("Processando Documento"),
+          content: SizedBox(
+            width: double.maxFinite,
+            child: ValueListenableBuilder<List<String>>(
+              valueListenable: logs,
+              builder: (context, value, child) => ListView.builder(
+                shrinkWrap: true,
+                itemCount: value.length + 1, // +1 for spinner
+                itemBuilder: (context, index) {
+                  if (index == value.length) {
+                    return const Padding(padding: EdgeInsets.all(8.0), child: Center(child: LinearProgressIndicator()));
+                  }
+                  return Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Icon(Icons.check_circle_outline, size: 16, color: Colors.green),
+                      const SizedBox(width: 8),
+                      Expanded(child: Text(value[index], style: const TextStyle(fontSize: 13))),
+                    ]
+                  );
+                },
+              ),
+            ),
+          ),
+          actions: [
+             TextButton(onPressed: () => Navigator.pop(ctx), child: const Text("CANCELAR")) // Emergency exit
+          ],
         )
       );
 
       try {
         File file = File(result.files.single.path!);
+        addLog("Tamanho: ${(file.lengthSync() / 1024).toStringAsFixed(1)} KB");
         
         // Fase 1: Enviado / Processando
-        statusNotifier.value = "🧠 Processando com ${_selectedModel.toUpperCase()}...\n(Isso pode levar alguns segundos)";
+        addLog("🚀 Enviando para Backend (${_selectedModel})...");
         
-        List<dynamic> meds = await ApiService.uploadMedicamento(file, nomeLista, _apiKeyController.text, _selectedModel);
+        // Call Service (Updated to return Map {items, debug})
+        Map<String, dynamic> response = await ApiService.uploadMedicamento(file, nomeLista, _apiKeyController.text, _selectedModel);
+        
+        List<dynamic> meds = response['items'] ?? [];
+        Map<String, dynamic>? debug = response['debug'];
+
+        if (debug != null) {
+           addLog("🔍 Backend Debug: Texto extraído: ${debug['text_len']} chars");
+           if ((debug['text_len'] as int) < 100) {
+              addLog("⚠️ ALERTA: Pouco texto encontrado. O PDF pode ser uma imagem digitalizada. A IA pode falhar.");
+           }
+        }
+
+        if (meds.isEmpty) {
+           Navigator.pop(context); // Close progress
+           // Show Report
+           showDialog(context: context, builder: (ctx) => AlertDialog(
+             title: const Text("Nenhum medicamento encontrado"),
+             content: SingleChildScrollView(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                const Text("A Inteligência Artificial não retornou nenhum item. Isso geralmente acontece quando:\n1. O PDF é uma imagem (escanneada) sem OCR.\n2. O PDF está protegido.\n\nDados Técnicos:", style: TextStyle(color: Colors.red)),
+                Container(
+                  margin: const EdgeInsets.only(top: 10),
+                  padding: const EdgeInsets.all(8),
+                  color: Colors.grey[200],
+                  child: Text("Preview Texto: ${debug?['text_preview']}\n\nResposta IA: ${debug?['ai_raw']}", style: const TextStyle(fontFamily: 'monospace', fontSize: 10))
+                )
+             ])),
+             actions: [TextButton(onPressed: () => Navigator.pop(ctx), child: const Text("OK"))],
+           ));
+           return;
+        }
         
         // Fase 2: Salvando Local
-        statusNotifier.value = "💾 Salvando ${meds.length} itens no dispositivo...";
+        addLog("✅ ${meds.length} itens identificados.");
+        addLog("💾 Salvando no banco de dados...");
         
         final batch = meds.map((e) => Map<String, dynamic>.from(e)).toList();
         await DatabaseHelper().inserirLoteMedicamentos(batch);
         
         Navigator.pop(context); // Fecha Dialog
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Sucesso! ${meds.length} medicamentos importados.")));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Sucesso! ${meds.length} medicamentos importados."), backgroundColor: Colors.green));
         
       } catch (e) {
         Navigator.pop(context); // Fecha Dialog
-        showDialog(context: context, builder: (ctx) => AlertDialog(title: const Text("Erro"), content: Text(e.toString())));
+        showDialog(context: context, builder: (ctx) => AlertDialog(title: const Text("Erro Fatal"), content: Text(e.toString())));
       }
     }
   }
@@ -229,17 +278,53 @@ class _MainScreenState extends State<MainScreen> {
   Future<void> _uploadDiretriz() async {
     final result = await FilePicker.platform.pickFiles(type: FileType.custom, allowedExtensions: ['pdf']);
     if (result != null && result.files.single.path != null) {
-      try {
-        if (!_validateKey(context)) return;
+      if (!_validateKey(context)) return;
 
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Enviando Diretriz...")));
+      // UX: Granular Logs
+      final ValueNotifier<List<String>> logs = ValueNotifier(["📄 Protocolo selecionado."]);
+      void addLog(String text) => logs.value = [...logs.value, text];
+
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (ctx) => AlertDialog(
+          title: const Text("Enviando Diretriz"),
+           content: SizedBox(
+            width: double.maxFinite,
+            child: ValueListenableBuilder<List<String>>(
+              valueListenable: logs,
+              builder: (context, value, child) => ListView.builder(
+                shrinkWrap: true,
+                itemCount: value.length + 1,
+                itemBuilder: (context, index) {
+                  if (index == value.length) return const Padding(padding: EdgeInsets.all(8.0), child: Center(child: LinearProgressIndicator()));
+                  return Row(children: [const Icon(Icons.check, size: 16, color: Colors.blue), const SizedBox(width: 8), Expanded(child: Text(value[index]))]);
+                },
+              ),
+            ),
+          ),
+          actions: [TextButton(onPressed: () => Navigator.pop(ctx), child: const Text("CANCELAR"))]
+        )
+      );
+
+      try {
         File file = File(result.files.single.path!);
+        addLog("Tamanho: ${(file.lengthSync() / 1024).toStringAsFixed(1)} KB");
+        addLog("🛫 Enviando para Base de Conhecimento...");
+        
         bool ok = await ApiService.uploadDiretriz(file, _apiKeyController.text);
         
         if (ok) {
-           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Diretriz salva na Base de Conhecimento!")));
+           addLog("✅ Sucesso! Protocolo indexado.");
+           await Future.delayed(const Duration(seconds: 1)); // UX pause
+           Navigator.pop(context);
+           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Diretriz salva na Base de Conhecimento!"), backgroundColor: Colors.green));
+        } else {
+           Navigator.pop(context);
+           showDialog(context: context, builder: (ctx) => AlertDialog(title: const Text("Falha"), content: const Text("O servidor retornou erro. Verifique a chave e a conexão.")));
         }
       } catch (e) {
+        Navigator.pop(context);
         showDialog(context: context, builder: (ctx) => AlertDialog(title: const Text("Erro"), content: Text(e.toString())));
       }
     }
@@ -351,7 +436,7 @@ class _MainScreenState extends State<MainScreen> {
         onFileSaved: _notifyOfflineFileSaved,
         onRequestKey: () => _showSettings(context),
       ),
-      LiveTab(apiKey: _apiKeyController.text, hasKey: hasKey),
+      // LiveTab removida temporariamente
       SpecialtiesTab(
         apiKey: _apiKeyController.text, 
         hasKey: hasKey,
@@ -374,12 +459,12 @@ class _MainScreenState extends State<MainScreen> {
         selectedIndex: _currentIndex,
         onDestinationSelected: (idx) {
           setState(() => _currentIndex = idx);
-          if (idx == 4) _offlineTabKey.currentState?.loadFiles();
+          if (idx == 3) _offlineTabKey.currentState?.loadFiles(); // Offline agora é index 3
         },
         indicatorColor: hasKey ? Colors.blue[100] : Colors.grey[300],
         destinations: const [
           NavigationDestination(icon: Icon(Icons.home_outlined), selectedIcon: Icon(Icons.home), label: "Início"),
-          NavigationDestination(icon: Icon(Icons.mic_external_on_outlined), selectedIcon: Icon(Icons.mic_external_on), label: "Ao Vivo"),
+          // NavigationDestination(icon: Icon(Icons.mic_external_on_outlined), selectedIcon: Icon(Icons.mic_external_on), label: "Ao Vivo"),
           NavigationDestination(icon: Icon(Icons.medical_services_outlined), selectedIcon: Icon(Icons.medical_services), label: "Espec."),
           NavigationDestination(icon: Icon(Icons.checklist_rtl_outlined), selectedIcon: Icon(Icons.checklist_rtl), label: "Rastreio"),
           NavigationDestination(icon: Icon(Icons.wifi_off_outlined), selectedIcon: Icon(Icons.wifi_off), label: "Offline"),
@@ -871,13 +956,59 @@ class _ScreeningTabState extends State<ScreeningTab> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Rastreio (Auto)")),
+      appBar: AppBar(title: const Text("Rastreio e Prevenção")),
       body: Padding(padding: const EdgeInsets.all(16), child: Column(children: [
-         Row(children: [Expanded(child: TextField(controller: _ageCtrl, decoration: const InputDecoration(labelText: "Idade", border: OutlineInputBorder()))), const SizedBox(width: 10), Expanded(child: DropdownButtonFormField(value: _sex, items: ["Feminino","Masculino"].map((e)=>DropdownMenuItem(value:e,child:Text(e))).toList(), onChanged:(v)=>setState(()=>_sex=v!), decoration: const InputDecoration(labelText:"Sexo",border:OutlineInputBorder())))]),
-         const SizedBox(height: 10),
-         SizedBox(width: double.infinity, child: ElevatedButton(onPressed: _loading?null:_check, child: Text(_loading ? "Consultando Gemini 1.5..." : (widget.hasKey ? "Verificar Protocolos" : "Configurar Key")))),
-         const Divider(),
-         Expanded(child: SingleChildScrollView(child: Text(_result)))
+         // Input Area
+         Card(
+           elevation: 0,
+           color: Colors.blue[50], 
+           child: Padding(
+             padding: const EdgeInsets.all(16),
+             child: Column(children: [
+               Row(children: [
+                 Expanded(child: TextField(controller: _ageCtrl, decoration: const InputDecoration(labelText: "Idade", border: OutlineInputBorder(), prefixIcon: Icon(Icons.cake)), keyboardType: TextInputType.number)), 
+                 const SizedBox(width: 10), 
+                 Expanded(child: DropdownButtonFormField(value: _sex, items: ["Feminino","Masculino"].map((e)=>DropdownMenuItem(value:e,child:Text(e))).toList(), onChanged:(v)=>setState(()=>_sex=v!), decoration: const InputDecoration(labelText:"Sexo",border:OutlineInputBorder(), prefixIcon: Icon(Icons.person))))
+               ]),
+               const SizedBox(height: 10),
+               SizedBox(width: double.infinity, child: FilledButton.icon(
+                 onPressed: _loading?null:_check, 
+                 icon: _loading ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2)) : const Icon(Icons.search),
+                 label: Text(_loading ? "Analisando..." : (widget.hasKey ? "Gerar Protocolo de Rastreio" : "Configurar API Key"))
+               )),
+             ])
+           ),
+         ),
+         const SizedBox(height: 20),
+         
+         // Result Area
+         Expanded(child: _result.isEmpty 
+           ? Center(child: Text("Preencha os dados acima para ver\nas diretrizes do MS.", textAlign: TextAlign.center, style: TextStyle(color: Colors.grey[400])))
+           : SingleChildScrollView(
+               child: Card(
+                 elevation: 2,
+                 child: Container(
+                   width: double.infinity,
+                   padding: const EdgeInsets.all(20),
+                   child: Column(
+                     crossAxisAlignment: CrossAxisAlignment.start,
+                     children: [
+                       Row(children: [
+                         Icon(Icons.health_and_safety, color: Colors.teal[700]),
+                         const SizedBox(width: 10),
+                         Text("Protocolo Sugerido", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.teal[800]))
+                       ]),
+                       const Divider(height: 30),
+                       SelectableText(
+                         _result, 
+                         style: const TextStyle(fontSize: 15, height: 1.5, color: Colors.black87),
+                       ),
+                     ],
+                   )
+                 ),
+               )
+             )
+         )
       ])),
     );
   }
