@@ -47,8 +47,30 @@ class ConsultaResponse(BaseModel):
     paciente: dict
     keywords: List[str] # Novo
     debug_rag: Optional[str] = None
+import time
+from google.api_core import exceptions as google_exceptions
 
 # --- FUNÇÕES AUXILIARES ---
+
+def generate_with_retry(model, prompt, retries=3, response_mime_type="application/json"):
+    """
+    Wrapper para chamar model.generate_content com Retry Strategy (Backoff Exponencial).
+    Trata erros 429 (ResourceExhausted) aguardando antes de tentar de novo.
+    """
+    base_delay = 5
+    for attempt in range(retries):
+        try:
+            return model.generate_content(prompt, generation_config={"response_mime_type": response_mime_type})
+        except google_exceptions.ResourceExhausted as e:
+            wait_time = base_delay * (2 ** attempt) # 5s, 10s, 20s...
+            print(f"⚠️ Quota Exceeded (429). Retrying in {wait_time}s... (Attempt {attempt+1}/{retries})")
+            time.sleep(wait_time)
+        except Exception as e:
+            # Outros erros (400, 500, etc) não adianta tentar de novo imediatamente
+            print(f"❌ Erro API Gemini: {e}")
+            raise e
+            
+    raise Exception("Falha após múltiplas tentativas (Quota Exceeded)")
 
 def extract_text_from_bytes(file_bytes: bytes) -> str:
     """Extrai texto de PDF direto da memória RAM."""
@@ -100,7 +122,7 @@ def simple_rag_search(query: str, kb_dir: str) -> str:
 
 @app.get("/")
 def read_root():
-    return {"status": "online", "version": "4.0 Hybrid", "rag_files": len(os.listdir(KNOWLEDGE_BASE_DIR))}
+    return {"status": "online", "version": "4.1 Retry-Enabled", "rag_files": len(os.listdir(KNOWLEDGE_BASE_DIR))}
 
 @app.post("/upload-medicamento")
 async def upload_medicamento(
@@ -149,6 +171,7 @@ async def upload_medicamento(
         
         aggregated_meds = []
         chunks_processed = 0
+        error_log = []
         
         # 4. Lógica Dinâmica ("Safety Valve")
         # Limite seguro para output JSON grande: ~30k caracteres de input costuma gerar outputs seguros
@@ -166,18 +189,23 @@ async def upload_medicamento(
             {opt_text}
             """
             try:
-                response = ai_model.generate_content(prompt, generation_config={"response_mime_type": "application/json"})
+                # USA RETRY AQUI
+                response = generate_with_retry(ai_model, prompt)
                 parsed = json.loads(response.text)
                 if isinstance(parsed, list): aggregated_meds = parsed
                 elif isinstance(parsed, dict): aggregated_meds = parsed.get('medicamentos', [])
             except Exception as e:
-                print(f"Erro Single Shot: {e}")
+                error_msg = str(e)
+                print(f"Erro Single Shot: {error_msg}")
+                error_log.append(f"SingleShot Error: {error_msg}")
+                # SE falhar aqui, não vamos silenciar se for erro de quota.
+                # Mas para manter comportamento do frontend, retornamos vazio MAS com debug msg.
                 
         else:
             # --- CHUNKING (Segurança para Docs Gigantes) ---
-            chunk_size = 25000 # Um pouco menor que o limite para garantir
+            chunk_size = 25000 
             total_chunks = (len(opt_text) // chunk_size) + 1
-            max_chunks = 6 # Aumentei um pouco pois agora o texto é "denso" (só info util)
+            max_chunks = 6 
             if total_chunks > max_chunks: total_chunks = max_chunks
             
             for i in range(total_chunks):
@@ -194,13 +222,20 @@ async def upload_medicamento(
                 {chunk}
                 """
                 try:
-                    response = ai_model.generate_content(prompt, generation_config={"response_mime_type": "application/json"})
+                    # USA RETRY AQUI
+                    response = generate_with_retry(ai_model, prompt)
                     parsed = json.loads(response.text)
                     batch = []
                     if isinstance(parsed, list): batch = parsed
                     elif isinstance(parsed, dict): batch = parsed.get('medicamentos', [])
                     aggregated_meds.extend(batch)
-                except: continue
+                    
+                    # Pausa educada entre chunks para evitar rate limit
+                    time.sleep(2) 
+                    
+                except Exception as e:
+                    error_log.append(f"Chunk {i} error: {str(e)}")
+                    continue
 
         # 5. Salva no Banco e Retorna
         if aggregated_meds:
@@ -212,7 +247,7 @@ async def upload_medicamento(
 
             return {
                 "status": "success",
-                "method": "ai_optimized",
+                "method": "ai_optimized_retry",
                 "data": aggregated_meds,
                 "debug": {
                     "text_len": len(opt_text),
@@ -221,10 +256,14 @@ async def upload_medicamento(
                 }
             }
         else:
+            # Se vazio, verificamos se teve erro crítico para avisar o usuário
             return {
-                "status": "success", # Retorna sucesso mas vazio, pra não travar loop
+                "status": "success", 
                 "data": [],
-                "debug": {"msg": "AI não encontrou itens"}
+                "debug": {
+                    "msg": "AI não encontrou itens. Verifique erros.",
+                    "errors": error_log
+                }
             }
 
     except Exception as e:
@@ -287,21 +326,27 @@ async def consultar_ia(req: ConsultaRequest):
         }}
         """
         
-        response = model.generate_content(prompt, generation_config={"response_mime_type": "application/json"})
+        # USA RETRY AQUI TAMBÉM
+        response = generate_with_retry(model, prompt)
         res_json = json.loads(response.text)
         
         return {
             "soap": res_json.get("soap", {}),
             "paciente": res_json.get("paciente", {}),
             "medicamentos": res_json.get("medicamentos", []),
-            "keywords": res_json.get("keywords", []), # Novo
+            "keywords": res_json.get("keywords", []), 
             "missoes": res_json.get("missoes", []),
             "debug_rag": "Contexto usado: " + ("SIM" if rag_context else "NÃO")
         }
 
     except Exception as e:
+        # Retorna erro legível no card em vez do JSON de crash
+        err_msg = str(e)
+        if "Quota" in err_msg or "429" in err_msg:
+             err_msg = "⚠️ Limite de cota atingido (Erro 429). Aguarde alguns instantes e tente novamente."
+             
         return {
-            "soap": {"s": "Erro ao processar", "o": "", "a": str(e), "p": ""}, 
+            "soap": {"s": "Erro ao processar", "o": "", "a": err_msg, "p": ""}, 
             "medicamentos": [], 
             "missoes": [],
             "keywords": [],
