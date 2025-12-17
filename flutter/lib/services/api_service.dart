@@ -18,7 +18,7 @@ class ApiService {
     request.files.add(await http.MultipartFile.fromPath('file', pdfFile.path));
 
     try {
-      var streamedResponse = await request.send();
+      var streamedResponse = await request.send().timeout(const Duration(minutes: 5));
       var response = await http.Response.fromStream(streamedResponse);
       
       if (response.statusCode == 200) {

@@ -2,6 +2,10 @@ import pdfplumber
 import re
 from unidecode import unidecode
 import io
+import logging
+
+# Suppress noisy PDF warnings matches
+logging.getLogger("pdfminer").setLevel(logging.ERROR)
 
 class HeuristicParser:
     def __init__(self):

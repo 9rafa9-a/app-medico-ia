@@ -230,8 +230,9 @@ async def upload_medicamento(
                     elif isinstance(parsed, dict): batch = parsed.get('medicamentos', [])
                     aggregated_meds.extend(batch)
                     
-                    # Pausa educada entre chunks para evitar rate limit
-                    time.sleep(2) 
+                    # Pausa de 12s para respeitar limite de 5 RPM (60s/5 = 12s)
+                    # O usuário relatou limite estrito de 5 req/min.
+                    time.sleep(12) 
                     
                 except Exception as e:
                     error_log.append(f"Chunk {i} error: {str(e)}")
